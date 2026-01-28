@@ -127,42 +127,35 @@ test.describe('Datasource - Server Folder', () => {
     // Wait for folder tree to load
     await page.waitForTimeout(1000);
 
-    // Navigate to wp-content folder
-    // The folder structure is typically: wp-content > e2e-assets > test-folder
-    // Find and click through the folder tree
-    const folderItems = page.locator('div.foogallery-datasources-modal-wrapper li > a');
-    const count = await folderItems.count();
+    // Navigate: wp-content > uploads > e2e-test-folder
+    const folderBase = page.locator('div.foogallery-datasources-modal-wrapper li > a');
 
-    // Look for wp-content or e2e-assets folder
-    for (let i = 0; i < count; i++) {
-      const text = await folderItems.nth(i).textContent();
-      if (text?.includes('wp-content') || text?.includes('e2e-assets') || text?.includes('test-folder')) {
-        await folderItems.nth(i).click();
-        await page.waitForTimeout(500);
-        break;
-      }
-    }
-
-    // Try to find and click e2e-assets or test-folder
+    // Click wp-content folder first
+    const wpContentFolder = folderBase.filter({ hasText: 'wp-content' }).first();
+    await expect(wpContentFolder).toBeVisible({ timeout: 10000 });
+    await wpContentFolder.click();
     await page.waitForTimeout(500);
-    const updatedFolderItems = page.locator('div.foogallery-datasources-modal-wrapper li > a');
-    const updatedCount = await updatedFolderItems.count();
 
-    for (let i = 0; i < updatedCount; i++) {
-      const text = await updatedFolderItems.nth(i).textContent();
-      if (text?.includes('e2e-assets') || text?.includes('test-folder')) {
-        await updatedFolderItems.nth(i).click();
-        await page.waitForTimeout(500);
-      }
-    }
+    // Click uploads folder
+    const uploadsFolder = folderBase.filter({ hasText: 'uploads' }).first();
+    await expect(uploadsFolder).toBeVisible({ timeout: 10000 });
+    await uploadsFolder.click();
+    await page.waitForTimeout(500);
+
+    // Click e2e-test-folder
+    const testFolder = folderBase.filter({ hasText: 'e2e-test-folder' }).first();
+    await expect(testFolder).toBeVisible({ timeout: 10000 });
+    await testFolder.click();
+    await page.waitForTimeout(500);
 
     await page.screenshot({ path: 'test-results/datasource-server-folder-selected.png' });
 
     // Apply datasource
     await applyDatasource(page);
 
-    // Verify datasource info is displayed
+    // Verify datasource info is displayed - scroll into view first
     const datasourceInfo = page.locator(SERVER_FOLDER.datasourceInfo);
+    await datasourceInfo.scrollIntoViewIfNeeded();
     await expect(datasourceInfo).toBeVisible({ timeout: 10000 });
 
     // Publish gallery
@@ -177,45 +170,29 @@ test.describe('Datasource - Server Folder', () => {
     await openDatasourceModal(page);
     await selectServerFolderDatasource(page);
 
-    // Navigate to test folder with images
+    // Wait for folder tree to load
     await page.waitForTimeout(1000);
-    const folderItems = page.locator('div.foogallery-datasources-modal-wrapper li > a');
 
-    // Navigate through folder structure
-    for (let i = 0; i < await folderItems.count(); i++) {
-      const text = await folderItems.nth(i).textContent();
-      if (text?.includes('wp-content')) {
-        await folderItems.nth(i).click();
-        await page.waitForTimeout(500);
-        break;
-      }
-    }
+    // Navigate: wp-content > uploads > e2e-test-folder
+    const folderBase = page.locator('div.foogallery-datasources-modal-wrapper li > a');
 
-    // Continue navigation to e2e-assets/test-folder
+    // Click wp-content folder first
+    const wpContentFolder = folderBase.filter({ hasText: 'wp-content' }).first();
+    await expect(wpContentFolder).toBeVisible({ timeout: 10000 });
+    await wpContentFolder.click();
     await page.waitForTimeout(500);
-    let found = false;
-    const items = page.locator('div.foogallery-datasources-modal-wrapper li > a');
-    for (let i = 0; i < await items.count(); i++) {
-      const text = await items.nth(i).textContent();
-      if (text?.includes('e2e-assets')) {
-        await items.nth(i).click();
-        await page.waitForTimeout(500);
-        found = true;
-        break;
-      }
-    }
 
-    if (found) {
-      const subItems = page.locator('div.foogallery-datasources-modal-wrapper li > a');
-      for (let i = 0; i < await subItems.count(); i++) {
-        const text = await subItems.nth(i).textContent();
-        if (text?.includes('test-folder')) {
-          await subItems.nth(i).click();
-          await page.waitForTimeout(500);
-          break;
-        }
-      }
-    }
+    // Click uploads folder
+    const uploadsFolder = folderBase.filter({ hasText: 'uploads' }).first();
+    await expect(uploadsFolder).toBeVisible({ timeout: 10000 });
+    await uploadsFolder.click();
+    await page.waitForTimeout(500);
+
+    // Click e2e-test-folder
+    const testFolder = folderBase.filter({ hasText: 'e2e-test-folder' }).first();
+    await expect(testFolder).toBeVisible({ timeout: 10000 });
+    await testFolder.click();
+    await page.waitForTimeout(500);
 
     await applyDatasource(page);
     await publishGallery(page);
@@ -237,28 +214,29 @@ test.describe('Datasource - Server Folder', () => {
     await openDatasourceModal(page);
     await selectServerFolderDatasource(page);
 
-    // Quick folder navigation
+    // Wait for folder tree to load
     await page.waitForTimeout(1000);
-    const folderItems = page.locator('div.foogallery-datasources-modal-wrapper li > a');
 
-    for (let i = 0; i < await folderItems.count(); i++) {
-      const text = await folderItems.nth(i).textContent();
-      if (text?.includes('wp-content')) {
-        await folderItems.nth(i).click();
-        await page.waitForTimeout(500);
-        break;
-      }
-    }
+    // Navigate: wp-content > uploads > e2e-test-folder
+    const folderBase = page.locator('div.foogallery-datasources-modal-wrapper li > a');
 
+    // Click wp-content folder first
+    const wpContentFolder = folderBase.filter({ hasText: 'wp-content' }).first();
+    await expect(wpContentFolder).toBeVisible({ timeout: 10000 });
+    await wpContentFolder.click();
     await page.waitForTimeout(500);
-    const items = page.locator('div.foogallery-datasources-modal-wrapper li > a');
-    for (let i = 0; i < await items.count(); i++) {
-      const text = await items.nth(i).textContent();
-      if (text?.includes('e2e-assets') || text?.includes('test-folder') || text?.includes('images')) {
-        await items.nth(i).click();
-        await page.waitForTimeout(500);
-      }
-    }
+
+    // Click uploads folder
+    const uploadsFolder = folderBase.filter({ hasText: 'uploads' }).first();
+    await expect(uploadsFolder).toBeVisible({ timeout: 10000 });
+    await uploadsFolder.click();
+    await page.waitForTimeout(500);
+
+    // Click e2e-test-folder
+    const testFolder = folderBase.filter({ hasText: 'e2e-test-folder' }).first();
+    await expect(testFolder).toBeVisible({ timeout: 10000 });
+    await testFolder.click();
+    await page.waitForTimeout(500);
 
     await applyDatasource(page);
     await publishGallery(page);

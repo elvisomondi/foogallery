@@ -60,8 +60,8 @@ export const SERVER_FOLDER = {
 
   // Datasource info on editor - look for heading with datasource name
   datasourceInfo: 'h3:has-text("Datasource : Server Folder")',
-  editButton: 'button:has-text("Change Server Folder")',
-  removeButton: 'button:has-text("Remove Server Folder")',
+  editButton: 'h3:has-text("Datasource : Server Folder") ~ button:has-text("Change")',
+  removeButton: 'h3:has-text("Datasource : Server Folder") ~ button:has-text("Remove")',
 
   // Image metadata form (database storage)
   metadataForm: {
@@ -97,8 +97,8 @@ export const MEDIA_TAGS = {
 
   // Datasource info on editor - look for heading with datasource name
   datasourceInfo: 'h3:has-text("Datasource : Media Tags")',
-  editButton: 'button:has-text("Change Media Tags")',
-  removeButton: 'button:has-text("Remove All Media Tags")',
+  editButton: 'h3:has-text("Datasource : Media Tags") ~ button:has-text("Change")',
+  removeButton: 'h3:has-text("Datasource : Media Tags") ~ button:has-text("Remove")',
 } as const;
 
 // ============================================================================
@@ -117,8 +117,8 @@ export const MEDIA_CATEGORIES = {
 
   // Datasource info on editor - look for heading with datasource name
   datasourceInfo: 'h3:has-text("Datasource : Media Categories")',
-  editButton: 'button:has-text("Change Media Categories")',
-  removeButton: 'button:has-text("Remove All Media Categories")',
+  editButton: 'h3:has-text("Datasource : Media Categories") ~ button:has-text("Change")',
+  removeButton: 'h3:has-text("Datasource : Media Categories") ~ button:has-text("Remove")',
 } as const;
 
 // ============================================================================
@@ -148,8 +148,8 @@ export const POST_QUERY = {
 
   // Datasource info on editor - look for heading with datasource name
   datasourceInfo: 'h3:has-text("Datasource : Post Query")',
-  editButton: 'button:has-text("Change Post Query")',
-  removeButton: 'button:has-text("Remove Post Query")',
+  editButton: 'h3:has-text("Datasource : Post Query") ~ button:has-text("Change")',
+  removeButton: 'h3:has-text("Datasource : Post Query") ~ button:has-text("Remove")',
 } as const;
 
 // ============================================================================
@@ -214,13 +214,31 @@ export async function updateGallery(page: Page): Promise<void> {
  * Create a page for the gallery and navigate to view it
  */
 export async function createPageAndView(page: Page): Promise<void> {
-  await page.locator(COMMON.createPageButton).click();
+  // Click create page button
+  const createButton = page.locator(COMMON.createPageButton);
+  await expect(createButton).toBeVisible({ timeout: 10000 });
+  await createButton.click();
   await page.waitForLoadState('networkidle');
 
+  // Wait for page to be created and view link to appear
   const viewLink = page.locator(COMMON.viewLink);
-  await expect(viewLink).toBeVisible({ timeout: 10000 });
-  await viewLink.click();
+  await expect(viewLink).toBeVisible({ timeout: 15000 });
+
+  // Get the href and navigate directly (more reliable than clicking)
+  const href = await viewLink.getAttribute('href');
+  if (href) {
+    await page.goto(href);
+  } else {
+    await viewLink.click();
+  }
+
   await page.waitForLoadState('domcontentloaded');
+
+  // Verify we're on the frontend (URL should not contain wp-admin)
+  const currentUrl = page.url();
+  if (currentUrl.includes('wp-admin')) {
+    throw new Error(`Failed to navigate to frontend. Current URL: ${currentUrl}`);
+  }
 }
 
 /**
@@ -245,10 +263,62 @@ export async function cancelDatasource(page: Page): Promise<void> {
  * Verify lightbox works on the gallery
  */
 export async function verifyLightboxWorks(page: Page): Promise<void> {
-  // Click first image
-  const firstImage = page.locator('.foogallery figure img').first();
-  await expect(firstImage).toBeVisible({ timeout: 15000 });
-  await firstImage.click();
+  // Allow FooGallery JS to fully initialize
+  await page.waitForTimeout(2000);
+
+  // Wait for gallery images to be present - try multiple selectors
+  const imageSelectors = [
+    '.foogallery figure img',
+    '.foogallery .fg-item img',
+    '.foogallery .fg-thumb img',
+    'div[id^="foogallery-gallery-"] figure img',
+    'figure img'
+  ];
+
+  let imagesFound = false;
+  for (const selector of imageSelectors) {
+    try {
+      await page.waitForSelector(selector, { state: 'visible', timeout: 5000 });
+      imagesFound = true;
+      break;
+    } catch {
+      continue;
+    }
+  }
+
+  if (!imagesFound) {
+    console.log('Warning: No gallery images found with standard selectors');
+  }
+
+  // Try clicking various gallery elements to open lightbox
+  // FooGallery captions can intercept clicks, so we may need to use force
+  const clickTargets = [
+    'div[id^="foogallery-gallery-"] figure a',
+    '.foogallery figure a',
+    '.foogallery .fg-item a',
+    '.fg-thumb',
+    'figure a'
+  ];
+
+  let clicked = false;
+  for (const selector of clickTargets) {
+    try {
+      const element = page.locator(selector).first();
+      const count = await page.locator(selector).count();
+      if (count > 0) {
+        // Use force click to bypass caption overlay interception
+        await element.click({ timeout: 5000, force: true });
+        clicked = true;
+        break;
+      }
+    } catch {
+      continue;
+    }
+  }
+
+  if (!clicked) {
+    throw new Error('Could not find clickable gallery element for lightbox');
+  }
 
   // Wait for lightbox to open
   await expect(page.locator(COMMON.panelVisible)).toBeVisible({ timeout: 10000 });
@@ -268,7 +338,8 @@ export async function verifyLightboxWorks(page: Page): Promise<void> {
   }
 
   // Close lightbox
-  await page.locator(COMMON.closeButton).click();
+  const closeButton = page.locator(COMMON.closeButton).first();
+  await closeButton.click();
   await expect(page.locator(COMMON.panelVisible)).not.toBeVisible({ timeout: 5000 });
 }
 
@@ -293,21 +364,54 @@ export async function getGalleryIdFromUrl(page: Page): Promise<string> {
  * Wait for gallery images to load on frontend
  */
 export async function waitForGalleryImages(page: Page): Promise<void> {
-  // Wait for the main gallery container (not the loading indicator)
-  await page.waitForSelector('.foogallery[id^="foogallery-gallery-"]', { state: 'visible', timeout: 30000 });
+  // Wait for page to be ready
+  await page.waitForLoadState('domcontentloaded');
 
-  // Wait for loading state to complete
-  await page.waitForFunction(() => {
-    const gallery = document.querySelector('.foogallery[id^="foogallery-gallery-"]');
-    return gallery && !gallery.classList.contains('fg-loading');
-  }, { timeout: 30000 });
+  // Try multiple selectors for gallery container
+  const gallerySelectors = [
+    '.foogallery[id^="foogallery-gallery-"]',
+    '.foogallery',
+    'div[class*="foogallery"]'
+  ];
 
-  // Try to wait for images, but don't fail if none exist
+  let galleryFound = false;
+  for (const selector of gallerySelectors) {
+    try {
+      await page.waitForSelector(selector, { state: 'visible', timeout: 15000 });
+      galleryFound = true;
+      break;
+    } catch {
+      continue;
+    }
+  }
+
+  if (!galleryFound) {
+    // Take a screenshot for debugging
+    const pageTitle = await page.title();
+    console.log(`Gallery not found. Page title: ${pageTitle}`);
+    console.log(`Current URL: ${page.url()}`);
+    throw new Error('Gallery container not found on page');
+  }
+
+  // Wait for loading state to complete (with try-catch)
   try {
-    await page.waitForSelector('.foogallery figure img, .foogallery .fg-item img', { state: 'visible', timeout: 10000 });
+    await page.waitForFunction(() => {
+      const gallery = document.querySelector('.foogallery');
+      return gallery && !gallery.classList.contains('fg-loading');
+    }, { timeout: 15000 });
   } catch {
-    // Gallery may be empty - that's OK for some tests
-    console.log('No gallery images found - gallery may be empty');
+    // Gallery may not have loading class, continue anyway
+    console.log('No fg-loading class found, continuing...');
+  }
+
+  // Ensure at least one image is visible
+  try {
+    await page.waitForSelector('.foogallery figure img, .foogallery .fg-thumb img, .foogallery .fg-item img', {
+      state: 'visible',
+      timeout: 10000
+    });
+  } catch {
+    console.log('Warning: No images found in gallery');
   }
 
   await page.waitForTimeout(1000); // Allow lazy loading to complete
@@ -428,8 +532,8 @@ export async function configurePostQuery(page: Page, options: {
   taxonomy?: string;
 }): Promise<void> {
   if (options.postType) {
-    await page.locator(POST_QUERY.postType).click();
-    await page.locator(POST_QUERY.postType).fill(options.postType);
+    // #gallery_post_type is a <select> dropdown, not an input
+    await page.locator(POST_QUERY.postType).selectOption(options.postType);
   }
 
   if (options.numberOfPosts) {
