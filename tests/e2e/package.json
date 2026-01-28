@@ -40,6 +40,8 @@
     "test:appearance:headed": "CLEANUP_AFTER_TESTS=false npm run pretest && npx playwright test --config=tests/playwright.config.ts --headed tests/specs/pro-features/appearance/",
     "test:hover-effects": "npm run pretest && npx playwright test --config=tests/playwright.config.ts tests/specs/pro-features/hover-effects/",
     "test:hover-effects:headed": "CLEANUP_AFTER_TESTS=false npm run pretest && npx playwright test --config=tests/playwright.config.ts --headed tests/specs/pro-features/hover-effects/",
+    "test:datasources": "npm run pretest && npx playwright test --config=tests/playwright.config.ts tests/specs/pro-features/datasources/",
+    "test:datasources:headed": "CLEANUP_AFTER_TESTS=false npm run pretest && npx playwright test --config=tests/playwright.config.ts --headed tests/specs/pro-features/datasources/",
 
     "setup": "npm run docker:up && sleep 10 && npm run docker:setup",
     "clean": "npm run docker:clean && rm -rf playwright-report test-results .auth",
