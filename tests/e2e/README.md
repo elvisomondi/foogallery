@@ -8,7 +8,7 @@ This infrastructure provides:
 - Reproducible WordPress + MySQL environment via Docker
 - **Automatic lifecycle management** - fresh environment for each test run
 - Automated WordPress setup with WP-CLI
-- FooGallery Premium pre-activated with test environment configuration
+- FooGallery Premium pre-activated (with optional Freemius bypass - see Developer Setup)
 - Playwright E2E test harness with interactive HTML dashboard
 - Screenshots at key test steps, video recordings, and trace debugging
 
@@ -48,11 +48,37 @@ npm run test:report
 
 ## Developer Setup
 
-### Premium Feature Testing
+### Freemius License Bypass (Required for Premium Feature Tests)
 
-The E2E tests verify FooGallery Premium features. For testing premium functionality, ensure the plugin is properly configured in your test environment.
+The E2E tests require FooGallery Premium features to be unlocked. For security reasons, the license bypass code is **not included in the repository**.
 
-The `secrets/` directory is gitignored and can contain environment-specific configuration files.
+#### Setup Steps
+
+1. **Create the secrets directory** (if not exists):
+   ```bash
+   mkdir -p e2e/secrets
+   ```
+
+2. **Get the freemius-e2e-helper code**:
+   - Contact your team lead or check internal documentation
+   - The code should be saved to: `e2e/secrets/freemius-e2e-helper.php`
+
+3. **Verify setup**:
+   ```bash
+   ls e2e/secrets/freemius-e2e-helper.php
+   ```
+
+#### What Happens Without It?
+
+- Tests will run but premium features will be locked
+- The setup script will display a warning message
+- You'll need a valid FooGallery Premium license to test premium features
+
+#### Security Note
+
+- **NEVER** commit `freemius-e2e-helper.php` to version control
+- The `secrets/` directory is gitignored
+- Only the `.example` template file is tracked
 
 ## Test Lifecycle Management
 
@@ -154,8 +180,10 @@ e2e/
 ├── scripts/
 │   ├── pre-test.sh             # Runs before tests (starts Docker)
 │   └── post-test.sh            # Runs after tests (cleanup)
-├── secrets/                    # GITIGNORED - local configuration
-│   └── .gitkeep                # Keeps directory in git
+├── secrets/                    # GITIGNORED - local secrets
+│   ├── .gitkeep                # Keeps directory in git
+│   ├── freemius-e2e-helper.php.example  # Template (tracked)
+│   └── freemius-e2e-helper.php     # Actual bypass (gitignored)
 ├── tests/
 │   ├── playwright.config.ts    # Playwright configuration
 │   ├── helpers/                # Test helper functions
@@ -428,7 +456,8 @@ export class GalleryPage {
 3. **Browser:** Chromium only for Phase 1 (fastest, most stable)
 4. **Sequential Tests:** Tests run sequentially for Phase 1 reliability
 5. **Plugin Location:** Plugin mounted from `../app/public/wp-content/plugins/foogallery-premium`
-6. **Fresh Environment:** Each `npm test` run starts with a clean WordPress installation
+6. **Freemius Bypass:** Requires manual setup of `secrets/freemius-e2e-helper.php` (see Developer Setup)
+7. **Fresh Environment:** Each `npm test` run starts with a clean WordPress installation
 
 ## License
 

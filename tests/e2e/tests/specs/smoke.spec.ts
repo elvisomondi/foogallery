@@ -140,12 +140,14 @@ test.describe('FooGallery Smoke Tests', () => {
       // Check for absence of upgrade nags
       !pageContent.includes('Upgrade to Pro');
 
-    // At minimum, we should not see upgrade prompts
-    const noUpgradeNag =
+    // The freemius-e2e-helper should ensure Pro features are unlocked
+  // At minimum, we should not see upgrade prompts
+    const noFreemiusNag =
       !pageContent.includes('Start my free trial') &&
-      !pageContent.includes('Activate License');
+      !pageContent.includes('Activate License') &&
+      !pageContent.includes('foogallery_fs().can_use_premium_code');
 
-    expect(hasProIndicators || noUpgradeNag).toBeTruthy();
+    expect(hasProIndicators || noFreemiusNag).toBeTruthy();
 
     // Screenshot: Pro features verification
     await page.screenshot({ path: 'test-results/smoke-foogallery-04-pro-features.png' });

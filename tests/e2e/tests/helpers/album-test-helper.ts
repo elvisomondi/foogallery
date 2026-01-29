@@ -104,41 +104,15 @@ export interface StackTemplateSettings {
 }
 
 /**
- * Ensure at least the specified number of galleries exist.
+ * Ensure at least the specified number of image galleries exist for album tests.
+ * Always creates fresh galleries to avoid selecting video/datasource galleries.
  * Returns array of gallery IDs.
  */
 export async function ensureGalleriesExist(page: Page, count: number = 3): Promise<string[]> {
-  await page.goto('/wp-admin/edit.php?post_type=foogallery');
-  await page.waitForLoadState('domcontentloaded');
-
-  const rows = page.locator('table.wp-list-table tbody tr:not(.no-items)');
-  const existing = await rows.count();
-
-  if (existing >= count) {
-    // Return IDs of first N galleries
-    const ids: string[] = [];
-    for (let i = 0; i < count; i++) {
-      const href = await rows.nth(i).locator('a.row-title').getAttribute('href');
-      const match = href?.match(/post=(\d+)/);
-      if (match) ids.push(match[1]);
-    }
-    return ids;
-  }
-
-  // Create missing galleries
-  const idsNeeded = count - existing;
   const ids: string[] = [];
 
-  // First collect existing IDs
-  for (let i = 0; i < existing; i++) {
-    const href = await rows.nth(i).locator('a.row-title').getAttribute('href');
-    const match = href?.match(/post=(\d+)/);
-    if (match) ids.push(match[1]);
-  }
-
-  // Create new galleries
-  for (let i = 0; i < idsNeeded; i++) {
-    const newId = await createSimpleGallery(page, `Test Gallery ${existing + i + 1}`);
+  for (let i = 0; i < count; i++) {
+    const newId = await createSimpleGallery(page, `Album Test Gallery ${Date.now()}-${i + 1}`);
     if (newId) ids.push(newId);
   }
 
@@ -223,18 +197,31 @@ export async function selectAlbumTemplate(page: Page, template: 'default' | 'sta
 }
 
 /**
- * Select galleries for the album by clicking on them
+ * Select galleries for the album by clicking on them.
+ * If galleryIds are provided, selects those specific galleries by data-foogallery-id.
+ * Otherwise, selects the first N galleries.
  */
-export async function selectGalleries(page: Page, count: number = 3): Promise<void> {
+export async function selectGalleries(page: Page, count: number = 3, galleryIds?: string[]): Promise<void> {
   const galleryItems = page.locator(ALBUM_SELECTORS.admin.galleryItem);
   await galleryItems.first().waitFor({ state: 'visible', timeout: 10000 });
 
-  const availableCount = await galleryItems.count();
-  const toSelect = Math.min(count, availableCount);
+  if (galleryIds && galleryIds.length > 0) {
+    // Select specific galleries by ID
+    for (const id of galleryIds) {
+      const item = page.locator(`div.foogallery-gallery-select[data-foogallery-id="${id}"]`);
+      if (await item.count() > 0) {
+        await item.click();
+        await page.waitForTimeout(200);
+      }
+    }
+  } else {
+    const availableCount = await galleryItems.count();
+    const toSelect = Math.min(count, availableCount);
 
-  for (let i = 0; i < toSelect; i++) {
-    await galleryItems.nth(i).click();
-    await page.waitForTimeout(200);
+    for (let i = 0; i < toSelect; i++) {
+      await galleryItems.nth(i).click();
+      await page.waitForTimeout(200);
+    }
   }
 }
 
@@ -332,11 +319,25 @@ export async function configureStackSettings(page: Page, settings: StackTemplate
  * Publish album and extract ID
  */
 export async function publishAlbum(page: Page): Promise<string> {
-  await page.locator(ALBUM_SELECTORS.admin.publishButton).click();
+  const publishBtn = page.locator(ALBUM_SELECTORS.admin.publishButton);
+
+  // Ensure publish button is ready
+  await publishBtn.scrollIntoViewIfNeeded();
+  await publishBtn.waitFor({ state: 'visible', timeout: 5000 });
+  await page.waitForTimeout(500);
+
+  await publishBtn.click();
   await page.waitForLoadState('networkidle');
 
-  // Wait for publish to complete
-  await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/);
+  // Wait for publish to complete - retry click if URL didn't change
+  try {
+    await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/, { timeout: 10000 });
+  } catch {
+    // Publish may not have triggered; retry
+    await publishBtn.click();
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/, { timeout: 15000 });
+  }
 
   const url = page.url();
   const match = url.match(/post=(\d+)/);
@@ -373,60 +374,71 @@ export async function createPageWithAlbum(page: Page): Promise<string> {
   // Get album title for page name
   const albumTitle = await page.locator(ALBUM_SELECTORS.admin.titleInput).inputValue();
   const pageTitle = `${albumTitle} Page`;
-  const slug = albumTitle.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') + '-page';
 
-  // Navigate to create new page using classic editor (add classic-editor parameter)
-  await page.goto('/wp-admin/post-new.php?post_type=page&classic-editor');
-  await page.waitForLoadState('domcontentloaded');
-
-  // Wait for page to be ready
-  await page.waitForTimeout(500);
-
-  // Check which editor we're in and handle accordingly
-  const classicTitle = page.locator('#title');
-  const blockTitle = page.locator('[aria-label="Add title"], .editor-post-title__input');
-
-  if (await classicTitle.isVisible()) {
-    // Classic editor
-    await classicTitle.fill(pageTitle);
-
-    // Add shortcode to content
-    const contentArea = page.locator('#content');
-    if (await contentArea.isVisible()) {
-      await contentArea.fill(shortcode);
+  // Use WordPress REST API to create the page reliably
+  const response = await page.evaluate(async ({ title, content }) => {
+    const res = await fetch('/wp-json/wp/v2/pages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': (window as any).wpApiSettings?.nonce || document.querySelector<HTMLInputElement>('#_wpnonce')?.value || '',
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        title,
+        content,
+        status: 'publish',
+      }),
+    });
+    if (!res.ok) {
+      // Fallback: try with basic auth header
+      return { error: res.status, link: '' };
     }
+    const data = await res.json();
+    return { error: null, link: data.link || '' };
+  }, { title: pageTitle, content: shortcode });
 
-    // Publish
-    await page.locator('#publish').click();
+  if (response.error || !response.link) {
+    // Fallback: use WP admin AJAX or direct page creation via admin UI
+    // Navigate to wp-admin and use the quick-create approach via REST with nonce
+    await page.goto('/wp-admin/');
+    await page.waitForLoadState('domcontentloaded');
+
+    const fallbackResponse = await page.evaluate(async ({ title, content }) => {
+      // Get a fresh nonce from the REST API
+      const nonceRes = await fetch('/wp-admin/admin-ajax.php?action=rest-nonce', { credentials: 'same-origin' });
+      let nonce = '';
+      if (nonceRes.ok) {
+        nonce = await nonceRes.text();
+      }
+
+      const res = await fetch('/wp-json/wp/v2/pages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(nonce ? { 'X-WP-Nonce': nonce } : {}),
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify({
+          title,
+          content,
+          status: 'publish',
+        }),
+      });
+      if (!res.ok) return { link: '', slug: '' };
+      const data = await res.json();
+      return { link: data.link || '', slug: data.slug || '' };
+    }, { title: pageTitle, content: shortcode });
+
+    const viewUrl = fallbackResponse.slug ? `/${fallbackResponse.slug}/` : fallbackResponse.link.replace(/^https?:\/\/[^/]+/, '');
+
+    await page.goto(viewUrl);
     await page.waitForLoadState('networkidle');
-
-  } else if (await blockTitle.first().isVisible()) {
-    // Block editor - use keyboard to type shortcode
-    await blockTitle.first().fill(pageTitle);
-    await page.waitForTimeout(300);
-
-    // Click in content area and type shortcode
-    await page.keyboard.press('Tab');
-    await page.keyboard.type(shortcode);
-    await page.waitForTimeout(300);
-
-    // Click Publish button (first click to open panel)
-    const publishButton = page.locator('button.editor-post-publish-panel__toggle, button:has-text("Publish"):visible').first();
-    if (await publishButton.isVisible()) {
-      await publishButton.click();
-      await page.waitForTimeout(500);
-    }
-
-    // Confirm publish (second click if panel opened)
-    const confirmButton = page.locator('button.editor-post-publish-button:visible');
-    if (await confirmButton.count() > 0) {
-      await confirmButton.first().click();
-      await page.waitForTimeout(2000);
-    }
+    return viewUrl;
   }
 
-  // Construct the URL and navigate
-  const viewUrl = `/${slug}/`;
+  // Extract path from the full link URL
+  const viewUrl = response.link.replace(/^https?:\/\/[^/]+/, '');
   await page.goto(viewUrl);
   await page.waitForLoadState('networkidle');
 
@@ -441,8 +453,8 @@ export async function createAlbumWithGalleries(page: Page, options: AlbumTestOpt
 
   await page.setViewportSize({ width: 1932, height: 1271 });
 
-  // Ensure galleries exist
-  await ensureGalleriesExist(page, galleryCount);
+  // Ensure galleries exist and get their IDs
+  const galleryIds = await ensureGalleriesExist(page, galleryCount);
 
   // Navigate to Add New Album
   await navigateToAddNewAlbum(page);
@@ -453,8 +465,8 @@ export async function createAlbumWithGalleries(page: Page, options: AlbumTestOpt
   // Select template
   await selectAlbumTemplate(page, template);
 
-  // Select galleries
-  await selectGalleries(page, galleryCount);
+  // Select specific galleries by ID
+  await selectGalleries(page, galleryCount, galleryIds);
 
   if (screenshotPrefix) {
     await page.screenshot({ path: `test-results/${screenshotPrefix}-configured.png` });

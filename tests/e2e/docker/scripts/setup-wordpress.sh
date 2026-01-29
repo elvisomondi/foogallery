@@ -59,21 +59,23 @@ else
     log_info "WordPress installed successfully!"
 fi
 
-# Step 3: Set up mu-plugins directory
+# Step 3: Set up mu-plugins directory and freemius-e2e-helper
 log_info "Setting up mu-plugins..."
 mkdir -p /var/www/html/wp-content/mu-plugins
 
-# Check for custom e2e configuration in mounted secrets directory
-E2E_CONFIG_SOURCE="/var/www/html/wp-content/e2e-secrets/e2e-config.php"
-E2E_CONFIG_DEST="/var/www/html/wp-content/mu-plugins/e2e-config.php"
+# Check for freemius-e2e-helper.php in mounted secrets directory
+FREEMIUS_HELPER_SOURCE="/var/www/html/wp-content/e2e-secrets/freemius-e2e-helper.php"
+FREEMIUS_HELPER_DEST="/var/www/html/wp-content/mu-plugins/freemius-e2e-helper.php"
 
-if [ -f "$E2E_CONFIG_SOURCE" ]; then
-    log_info "Installing E2E configuration from secrets..."
-    cp "$E2E_CONFIG_SOURCE" "$E2E_CONFIG_DEST"
-    chown www-data:www-data "$E2E_CONFIG_DEST"
-    log_info "E2E configuration installed!"
+if [ -f "$FREEMIUS_HELPER_SOURCE" ]; then
+    log_info "Installing freemius-e2e-helper from secrets..."
+    cp "$FREEMIUS_HELPER_SOURCE" "$FREEMIUS_HELPER_DEST"
+    chown www-data:www-data "$FREEMIUS_HELPER_DEST"
+    log_info "Freemius E2E helper installed!"
 else
-    log_info "No custom E2E configuration found (optional)"
+    log_warn "Freemius E2E helper not found at $FREEMIUS_HELPER_SOURCE"
+    log_warn "Premium features will require a valid license."
+    log_warn "See e2e/README.md for setup instructions."
 fi
 
 # Step 4: Activate FooGallery Premium

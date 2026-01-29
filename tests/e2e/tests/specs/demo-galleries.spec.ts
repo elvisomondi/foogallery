@@ -25,8 +25,8 @@ test.describe('FooGallery Demo Galleries', () => {
     // Screenshot: FooGallery list page
     await page.screenshot({ path: 'test-results/demo-galleries-01-foogallery-list.png' });
 
-    // Click on Help submenu (9th item in FooGallery menu)
-    await page.locator('#menu-posts-foogallery li:nth-of-type(9) > a').click();
+    // Navigate to the Help page directly
+    await page.goto('/wp-admin/edit.php?post_type=foogallery&page=foogallery-help');
     await page.waitForLoadState('domcontentloaded');
 
     // Verify we're on the Help page
@@ -57,7 +57,7 @@ test.describe('FooGallery Demo Galleries', () => {
 
     // If we're not redirected, navigate to galleries list manually
     const currentUrl = page.url();
-    if (!currentUrl.includes('post_type=foogallery') || currentUrl.includes('foogallery-help')) {
+    if (!currentUrl.includes('post_type=foogallery') || currentUrl.includes('foogallery-features') || currentUrl.includes('foogallery-help')) {
       await page.goto('/wp-admin/edit.php?post_type=foogallery');
       await page.waitForLoadState('networkidle');
     }

@@ -39,6 +39,7 @@ yarn-error.log*
 *.temp
 .cache/
 
-# Secrets (local configuration for testing)
+# Secrets (contains license bypass for testing)
 secrets/
 !secrets/.gitkeep
+!secrets/*.example
