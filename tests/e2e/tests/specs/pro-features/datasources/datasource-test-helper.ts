@@ -323,15 +323,15 @@ export async function verifyLightboxWorks(page: Page): Promise<void> {
   // Wait for lightbox to open
   await expect(page.locator(COMMON.panelVisible)).toBeVisible({ timeout: 10000 });
 
-  // Navigate forward if possible
+  // Navigate forward if possible (button must be visible AND enabled)
   const nextButton = page.locator(COMMON.nextButton);
-  if (await nextButton.isVisible()) {
+  if (await nextButton.isVisible() && await nextButton.isEnabled()) {
     await nextButton.click();
     await page.waitForTimeout(500);
 
     // Navigate back
     const prevButton = page.locator(COMMON.prevButton);
-    if (await prevButton.isVisible()) {
+    if (await prevButton.isVisible() && await prevButton.isEnabled()) {
       await prevButton.click();
       await page.waitForTimeout(500);
     }
