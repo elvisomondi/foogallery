@@ -5,10 +5,10 @@
  */
 import './editor.scss';
 
-import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps } from '@wordpress/block-editor';
 import FooGalleryEdit from './edit';
+import metadata from '../../block.json';
 
 const FooGalleryEditWithBlockProps = ( props ) => {
 	const blockProps = useBlockProps();
@@ -32,30 +32,8 @@ const FooGalleryEditWithBlockProps = ( props ) => {
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'fooplugins/foogallery', {
-	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
-	apiVersion: 3,
-	title: __( 'FooGallery' ), // Block title.
-	description: __( 'Insert a FooGallery into your content' ),
-	icon: 'format-gallery', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
-	category: 'media', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
-	keywords: [
-		__( 'foogallery' ),
-		__( 'gallery' ),
-	],
-	supports: {
-		multiple: true,
-		html: false
-	},
-	attributes: {
-		id: {
-			type: 'number',
-			default: 0
-		},
-		className: {
-			type: 'string'
-		}
-	},
+registerBlockType( metadata.name, {
+	...metadata,
 	/**
 	 * The edit function describes the structure of your block in the context of the editor.
 	 * This represents what the editor will render when the block is used.
