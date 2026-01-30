@@ -41,9 +41,9 @@ if ( ! class_exists( 'FooGallery_Blocks' ) ) {
 			}
 
 			//enqueue foogallery dependencies
-			wp_enqueue_script( 'masonry' );
 			wp_enqueue_script( 'lodash' );
-			foogallery_enqueue_core_gallery_template_script();
+			wp_enqueue_script( 'masonry' );
+			foogallery_enqueue_core_gallery_template_script( array('jquery', 'masonry' ) );
 			foogallery_enqueue_core_gallery_template_style();
 
             $path = FOOGALLERY_PATH . 'gutenberg/assets/blocks';

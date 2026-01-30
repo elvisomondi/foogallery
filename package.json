@@ -8,7 +8,7 @@
   "author": "FooPlugins <info@fooplugins.com> (https://fooplugins.com)",
   "license": "GPL",
   "scripts": {
-    "develop": "set NODE_ENV=development&& wp-scripts build --config=./gutenberg/config/blocks.js",
+    "develop": "cross-env NODE_ENV=development wp-scripts build --config=./gutenberg/config/blocks.js",
     "build": "wp-scripts build --config=./gutenberg/config/blocks.js",
     "package": "npm run build && gulp",
     "gulp": "gulp",
@@ -40,5 +40,7 @@
     "gulp-zip": "^5.1.0",
     "lodash": "^4.17.21",
     "source-map-loader": "^4.0.1"
+    ,
+    "cross-env": "^7.0.3"
   }
 }
