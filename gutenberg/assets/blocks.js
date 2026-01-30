@@ -554,7 +554,9 @@ function FooGalleryEditServerSideRender(_ref) {
     if (typeof jQuery === 'undefined' || typeof FooGallery === 'undefined') {
       return;
     }
-    jQuery(galleryRef.current).children('.foogallery').foogallery(FooGallery.autoDefaults);
+    const frameWin = galleryRef.current?.ownerDocument?.defaultView;
+    if (!frameWin?.FooGallery || !frameWin?.FooGallery.$) return;
+    frameWin.FooGallery.$(galleryRef.current).children('.foogallery').foogallery(frameWin.FooGallery.autoDefaults);
   }, [status, content]);
   if (status === 'loading' || status === 'idle') {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_placeholder__WEBPACK_IMPORTED_MODULE_1__["default"], {

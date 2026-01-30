@@ -33,9 +33,14 @@ export default function FooGalleryEditServerSideRender( {
 		if ( typeof jQuery === 'undefined' || typeof FooGallery === 'undefined' ) {
 			return;
 		}
-		jQuery( galleryRef.current )
-			.children( '.foogallery' )
-			.foogallery( FooGallery.autoDefaults );
+
+		const frameWin = galleryRef.current?.ownerDocument?.defaultView;
+		if (!frameWin?.FooGallery || !frameWin?.FooGallery.$) return;
+
+		frameWin.FooGallery.$(galleryRef.current)
+			.children('.foogallery')
+			.foogallery(frameWin.FooGallery.autoDefaults);
+
 	}, [ status, content ] );
 
 	if ( status === 'loading' || status === 'idle' ) {
