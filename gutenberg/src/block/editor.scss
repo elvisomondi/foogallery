@@ -11,3 +11,9 @@
 .foogallery__placeholder .components-placeholder__label .dashicon {
   margin-right: .5em;
 }
+
+/* Ensure editor selection works by preventing the front-end preview from capturing clicks. */
+.wp-block-fooplugins-foogallery .foogallery,
+.wp-block-fooplugins-foogallery .foogallery * {
+  pointer-events: none;
+}

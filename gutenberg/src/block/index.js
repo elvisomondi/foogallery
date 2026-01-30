@@ -5,9 +5,19 @@
  */
 import './editor.scss';
 
-import FooGalleryEdit from './edit';
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps } from '@wordpress/block-editor';
+import FooGalleryEdit from './edit';
+
+const FooGalleryEditWithBlockProps = ( props ) => {
+	const blockProps = useBlockProps();
+	return (
+		<div { ...blockProps }>
+			<FooGalleryEdit { ...props } />
+		</div>
+	);
+};
 
 /**
  * Register: aa Gutenberg Block.
@@ -55,7 +65,7 @@ registerBlockType( 'fooplugins/foogallery', {
 	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
 	 */
 	edit(props) {
-		return (<FooGalleryEdit {...props}/>)
+		return ( <FooGalleryEditWithBlockProps { ...props } /> );
 	},
 
 
