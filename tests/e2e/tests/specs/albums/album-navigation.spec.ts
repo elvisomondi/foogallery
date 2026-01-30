@@ -19,7 +19,6 @@ test.describe('Album - Navigation', () => {
 
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
-    await page.setViewportSize({ width: 1932, height: 1271 });
 
     // Create album once for all navigation tests
     await ensureGalleriesExist(page, 3);
@@ -38,7 +37,6 @@ test.describe('Album - Navigation', () => {
   });
 
   test.beforeEach(async ({ page }) => {
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('navigates through all galleries sequentially', async ({ page }) => {
@@ -66,7 +64,6 @@ test.describe('Album - Navigation', () => {
       const galleryContainer = page.locator(ALBUM_SELECTORS.frontend.galleryContainer);
       await expect(galleryContainer).toBeVisible();
 
-      await page.screenshot({ path: `test-results/album-navigation-gallery-${i}.png` });
     }
   });
 
@@ -95,7 +92,6 @@ test.describe('Album - Navigation', () => {
     const pileCount = await piles.count();
     expect(pileCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-navigation-back-context.png' });
   });
 
   test('handles direct gallery URL access', async ({ page }) => {
@@ -128,7 +124,6 @@ test.describe('Album - Navigation', () => {
       await waitForAlbumReady(page, 'default');
     }
 
-    await page.screenshot({ path: 'test-results/album-navigation-direct-url.png' });
   });
 
   test('preserves scroll position with hash', async ({ page }) => {
@@ -154,7 +149,6 @@ test.describe('Album - Navigation', () => {
     // If hash was used, check the URL
     const urlAfterBack = page.url();
 
-    await page.screenshot({ path: 'test-results/album-navigation-scroll-hash.png' });
   });
 
   test('handles URL with trailing slash', async ({ page }) => {
@@ -170,7 +164,6 @@ test.describe('Album - Navigation', () => {
     const pileCount = await piles.count();
     expect(pileCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-navigation-trailing-slash-with.png' });
 
     // Test without trailing slash
     const urlWithoutSlash = albumPageUrl.endsWith('/') ? albumPageUrl.slice(0, -1) : albumPageUrl;
@@ -184,6 +177,5 @@ test.describe('Album - Navigation', () => {
     const pileCountAgain = await pilesAgain.count();
     expect(pileCountAgain).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-navigation-trailing-slash-without.png' });
   });
 });

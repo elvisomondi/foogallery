@@ -16,8 +16,6 @@ test.describe('Loaded Effects', () => {
 
   test.describe('Admin Settings', () => {
     test('shows all 10 loaded effect options plus none', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -35,12 +33,9 @@ test.describe('Loaded Effects', () => {
         await expect(effectOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/loaded-effects-all-options.png' });
     });
 
     test('default effect is fade-in', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -56,7 +51,6 @@ test.describe('Loaded Effects', () => {
       const fadeInOption = page.locator('#FooGallerySettings_default_loaded_effect1');
       await expect(fadeInOption).toBeChecked();
 
-      await page.screenshot({ path: 'test-results/loaded-effects-default-fadein.png' });
     });
   });
 

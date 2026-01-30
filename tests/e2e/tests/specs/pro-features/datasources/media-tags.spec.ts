@@ -41,7 +41,6 @@ test.describe('Datasource - Media Tags', () => {
     const optionText = await mediaTagsOption.textContent();
     expect(optionText?.toLowerCase()).toMatch(/tag/);
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-modal.png' });
   });
 
   test('shows available tags after selection', async ({ page }) => {
@@ -60,7 +59,6 @@ test.describe('Datasource - Media Tags', () => {
     // Should have at least some tags (created in setup script)
     expect(count).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-list.png' });
   });
 
   test('can select single tag', async ({ page }) => {
@@ -79,7 +77,6 @@ test.describe('Datasource - Media Tags', () => {
       await page.waitForTimeout(300);
 
       // Verify selection (could be highlighted or checked)
-      await page.screenshot({ path: 'test-results/datasource-media-tags-single-selected.png' });
     }
   });
 
@@ -98,7 +95,6 @@ test.describe('Datasource - Media Tags', () => {
 
     if (count >= 2) {
       await selectTagsByIndices(page, [1, 2]);
-      await page.screenshot({ path: 'test-results/datasource-media-tags-multi-selected.png' });
     }
   });
 
@@ -120,7 +116,6 @@ test.describe('Datasource - Media Tags', () => {
       await expect(checkboxes.first()).toBeVisible();
     }
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-checkboxes.png' });
   });
 
   test('creates gallery from media tags', async ({ page }) => {
@@ -154,7 +149,6 @@ test.describe('Datasource - Media Tags', () => {
       await page.waitForTimeout(300);
     }
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-tag-selected.png' });
 
     // Apply datasource
     await applyDatasource(page);
@@ -166,7 +160,6 @@ test.describe('Datasource - Media Tags', () => {
     // Publish gallery
     await publishGallery(page);
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-published.png' });
   });
 
   test('gallery displays tagged images', async ({ page }) => {
@@ -194,7 +187,6 @@ test.describe('Datasource - Media Tags', () => {
     const imageCount = await getGalleryImageCount(page);
     expect(imageCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-frontend.png' });
   });
 
   test('lightbox works on media tags gallery', async ({ page }) => {
@@ -219,7 +211,6 @@ test.describe('Datasource - Media Tags', () => {
     // Test lightbox functionality
     await verifyLightboxWorks(page);
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-lightbox.png' });
   });
 
   test('can edit media tags datasource', async ({ page }) => {
@@ -249,7 +240,6 @@ test.describe('Datasource - Media Tags', () => {
     const modalHeading = page.locator('h1:has-text("Add To Gallery From Another Source")');
     await modalHeading.waitFor({ state: 'visible', timeout: 15000 });
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-edit.png' });
   });
 
   test('can remove media tags datasource', async ({ page }) => {
@@ -280,6 +270,5 @@ test.describe('Datasource - Media Tags', () => {
     // Verify datasource info is removed
     await expect(datasourceInfo).not.toBeVisible({ timeout: 5000 });
 
-    await page.screenshot({ path: 'test-results/datasource-media-tags-removed.png' });
   });
 });

@@ -44,7 +44,6 @@ test.describe('Pagination - Numbered', () => {
       const activePage = page.locator(PAGINATION_SELECTORS.pageActive);
       await expect(activePage).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-display-result.png' });
     });
 
     test('shows navigation buttons (First, Prev, Next, Last)', async ({ page }) => {
@@ -72,7 +71,6 @@ test.describe('Pagination - Numbered', () => {
       await expect(nextButton).toBeVisible();
       await expect(lastButton).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-nav-result.png' });
     });
 
     test('hides First/Last buttons when disabled', async ({ page }) => {
@@ -103,7 +101,6 @@ test.describe('Pagination - Numbered', () => {
       await expect(prevButton).toBeVisible();
       await expect(nextButton).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-no-firstlast-result.png' });
     });
   });
 
@@ -131,7 +128,6 @@ test.describe('Pagination - Numbered', () => {
       currentPage = await getCurrentPageNumber(page);
       expect(currentPage).toBe(2);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-next-result.png' });
     });
 
     test('navigates to previous page', async ({ page }) => {
@@ -158,7 +154,6 @@ test.describe('Pagination - Numbered', () => {
       currentPage = await getCurrentPageNumber(page);
       expect(currentPage).toBe(1);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-prev-result.png' });
     });
 
     test('navigates to first page', async ({ page }) => {
@@ -186,7 +181,6 @@ test.describe('Pagination - Numbered', () => {
       currentPage = await getCurrentPageNumber(page);
       expect(currentPage).toBe(1);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-first-result.png' });
     });
 
     test('navigates to last page', async ({ page }) => {
@@ -212,7 +206,6 @@ test.describe('Pagination - Numbered', () => {
       currentPage = await getCurrentPageNumber(page);
       expect(currentPage).toBe(4);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-last-result.png' });
     });
 
     test('navigates by clicking page number', async ({ page }) => {
@@ -233,7 +226,6 @@ test.describe('Pagination - Numbered', () => {
       const currentPage = await getCurrentPageNumber(page);
       expect(currentPage).toBe(3);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-pageclick-result.png' });
     });
   });
 
@@ -257,7 +249,6 @@ test.describe('Pagination - Numbered', () => {
       await expect(prevButton).toHaveClass(/fg-disabled/);
       await expect(firstButton).toHaveClass(/fg-disabled/);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-firstpage-state-result.png' });
     });
 
     test('disables Next and Last on last page', async ({ page }) => {
@@ -282,7 +273,6 @@ test.describe('Pagination - Numbered', () => {
       await expect(nextButton).toHaveClass(/fg-disabled/);
       await expect(lastButton).toHaveClass(/fg-disabled/);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-lastpage-state-result.png' });
     });
 
     test('enables all buttons on middle page', async ({ page }) => {
@@ -311,7 +301,6 @@ test.describe('Pagination - Numbered', () => {
       await expect(nextButton).not.toHaveClass(/fg-disabled/);
       await expect(lastButton).not.toHaveClass(/fg-disabled/);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-middlepage-state-result.png' });
     });
   });
 
@@ -330,7 +319,6 @@ test.describe('Pagination - Numbered', () => {
       await waitForPagination(page);
       await verifyPaginationPosition(page, 'top');
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-top-result.png' });
     });
 
     test('displays at bottom position', async ({ page }) => {
@@ -347,7 +335,6 @@ test.describe('Pagination - Numbered', () => {
       await waitForPagination(page);
       await verifyPaginationPosition(page, 'bottom');
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-bottom-result.png' });
     });
 
     test('displays at both positions', async ({ page }) => {
@@ -364,7 +351,6 @@ test.describe('Pagination - Numbered', () => {
       await waitForPagination(page);
       await verifyPaginationPosition(page, 'both');
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-both-result.png' });
     });
   });
 
@@ -395,7 +381,6 @@ test.describe('Pagination - Numbered', () => {
       count = await getVisibleItemCount(page);
       expect(count).toBe(5);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-items-result.png' });
     });
 
     test('handles uneven item distribution on last page', async ({ page }) => {
@@ -417,7 +402,6 @@ test.describe('Pagination - Numbered', () => {
       const count = await getVisibleItemCount(page);
       expect(count).toBe(2);
 
-      await page.screenshot({ path: 'test-results/pagination-numbered-uneven-result.png' });
     });
   });
 });

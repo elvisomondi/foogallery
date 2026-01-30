@@ -61,8 +61,8 @@ export default defineConfig({
     // Record video on failure
     video: 'retain-on-failure',
 
-    // Viewport size
-    viewport: { width: 1280, height: 720 },
+    // Viewport size (optimized for FooGallery admin)
+    viewport: { width: 1932, height: 1271 },
 
     // Ignore HTTPS errors (for local development)
     ignoreHTTPSErrors: true,

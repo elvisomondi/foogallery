@@ -39,7 +39,6 @@ test.describe('Filtering - Simple Tag Filtering', () => {
     const filterTags = await getFilterTags(page);
     expect(filterTags.length).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/filtering-simple-tags-visible.png' });
   });
 
   test('filters gallery items when clicking a tag', async ({ page }) => {
@@ -69,7 +68,6 @@ test.describe('Filtering - Simple Tag Filtering', () => {
       const isSelected = await isFilterSelected(page, firstTag);
       expect(isSelected).toBe(true);
 
-      await page.screenshot({ path: 'test-results/filtering-simple-tag-clicked.png' });
     }
   });
 
@@ -118,7 +116,6 @@ test.describe('Filtering - Simple Tag Filtering', () => {
       });
       // Note: Selection state check is informational, main assertion is item count
 
-      await page.screenshot({ path: 'test-results/filtering-simple-all-clicked.png' });
     }
   });
 
@@ -142,7 +139,6 @@ test.describe('Filtering - Simple Tag Filtering', () => {
     const filterTags = await getFilterTags(page);
     expect(filterTags.length).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/filtering-simple-no-all.png' });
   });
 
   test('applies filtering animation when switching tags', async ({ page }) => {
@@ -163,11 +159,9 @@ test.describe('Filtering - Simple Tag Filtering', () => {
     if (tags.length >= 2) {
       // Click first tag
       await clickFilterTag(page, tags[0]);
-      await page.screenshot({ path: 'test-results/filtering-simple-first-tag.png' });
 
       // Click second tag
       await clickFilterTag(page, tags[1]);
-      await page.screenshot({ path: 'test-results/filtering-simple-second-tag.png' });
 
       // Verify second tag is selected
       const isFirstSelected = await isFilterSelected(page, tags[0]);

@@ -36,8 +36,6 @@ test.describe('Video Import Configuration', () => {
     // Import a YouTube video
     await importYouTubeVideo(page, TEST_VIDEOS.youtube.url);
 
-    // Screenshot: YouTube video imported
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-youtube-imported.png` });
 
     // Verify the video appears in the gallery items
     const galleryItems = page.locator('.foogallery-attachments-list .attachment, #foogallery_items .attachment');
@@ -48,8 +46,6 @@ test.describe('Video Import Configuration', () => {
     await page.waitForLoadState('networkidle');
     await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/);
 
-    // Screenshot: Gallery published with YouTube video
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-youtube-published.png` });
   });
 
   // Skip Vimeo test - requires working Vimeo API access token validation
@@ -69,8 +65,6 @@ test.describe('Video Import Configuration', () => {
     // Import a Vimeo video
     await importVimeoVideo(page, TEST_VIDEOS.vimeo.url);
 
-    // Screenshot: Vimeo video imported
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-vimeo-imported.png` });
 
     // Verify the video appears in the gallery items
     const galleryItems = page.locator('.foogallery-attachments-list .attachment, #foogallery_items .attachment');
@@ -81,8 +75,6 @@ test.describe('Video Import Configuration', () => {
     await page.waitForLoadState('networkidle');
     await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/);
 
-    // Screenshot: Gallery published with Vimeo video
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-vimeo-published.png` });
   });
 
   test('imports multiple YouTube videos to gallery', async ({ page }) => {
@@ -105,8 +97,6 @@ test.describe('Video Import Configuration', () => {
     ];
     await importMultipleYouTubeVideos(page, youtubeUrls);
 
-    // Screenshot: Multiple videos imported
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-multiple-youtube.png` });
 
     // Verify both videos appear in the gallery items
     const galleryItems = page.locator('.foogallery-attachments-list .attachment, #foogallery_items .attachment');
@@ -117,8 +107,6 @@ test.describe('Video Import Configuration', () => {
     await page.waitForLoadState('networkidle');
     await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/);
 
-    // Screenshot: Gallery published with multiple videos
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-multiple-published.png` });
   });
 
   // Skip mixed test - requires working Vimeo API
@@ -141,8 +129,6 @@ test.describe('Video Import Configuration', () => {
     // Import Vimeo video second
     await importVimeoVideo(page, TEST_VIDEOS.vimeo.url);
 
-    // Screenshot: Mixed videos imported
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-mixed-videos.png` });
 
     // Verify both videos appear in the gallery items
     const galleryItems = page.locator('.foogallery-attachments-list .attachment, #foogallery_items .attachment');
@@ -153,8 +139,6 @@ test.describe('Video Import Configuration', () => {
     await page.waitForLoadState('networkidle');
     await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/);
 
-    // Screenshot: Gallery published with mixed videos
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-mixed-published.png` });
   });
 
   test('removes video from gallery', async ({ page }) => {
@@ -177,8 +161,6 @@ test.describe('Video Import Configuration', () => {
     const galleryItems = page.locator('.foogallery-attachments-list .attachment, #foogallery_items .attachment');
     await expect(galleryItems).toHaveCount(1);
 
-    // Screenshot: Before removal
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-before-remove.png` });
 
     // Click on the video item to select it
     await galleryItems.first().click();
@@ -200,8 +182,6 @@ test.describe('Video Import Configuration', () => {
       }
     }
 
-    // Screenshot: After removal
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-after-remove.png` });
 
     // Verify gallery is now empty or has fewer items
     const remainingItems = page.locator('.foogallery-attachments-list .attachment, #foogallery_items .attachment');
@@ -254,8 +234,6 @@ test.describe('Video Import Configuration', () => {
     await addButton.click();
     await page.waitForLoadState('networkidle');
 
-    // Screenshot: Gallery with mixed content
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-11-mixed-count.png` });
 
     // Verify the gallery has 3 items total (1 video + 2 images)
     const galleryItems = page.locator('.foogallery-attachments-list .attachment, #foogallery_items .attachment');
@@ -269,8 +247,6 @@ test.describe('Video Import Configuration', () => {
     await page.goto('/wp-admin/edit.php?post_type=foogallery');
     await page.waitForLoadState('domcontentloaded');
 
-    // Screenshot: Gallery list showing count
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-12-list-count.png` });
 
     // Find the gallery row
     const galleryRow = page.locator('tr').filter({ hasText: 'Test Video Count Display' });

@@ -16,7 +16,6 @@ import {
 
 test.describe('Album - Default Template Settings', () => {
   test.beforeEach(async ({ page }) => {
-    await page.setViewportSize({ width: 1932, height: 1271 });
     await ensureGalleriesExist(page, 3);
   });
 
@@ -32,7 +31,6 @@ test.describe('Album - Default Template Settings', () => {
       thumbHeight: 200,
     });
 
-    await page.screenshot({ path: 'test-results/album-default-dimensions-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -51,7 +49,6 @@ test.describe('Album - Default Template Settings', () => {
       expect(box.height).toBeGreaterThan(0);
     }
 
-    await page.screenshot({ path: 'test-results/album-default-dimensions-frontend.png' });
   });
 
   test('applies title background color', async ({ page }) => {
@@ -78,13 +75,11 @@ test.describe('Album - Default Template Settings', () => {
       }
     }
 
-    await page.screenshot({ path: 'test-results/album-default-title-bg-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
     await waitForAlbumReady(page, 'default');
 
-    await page.screenshot({ path: 'test-results/album-default-title-bg-frontend.png' });
   });
 
   test('applies title font color', async ({ page }) => {
@@ -111,13 +106,11 @@ test.describe('Album - Default Template Settings', () => {
       }
     }
 
-    await page.screenshot({ path: 'test-results/album-default-title-font-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
     await waitForAlbumReady(page, 'default');
 
-    await page.screenshot({ path: 'test-results/album-default-title-font-frontend.png' });
   });
 
   test('applies left alignment', async ({ page }) => {
@@ -130,7 +123,6 @@ test.describe('Album - Default Template Settings', () => {
       alignment: 'left',
     });
 
-    await page.screenshot({ path: 'test-results/album-default-left-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -140,7 +132,6 @@ test.describe('Album - Default Template Settings', () => {
     const container = page.locator(ALBUM_SELECTORS.frontend.albumContainer);
     const containerClass = await container.getAttribute('class');
 
-    await page.screenshot({ path: 'test-results/album-default-left-frontend.png' });
   });
 
   test('applies center alignment', async ({ page }) => {
@@ -153,13 +144,11 @@ test.describe('Album - Default Template Settings', () => {
       alignment: 'center',
     });
 
-    await page.screenshot({ path: 'test-results/album-default-center-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
     await waitForAlbumReady(page, 'default');
 
-    await page.screenshot({ path: 'test-results/album-default-center-frontend.png' });
   });
 
   test('applies right alignment', async ({ page }) => {
@@ -172,13 +161,11 @@ test.describe('Album - Default Template Settings', () => {
       alignment: 'right',
     });
 
-    await page.screenshot({ path: 'test-results/album-default-right-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
     await waitForAlbumReady(page, 'default');
 
-    await page.screenshot({ path: 'test-results/album-default-right-frontend.png' });
   });
 
   test('uses pretty URL format', async ({ page }) => {
@@ -197,7 +184,6 @@ test.describe('Album - Default Template Settings', () => {
       await formatPretty.click();
     }
 
-    await page.screenshot({ path: 'test-results/album-default-pretty-url-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -211,7 +197,6 @@ test.describe('Album - Default Template Settings', () => {
       expect(href).toBeTruthy();
     }
 
-    await page.screenshot({ path: 'test-results/album-default-pretty-url-frontend.png' });
   });
 
   test('uses querystring URL format', async ({ page }) => {
@@ -232,13 +217,11 @@ test.describe('Album - Default Template Settings', () => {
       await formatQuery.click();
     }
 
-    await page.screenshot({ path: 'test-results/album-default-query-url-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
     await waitForAlbumReady(page, 'default');
 
-    await page.screenshot({ path: 'test-results/album-default-query-url-frontend.png' });
   });
 
   test('enables scroll position memory with hash', async ({ page }) => {
@@ -254,7 +237,6 @@ test.describe('Album - Default Template Settings', () => {
       await hashYes.click();
     }
 
-    await page.screenshot({ path: 'test-results/album-default-hash-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -263,7 +245,6 @@ test.describe('Album - Default Template Settings', () => {
     // Album hash is typically used for URL state preservation
     // The setting being enabled should add data attributes or hash handling
 
-    await page.screenshot({ path: 'test-results/album-default-hash-frontend.png' });
   });
 
   test('applies gallery title size', async ({ page }) => {
@@ -277,7 +258,6 @@ test.describe('Album - Default Template Settings', () => {
       titleSize: 'h4',
     });
 
-    await page.screenshot({ path: 'test-results/album-default-title-size-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -288,6 +268,5 @@ test.describe('Album - Default Template Settings', () => {
     const count = await pileTitles.count();
     expect(count).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-default-title-size-frontend.png' });
   });
 });

@@ -17,8 +17,6 @@ test.describe('Caption Length Limiting', () => {
   const screenshotPrefix = 'captions-length';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('enables character length limiting', async ({ page }) => {
@@ -39,7 +37,6 @@ test.describe('Caption Length Limiting', () => {
     await setLengthLimiting(page, 'chars', undefined, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-char-limiting.png` });
 
     // Verify char limiting is selected
     const charsRadio = page.locator(`#FooGallerySettings_${templateSelector}_captions_limit_length1`);
@@ -64,7 +61,6 @@ test.describe('Caption Length Limiting', () => {
     await setLengthLimiting(page, 'chars', { titleLength: 20 }, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-title-char-limit.png` });
 
     // Verify title length input has the value
     const titleLengthInput = page.locator(`#FooGallerySettings_${templateSelector}_caption_title_length`);
@@ -89,7 +85,6 @@ test.describe('Caption Length Limiting', () => {
     await setLengthLimiting(page, 'chars', { descLength: 50 }, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-desc-char-limit.png` });
 
     // Verify desc length input has the value
     const descLengthInput = page.locator(`#FooGallerySettings_${templateSelector}_caption_desc_length`);
@@ -114,7 +109,6 @@ test.describe('Caption Length Limiting', () => {
     await setLengthLimiting(page, 'clamp', undefined, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-clamp-limiting.png` });
 
     // Verify clamp limiting is selected
     const clampRadio = page.locator(`#FooGallerySettings_${templateSelector}_captions_limit_length2`);
@@ -139,7 +133,6 @@ test.describe('Caption Length Limiting', () => {
     await setLengthLimiting(page, 'clamp', { titleClamp: 2 }, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-title-line-clamp.png` });
 
     // Verify title clamp input has the value
     const titleClampInput = page.locator(`#FooGallerySettings_${templateSelector}_caption_title_clamp`);
@@ -164,7 +157,6 @@ test.describe('Caption Length Limiting', () => {
     await setLengthLimiting(page, 'clamp', { descClamp: 3 }, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-desc-line-clamp.png` });
 
     // Verify desc clamp input has the value
     const descClampInput = page.locator(`#FooGallerySettings_${templateSelector}_caption_desc_clamp`);
@@ -189,7 +181,6 @@ test.describe('Caption Length Limiting', () => {
     await setLengthLimiting(page, 'none', undefined, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-no-limiting.png` });
 
     // Verify no limiting is selected
     const noneRadio = page.locator(`#FooGallerySettings_${templateSelector}_captions_limit_length0`);
@@ -217,7 +208,6 @@ test.describe('Caption Length Limiting', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-css-vars.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);

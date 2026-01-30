@@ -5,12 +5,6 @@ import { test, expect } from '@playwright/test';
 
 test.describe('FooGallery Demo Galleries', () => {
   test('create demo galleries and images', async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({
-      width: 1932,
-      height: 1271
-    });
-
     // Navigate to WordPress admin dashboard
     await page.goto('/wp-admin/index.php');
     await page.waitForLoadState('domcontentloaded');
@@ -22,8 +16,6 @@ test.describe('FooGallery Demo Galleries', () => {
     // Verify we're on the FooGallery list page
     await expect(page).toHaveURL(/post_type=foogallery/);
 
-    // Screenshot: FooGallery list page
-    await page.screenshot({ path: 'test-results/demo-galleries-01-foogallery-list.png' });
 
     // Navigate to the Help page directly
     await page.goto('/wp-admin/edit.php?post_type=foogallery&page=foogallery-help');
@@ -32,8 +24,6 @@ test.describe('FooGallery Demo Galleries', () => {
     // Verify we're on the Help page
     await expect(page).toHaveURL(/page=foogallery-help/);
 
-    // Screenshot: Help page before creating demos
-    await page.screenshot({ path: 'test-results/demo-galleries-02-help-page.png' });
 
     // Click the "Create Demo Content" button
     // This button creates sample galleries and downloads images to media library
@@ -48,8 +38,6 @@ test.describe('FooGallery Demo Galleries', () => {
     const doneButton = page.locator('button:has-text("Done!"), a:has-text("Done!"), .fgah-done-button').first();
     await expect(doneButton).toBeVisible({ timeout: 120000 });
 
-    // Screenshot: Demo content created successfully
-    await page.screenshot({ path: 'test-results/demo-galleries-03-demos-created.png' });
 
     // Click the Done button to go back to galleries
     await doneButton.click();
@@ -69,7 +57,5 @@ test.describe('FooGallery Demo Galleries', () => {
     const galleryRows = page.locator('table.wp-list-table tbody tr');
     await expect(galleryRows.first()).toBeVisible({ timeout: 10000 });
 
-    // Screenshot: Final galleries list with demo galleries
-    await page.screenshot({ path: 'test-results/demo-galleries-04-final-galleries-list.png' });
   });
 });

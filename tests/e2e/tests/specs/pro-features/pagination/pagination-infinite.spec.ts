@@ -30,7 +30,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       const loadMoreButton = page.locator(PAGINATION_SELECTORS.loadMoreButton);
       await expect(loadMoreButton).not.toBeVisible();
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-initial-result.png' });
     });
 
     test('shows all items when total is less than page size', async ({ page }) => {
@@ -47,7 +46,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       const visibleCount = await getVisibleItemCount(page);
       expect(visibleCount).toBe(3);
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-small-result.png' });
     });
   });
 
@@ -73,7 +71,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       const countAfterScroll = await getVisibleItemCount(page);
       expect(countAfterScroll).toBeGreaterThan(initialCount);
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-scroll-result.png' });
     });
 
     test('progressively loads items with multiple scrolls', async ({ page }) => {
@@ -111,7 +108,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       // All items should eventually be visible
       expect(count).toBe(20);
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-progressive-result.png' });
     });
 
     test('stops loading when all items are visible', async ({ page }) => {
@@ -138,7 +134,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       count = await getVisibleItemCount(page);
       expect(count).toBe(10); // Still 10, no more to load
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-complete-result.png' });
     });
   });
 
@@ -161,7 +156,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       const countAfterScroll = await getVisibleItemCount(page);
       expect(countAfterScroll).toBeGreaterThan(initialCount);
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-masonry-result.png' });
     });
 
     test('works with Grid Pro template', async ({ page }) => {
@@ -216,7 +210,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       // Verify that some items were loaded (may load all at once or in batches)
       expect(count).toBeGreaterThan(initialCount);
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-gridpro-result.png' });
     });
   });
 
@@ -246,7 +239,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       const count = await getVisibleItemCount(page);
       expect(count).toBe(20);
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-rapid-result.png' });
     });
 
     test('works with different page sizes', async ({ page }) => {
@@ -269,7 +261,6 @@ test.describe('Pagination - Infinite Scroll', () => {
       const countAfterScroll = await getVisibleItemCount(page);
       expect(countAfterScroll).toBe(16);
 
-      await page.screenshot({ path: 'test-results/pagination-infinite-custom-size-result.png' });
     });
   });
 });

@@ -18,8 +18,6 @@ test.describe('Border Size', () => {
 
   test.describe('Admin Settings', () => {
     test('shows all border size options', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -37,7 +35,6 @@ test.describe('Border Size', () => {
         await expect(borderOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/borders-all-options.png' });
     });
   });
 
@@ -118,8 +115,6 @@ test.describe('Rounded Corners', () => {
 
   test.describe('Admin Settings', () => {
     test('shows all rounded corner options', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -137,7 +132,6 @@ test.describe('Rounded Corners', () => {
         await expect(cornerOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/rounded-corners-all-options.png' });
     });
   });
 
@@ -234,8 +228,6 @@ test.describe('Drop Shadow', () => {
 
   test.describe('Admin Settings', () => {
     test('shows all drop shadow options', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -253,7 +245,6 @@ test.describe('Drop Shadow', () => {
         await expect(shadowOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/drop-shadow-all-options.png' });
     });
   });
 
@@ -350,8 +341,6 @@ test.describe('Inner Shadow', () => {
 
   test.describe('Admin Settings', () => {
     test('shows all inner shadow options', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -369,7 +358,6 @@ test.describe('Inner Shadow', () => {
         await expect(shadowOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/inner-shadow-all-options.png' });
     });
   });
 

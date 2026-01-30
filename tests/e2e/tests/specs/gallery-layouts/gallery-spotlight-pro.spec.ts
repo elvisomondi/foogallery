@@ -20,8 +20,6 @@ test.describe('Gallery - Spotlight PRO Layout', () => {
     const galleryContainer = page.locator('.foogallery');
     await galleryContainer.waitFor({ state: 'visible', timeout: 15000 });
 
-    // Screenshot: Spotlight gallery loaded
-    await page.screenshot({ path: 'test-results/spotlight-pro-07-gallery-loaded.png' });
 
     // Spotlight PRO navigation: use pagination links instead of prev/next buttons
     // The pagination dots at the bottom allow navigation between images
@@ -33,21 +31,18 @@ test.describe('Gallery - Spotlight PRO Layout', () => {
     if (await page2Link.isVisible()) {
       await page2Link.click();
       await page.waitForTimeout(500);
-      await page.screenshot({ path: 'test-results/spotlight-pro-08-page-2.png' });
     }
 
     const page3Link = page.getByRole('link', { name: /page 3/i });
     if (await page3Link.isVisible()) {
       await page3Link.click();
       await page.waitForTimeout(500);
-      await page.screenshot({ path: 'test-results/spotlight-pro-09-page-3.png' });
     }
 
     const page4Link = page.getByRole('link', { name: /page 4/i });
     if (await page4Link.isVisible()) {
       await page4Link.click();
       await page.waitForTimeout(500);
-      await page.screenshot({ path: 'test-results/spotlight-pro-10-page-4.png' });
     }
 
     // Navigate back to page 1
@@ -57,7 +52,5 @@ test.describe('Gallery - Spotlight PRO Layout', () => {
       await page.waitForTimeout(500);
     }
 
-    // Screenshot: Final state after navigation
-    await page.screenshot({ path: 'test-results/spotlight-pro-12-final.png' });
   });
 });

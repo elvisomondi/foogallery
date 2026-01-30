@@ -19,8 +19,6 @@ test.describe('Caption Frontend Display', () => {
   const screenshotPrefix = 'captions-frontend';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('renders caption HTML structure', async ({ page }) => {
@@ -36,7 +34,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-html-structure.png` });
 
     // Verify caption structure
     const structure = await verifyCaptionStructure(page, 0);
@@ -60,7 +57,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-title-display.png` });
 
     // Get caption and verify title is present
     const caption = await getCaptionFromGallery(page, 0);
@@ -85,7 +81,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-desc-display.png` });
 
     // Verify gallery is displayed
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -109,7 +104,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-left-alignment.png` });
 
     // Verify left alignment class is applied
     const hasLeftClass = await verifyCaptionAlignment(page, 'left');
@@ -133,7 +127,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-center-alignment.png` });
 
     // Verify center alignment class is applied
     const hasCenterClass = await verifyCaptionAlignment(page, 'center');
@@ -157,7 +150,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-right-alignment.png` });
 
     // Verify right alignment class is applied
     const hasRightClass = await verifyCaptionAlignment(page, 'right');
@@ -181,7 +173,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-justify-alignment.png` });
 
     // Verify justify alignment class is applied
     const hasJustifyClass = await verifyCaptionAlignment(page, 'justify');
@@ -204,7 +195,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot before hover
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-before-hover.png` });
 
     // Hover over first item
     const firstItem = page.locator(CAPTION_SELECTORS.galleryItem).first();
@@ -212,7 +202,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForTimeout(500);
 
     // Screenshot after hover
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-after-hover.png` });
 
     // Verify gallery item exists
     await expect(firstItem).toBeVisible();
@@ -235,7 +224,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-always-visible.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -259,7 +247,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-data-caption-title.png` });
 
     // Check data attributes - captionTitle might be null if no title is set on images
     const dataAttrs = await getDataAttributes(page, 0);
@@ -285,7 +272,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-11-data-caption-desc.png` });
 
     // Check data attributes
     const dataAttrs = await getDataAttributes(page, 0);
@@ -311,7 +297,6 @@ test.describe('Caption Frontend Display', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-12-caption-hidden.png` });
 
     // Get caption from first item
     const caption = await getCaptionFromGallery(page, 0);

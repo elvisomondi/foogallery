@@ -16,8 +16,6 @@ test.describe('Hover Effect Icons', () => {
 
   test.describe('Admin Settings', () => {
     test('shows all icon size options', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -39,7 +37,6 @@ test.describe('Hover Effect Icons', () => {
         await expect(sizeOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/hover-icons-size-options.png' });
     });
   });
 

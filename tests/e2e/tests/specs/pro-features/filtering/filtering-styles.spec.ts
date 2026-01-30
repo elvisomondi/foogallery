@@ -35,7 +35,6 @@ test.describe('Filtering - Visual Styles', () => {
       await expect(filterContainer).not.toHaveClass(/fg-style-pill/);
       await expect(filterContainer).not.toHaveClass(/fg-style-dropdown/);
 
-      await page.screenshot({ path: 'test-results/filtering-style-default-result.png' });
     });
   });
 
@@ -56,7 +55,6 @@ test.describe('Filtering - Visual Styles', () => {
       await expect(filterContainer).toBeVisible();
       await expect(filterContainer).toHaveClass(/fg-style-button/);
 
-      await page.screenshot({ path: 'test-results/filtering-style-button-result.png' });
     });
 
     test('displays filters as button blocks (full width)', async ({ page }) => {
@@ -75,7 +73,6 @@ test.describe('Filtering - Visual Styles', () => {
       await expect(filterContainer).toBeVisible();
       await expect(filterContainer).toHaveClass(/fg-style-button-block/);
 
-      await page.screenshot({ path: 'test-results/filtering-style-button-block-result.png' });
     });
   });
 
@@ -96,7 +93,6 @@ test.describe('Filtering - Visual Styles', () => {
       await expect(filterContainer).toBeVisible();
       await expect(filterContainer).toHaveClass(/fg-style-pill/);
 
-      await page.screenshot({ path: 'test-results/filtering-style-pill-result.png' });
     });
 
     test('displays filters as pill blocks (full width)', async ({ page }) => {
@@ -115,7 +111,6 @@ test.describe('Filtering - Visual Styles', () => {
       await expect(filterContainer).toBeVisible();
       await expect(filterContainer).toHaveClass(/fg-style-pill-block/);
 
-      await page.screenshot({ path: 'test-results/filtering-style-pill-block-result.png' });
     });
   });
 
@@ -140,7 +135,6 @@ test.describe('Filtering - Visual Styles', () => {
       const dropdown = page.locator(FILTERING_SELECTORS.dropdown);
       await expect(dropdown).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/filtering-style-dropdown-result.png' });
     });
 
     test('filters gallery when selecting from dropdown', async ({ page }) => {
@@ -168,7 +162,6 @@ test.describe('Filtering - Visual Styles', () => {
         // Select the filter option
         await selectDropdownFilter(page, filterOption);
 
-        await page.screenshot({ path: 'test-results/filtering-style-dropdown-selected.png' });
       }
     });
 
@@ -188,7 +181,6 @@ test.describe('Filtering - Visual Styles', () => {
       await expect(filterContainer).toBeVisible();
       await expect(filterContainer).toHaveClass(/fg-style-dropdown-block/);
 
-      await page.screenshot({ path: 'test-results/filtering-style-dropdown-block-result.png' });
     });
   });
 
@@ -217,7 +209,6 @@ test.describe('Filtering - Visual Styles', () => {
         const filterContainer = page.locator(FILTERING_SELECTORS.container);
         await expect(filterContainer).toHaveClass(/fg-style-button/);
 
-        await page.screenshot({ path: 'test-results/filtering-style-button-func-result.png' });
       }
     });
 
@@ -243,7 +234,6 @@ test.describe('Filtering - Visual Styles', () => {
         const filterContainer = page.locator(FILTERING_SELECTORS.container);
         await expect(filterContainer).toHaveClass(/fg-style-pill/);
 
-        await page.screenshot({ path: 'test-results/filtering-style-pill-func-result.png' });
       }
     });
   });

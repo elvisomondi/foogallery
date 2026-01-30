@@ -16,8 +16,6 @@ test.describe('EXIF Frontend Display', () => {
   const screenshotPrefix = 'exif-frontend';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('adds fg-item-exif class to items with EXIF', async ({ page }) => {
@@ -36,7 +34,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-item-exif-class.png` });
 
     // Check for items with EXIF class
     const itemsWithExif = page.locator(EXIF_SELECTORS.itemWithExif);
@@ -62,7 +59,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-no-exif-class.png` });
 
     // Get all items
     const allItems = page.locator(EXIF_SELECTORS.galleryItem);
@@ -94,7 +90,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-position-class.png` });
 
     // Verify gallery has position class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -117,7 +112,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-theme-class.png` });
 
     // Verify gallery has theme class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -139,7 +133,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-data-exif-attr.png` });
 
     // Check for data-exif attribute on anchor elements
     const anchorsWithExif = page.locator(EXIF_SELECTORS.dataExifAttr);
@@ -165,7 +158,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-data-exif-values.png` });
 
     // Try to get and parse data-exif from first item with EXIF
     const exifData = await verifyDataExifAttribute(page, 0);
@@ -191,7 +183,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-shutter-speed-format.png` });
 
     // Get data-exif from first item
     const exifData = await verifyDataExifAttribute(page, 0);
@@ -219,7 +210,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-timestamp-format.png` });
 
     // Get data-exif from first item
     const exifData = await verifyDataExifAttribute(page, 0);
@@ -247,7 +237,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-mixed-gallery.png` });
 
     // Get all items
     const allItems = page.locator(EXIF_SELECTORS.galleryItem);
@@ -279,7 +268,6 @@ test.describe('EXIF Frontend Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot before hover
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-thumbnail-icon-before.png` });
 
     // Hover over first item with EXIF to show icon
     const itemWithExif = page.locator(EXIF_SELECTORS.itemWithExif).first();
@@ -288,7 +276,6 @@ test.describe('EXIF Frontend Display', () => {
       await page.waitForTimeout(500);
 
       // Screenshot after hover
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-10-thumbnail-icon-after.png` });
 
       // Verify the item has the EXIF class
       await expect(itemWithExif).toHaveClass(/fg-item-exif/);

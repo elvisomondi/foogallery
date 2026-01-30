@@ -39,7 +39,6 @@ test.describe('Filtering - Position', () => {
         expect(filterBox.y).toBeLessThan(galleryBox.y);
       }
 
-      await page.screenshot({ path: 'test-results/filtering-position-top-result.png' });
     });
   });
 
@@ -70,7 +69,6 @@ test.describe('Filtering - Position', () => {
         expect(filterBox.y).toBeGreaterThan(galleryBox.y);
       }
 
-      await page.screenshot({ path: 'test-results/filtering-position-bottom-result.png' });
     });
   });
 
@@ -109,7 +107,6 @@ test.describe('Filtering - Position', () => {
         expect(bottomFilterBox.y).toBeGreaterThan(galleryBox.y);
       }
 
-      await page.screenshot({ path: 'test-results/filtering-position-both-result.png' });
     });
 
     test('both filters stay synchronized when clicking', async ({ page }) => {
@@ -145,7 +142,6 @@ test.describe('Filtering - Position', () => {
         await expect(topSelectedTag).toBeVisible();
         await expect(bottomSelectedTag).toBeVisible();
 
-        await page.screenshot({ path: 'test-results/filtering-position-both-sync-top.png' });
 
         // Now click "All" in BOTTOM filter
         const bottomAllTag = filterContainers.last().locator(FILTERING_SELECTORS.tagAll);
@@ -159,7 +155,6 @@ test.describe('Filtering - Position', () => {
         await expect(topAllSelected).toBeVisible();
         await expect(bottomAllSelected).toBeVisible();
 
-        await page.screenshot({ path: 'test-results/filtering-position-both-sync-bottom.png' });
       }
     });
   });
@@ -182,7 +177,6 @@ test.describe('Filtering - Position', () => {
       await expect(filterContainer).toBeVisible();
       await expect(filterContainer).toHaveClass(/fg-style-button/);
 
-      await page.screenshot({ path: 'test-results/filtering-position-bottom-button-result.png' });
     });
 
     test('dropdown style works at both positions', async ({ page }) => {
@@ -208,7 +202,6 @@ test.describe('Filtering - Position', () => {
       await expect(topDropdown).toBeVisible();
       await expect(bottomDropdown).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/filtering-position-both-dropdown-result.png' });
     });
   });
 });

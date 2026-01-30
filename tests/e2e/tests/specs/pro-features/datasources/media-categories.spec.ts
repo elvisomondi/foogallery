@@ -37,7 +37,6 @@ test.describe('Datasource - Media Categories', () => {
     const optionText = await mediaCategoriesOption.textContent();
     expect(optionText?.toLowerCase()).toMatch(/categor/);
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-modal.png' });
   });
 
   test('shows available categories after selection', async ({ page }) => {
@@ -56,7 +55,6 @@ test.describe('Datasource - Media Categories', () => {
     // Should have at least some categories (created in setup script)
     expect(count).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-list.png' });
   });
 
   test('can select single category', async ({ page }) => {
@@ -74,7 +72,6 @@ test.describe('Datasource - Media Categories', () => {
       await firstCategory.click();
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: 'test-results/datasource-media-categories-single-selected.png' });
     }
   });
 
@@ -93,7 +90,6 @@ test.describe('Datasource - Media Categories', () => {
 
     if (count >= 2) {
       await selectCategoriesByIndices(page, [1, 2]);
-      await page.screenshot({ path: 'test-results/datasource-media-categories-multi-selected.png' });
     }
   });
 
@@ -115,7 +111,6 @@ test.describe('Datasource - Media Categories', () => {
 
     // If there are nested items, hierarchy is present
     // The setup script creates parent "Landscapes" with children "Mountains" and "Beaches"
-    await page.screenshot({ path: 'test-results/datasource-media-categories-hierarchy.png' });
 
     // Log hierarchy structure for debugging
     const count = await categoryItems.count();
@@ -140,7 +135,6 @@ test.describe('Datasource - Media Categories', () => {
       await expect(checkboxes.first()).toBeVisible();
     }
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-checkboxes.png' });
   });
 
   test('creates gallery from media categories', async ({ page }) => {
@@ -173,7 +167,6 @@ test.describe('Datasource - Media Categories', () => {
       await page.waitForTimeout(300);
     }
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-category-selected.png' });
 
     // Apply datasource
     await applyDatasource(page);
@@ -185,7 +178,6 @@ test.describe('Datasource - Media Categories', () => {
     // Publish gallery
     await publishGallery(page);
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-published.png' });
   });
 
   test('gallery displays categorized images', async ({ page }) => {
@@ -213,7 +205,6 @@ test.describe('Datasource - Media Categories', () => {
     const imageCount = await getGalleryImageCount(page);
     expect(imageCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-frontend.png' });
   });
 
   test('lightbox works on media categories gallery', async ({ page }) => {
@@ -238,7 +229,6 @@ test.describe('Datasource - Media Categories', () => {
     // Test lightbox functionality
     await verifyLightboxWorks(page);
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-lightbox.png' });
   });
 
   test('can edit media categories datasource', async ({ page }) => {
@@ -268,7 +258,6 @@ test.describe('Datasource - Media Categories', () => {
     const modalHeading = page.locator('h1:has-text("Add To Gallery From Another Source")');
     await modalHeading.waitFor({ state: 'visible', timeout: 15000 });
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-edit.png' });
   });
 
   test('can remove media categories datasource', async ({ page }) => {
@@ -299,6 +288,5 @@ test.describe('Datasource - Media Categories', () => {
     // Verify datasource info is removed
     await expect(datasourceInfo).not.toBeVisible({ timeout: 5000 });
 
-    await page.screenshot({ path: 'test-results/datasource-media-categories-removed.png' });
   });
 });

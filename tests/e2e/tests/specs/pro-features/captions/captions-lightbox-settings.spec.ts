@@ -22,8 +22,6 @@ test.describe('Lightbox Caption Settings', () => {
   const screenshotPrefix = 'captions-lightbox-settings';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('displays lightbox caption settings', async ({ page }) => {
@@ -43,7 +41,6 @@ test.describe('Lightbox Caption Settings', () => {
     await navigateToLightboxInfoTab(page, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-lightbox-settings-visible.png` });
 
     // Verify the lightbox info settings are visible
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -69,7 +66,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxInfoEnabled(page, 'enabled', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-lightbox-enabled.png` });
 
     // Verify enabled is selected
     const enabledRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_enabled${LIGHTBOX_INFO_ENABLED.enabled}`);
@@ -94,7 +90,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxInfoEnabled(page, 'disabled', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-lightbox-disabled.png` });
 
     // Verify disabled is selected
     const disabledRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_enabled${LIGHTBOX_INFO_ENABLED.disabled}`);
@@ -119,7 +114,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxInfoEnabled(page, 'hidden', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-lightbox-hidden.png` });
 
     // Verify hidden is selected
     const hiddenRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_enabled${LIGHTBOX_INFO_ENABLED.hidden}`);
@@ -144,7 +138,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxCaptionPosition(page, 'bottom', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-position-bottom.png` });
 
     // Verify position is set
     const positionRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_position${LIGHTBOX_POSITIONS.bottom}`);
@@ -169,7 +162,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxCaptionPosition(page, 'top', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-position-top.png` });
 
     // Verify position is set
     const positionRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_position${LIGHTBOX_POSITIONS.top}`);
@@ -194,7 +186,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxCaptionPosition(page, 'left', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-position-left.png` });
 
     // Verify position is set
     const positionRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_position${LIGHTBOX_POSITIONS.left}`);
@@ -219,7 +210,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxCaptionPosition(page, 'right', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-position-right.png` });
 
     // Verify position is set
     const positionRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_position${LIGHTBOX_POSITIONS.right}`);
@@ -244,7 +234,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxCaptionAlignment(page, 'center', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-alignment-center.png` });
 
     // Verify alignment is set
     const alignmentRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_alignment${CAPTION_ALIGNMENTS.center}`);
@@ -269,7 +258,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxOverlay(page, true, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-overlay-enabled.png` });
 
     // Verify overlay is enabled
     const overlayYesRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_overlay0`);
@@ -294,7 +282,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxOverlay(page, false, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-11-overlay-disabled.png` });
 
     // Verify overlay is disabled
     const overlayNoRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_overlay1`);
@@ -319,7 +306,6 @@ test.describe('Lightbox Caption Settings', () => {
     await setLightboxMobileAutohide(page, true, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-12-mobile-autohide.png` });
 
     // Verify mobile autohide is enabled
     const autohideYesRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_info_autohide_mobile0`);

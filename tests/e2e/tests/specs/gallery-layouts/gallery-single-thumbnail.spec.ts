@@ -22,8 +22,6 @@ test.describe('Gallery - Single Thumbnail Layout', () => {
     // Wait for lightbox to open
     await page.waitForSelector('.fg-panel-content', { state: 'visible', timeout: 10000 });
 
-    // Screenshot: Lightbox opened
-    await page.screenshot({ path: 'test-results/single-thumbnail-07-lightbox-open.png' });
 
     // Navigate in lightbox - next
     await page.locator('button.fg-panel-button-next').click();
@@ -31,8 +29,6 @@ test.describe('Gallery - Single Thumbnail Layout', () => {
     await page.locator('button.fg-panel-button-next').click();
     await page.locator('button.fg-panel-button-next').click();
 
-    // Screenshot: After forward navigation
-    await page.screenshot({ path: 'test-results/single-thumbnail-08-lightbox-forward.png' });
 
     // Navigate in lightbox - prev
     await page.locator('button.fg-panel-button-prev').click();
@@ -40,14 +36,10 @@ test.describe('Gallery - Single Thumbnail Layout', () => {
     await page.locator('button.fg-panel-button-prev > svg').click();
     await page.locator('button.fg-panel-button-prev > svg').click();
 
-    // Screenshot: After backward navigation
-    await page.screenshot({ path: 'test-results/single-thumbnail-09-lightbox-backward.png' });
 
     // Expand fullscreen
     await page.locator('svg.fg-icon-expand').click();
 
-    // Screenshot: Fullscreen
-    await page.screenshot({ path: 'test-results/single-thumbnail-10-fullscreen.png' });
 
     // Shrink back
     await page.locator('svg.fg-icon-shrink').click();
@@ -58,7 +50,5 @@ test.describe('Gallery - Single Thumbnail Layout', () => {
     // Wait for lightbox to close
     await page.waitForSelector('.fg-panel-content', { state: 'hidden', timeout: 20000 });
 
-    // Screenshot: Final state
-    await page.screenshot({ path: 'test-results/single-thumbnail-11-final.png' });
   });
 });

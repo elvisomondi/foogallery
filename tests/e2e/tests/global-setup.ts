@@ -95,7 +95,6 @@ async function globalSetup(config: FullConfig): Promise<void> {
     } catch {
       console.warn('[Global Setup] WARNING: FooGallery menu not immediately visible');
       // Take a screenshot for debugging
-      await page.screenshot({ path: path.join(authDir, 'setup-debug.png') });
     }
 
     // Step 4: Save authentication state

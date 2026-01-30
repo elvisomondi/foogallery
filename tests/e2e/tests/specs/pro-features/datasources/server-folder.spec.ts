@@ -39,7 +39,6 @@ test.describe('Datasource - Server Folder', () => {
     const optionText = await serverFolderOption.textContent();
     expect(optionText?.toLowerCase()).toContain('server');
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-modal.png' });
   });
 
   test('can select metadata storage option', async ({ page }) => {
@@ -63,7 +62,6 @@ test.describe('Datasource - Server Folder', () => {
     await selectMetadataStorage(page, 'file');
     await expect(fileOption).toBeChecked();
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-metadata-options.png' });
   });
 
   test('can navigate folder tree', async ({ page }) => {
@@ -90,7 +88,6 @@ test.describe('Datasource - Server Folder', () => {
       await page.waitForTimeout(500);
     }
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-navigation.png' });
   });
 
   test('can set sort options', async ({ page }) => {
@@ -114,7 +111,6 @@ test.describe('Datasource - Server Folder', () => {
       await selectSortOption(page, 'filename');
       await expect(sortFilenameOption).toBeChecked();
 
-      await page.screenshot({ path: 'test-results/datasource-server-folder-sort-options.png' });
     }
   });
 
@@ -148,7 +144,6 @@ test.describe('Datasource - Server Folder', () => {
     await testFolder.click();
     await page.waitForTimeout(500);
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-selected.png' });
 
     // Apply datasource
     await applyDatasource(page);
@@ -161,7 +156,6 @@ test.describe('Datasource - Server Folder', () => {
     // Publish gallery
     await publishGallery(page);
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-published.png' });
   });
 
   test('gallery displays images from server folder', async ({ page }) => {
@@ -205,7 +199,6 @@ test.describe('Datasource - Server Folder', () => {
     const imageCount = await getGalleryImageCount(page);
     expect(imageCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-frontend.png' });
   });
 
   test('lightbox works on server folder gallery', async ({ page }) => {
@@ -246,7 +239,6 @@ test.describe('Datasource - Server Folder', () => {
     // Test lightbox functionality
     await verifyLightboxWorks(page);
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-lightbox.png' });
   });
 
   test('can edit server folder datasource', async ({ page }) => {
@@ -276,7 +268,6 @@ test.describe('Datasource - Server Folder', () => {
     const modalHeading = page.locator('h1:has-text("Add To Gallery From Another Source")');
     await modalHeading.waitFor({ state: 'visible', timeout: 15000 });
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-edit.png' });
   });
 
   test('can remove server folder datasource', async ({ page }) => {
@@ -307,7 +298,6 @@ test.describe('Datasource - Server Folder', () => {
     // Verify datasource info is removed
     await expect(datasourceInfo).not.toBeVisible({ timeout: 5000 });
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-removed.png' });
   });
 
   test('can add captions via database storage', async ({ page }) => {
@@ -332,7 +322,6 @@ test.describe('Datasource - Server Folder', () => {
 
     // Verify the metadata form inputs exist when editing images
     // This depends on clicking an image in the gallery preview
-    await page.screenshot({ path: 'test-results/datasource-server-folder-database-captions.png' });
   });
 
   test('can add captions via JSON file storage', async ({ page }) => {
@@ -360,6 +349,5 @@ test.describe('Datasource - Server Folder', () => {
       await expect(metadataTextarea).toBeEditable();
     }
 
-    await page.screenshot({ path: 'test-results/datasource-server-folder-json-captions.png' });
   });
 });

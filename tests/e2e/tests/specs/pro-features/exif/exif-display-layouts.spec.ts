@@ -22,8 +22,6 @@ test.describe('EXIF Attribute layouts', () => {
   const screenshotPrefix = 'exif-layouts';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('sets display layout - auto (default) and verifies on frontend', async ({ page }) => {
@@ -49,7 +47,6 @@ test.describe('EXIF Attribute layouts', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-layout-auto-admin.png` });
 
     // Verify auto layout is selected
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -64,13 +61,11 @@ test.describe('EXIF Attribute layouts', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-layout-auto-frontend.png` });
 
     // Open lightbox and verify EXIF display
     const exifOpened = await openLightboxAndShowExif(page, 0);
 
     // Screenshot lightbox
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-layout-auto-lightbox.png` });
 
     // Verify EXIF behavior (may or may not be visible based on auto layout logic)
     if (exifOpened) {
@@ -111,7 +106,6 @@ test.describe('EXIF Attribute layouts', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-layout-full-admin.png` });
 
     // Verify full layout is selected
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -126,14 +120,12 @@ test.describe('EXIF Attribute layouts', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-layout-full-frontend.png` });
 
     // Open lightbox and verify EXIF display
     await openLightbox(page, 0);
     await toggleLightboxInfo(page);
 
     // Screenshot lightbox
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-layout-full-lightbox.png` });
 
     // Verify EXIF container has full layout class
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -183,7 +175,6 @@ test.describe('EXIF Attribute layouts', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-layout-partial-admin.png` });
 
     // Verify partial layout is selected
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -198,14 +189,12 @@ test.describe('EXIF Attribute layouts', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-layout-partial-frontend.png` });
 
     // Open lightbox and verify EXIF display
     await openLightbox(page, 0);
     await toggleLightboxInfo(page);
 
     // Screenshot lightbox
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-layout-partial-lightbox.png` });
 
     // Verify EXIF container has partial layout class
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -253,7 +242,6 @@ test.describe('EXIF Attribute layouts', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-layout-minimal-admin.png` });
 
     // Verify minimal layout is selected
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -268,14 +256,12 @@ test.describe('EXIF Attribute layouts', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-layout-minimal-frontend.png` });
 
     // Open lightbox and verify EXIF display
     await openLightbox(page, 0);
     await toggleLightboxInfo(page);
 
     // Screenshot lightbox
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-layout-minimal-lightbox.png` });
 
     // Verify EXIF container has minimal layout class
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -323,7 +309,6 @@ test.describe('EXIF Attribute layouts', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot at full width
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-auto-full-width.png` });
 
     // Check EXIF container exists
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -342,7 +327,6 @@ test.describe('EXIF Attribute layouts', () => {
       await openLightboxAndShowExif(page);
 
       // Screenshot at smaller width
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-06-auto-small-width.png` });
 
       // Verify container has auto class (behavior may change based on size)
       const exifContainerSmall = page.locator(EXIF_SELECTORS.exifContainer);
@@ -376,7 +360,6 @@ test.describe('EXIF Attribute layouts', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-full-all-properties.png` });
 
     // Verify EXIF container is visible
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -426,7 +409,6 @@ test.describe('EXIF Attribute layouts', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-css-class-verification.png` });
 
     // Verify EXIF container has the correct layout class
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -459,7 +441,6 @@ test.describe('EXIF Attribute layouts', () => {
 
     await openLightboxAndShowExif(page);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-partial-layout-verification.png` });
 
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
     if (await exifContainer.isVisible()) {

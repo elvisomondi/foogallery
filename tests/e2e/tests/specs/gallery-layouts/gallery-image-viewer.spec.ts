@@ -24,8 +24,6 @@ test.describe('Gallery - Image Viewer Layout', () => {
     // Wait for lightbox to open
     await page.waitForSelector('.fg-panel-content', { state: 'visible', timeout: 10000 });
 
-    // Screenshot: Lightbox opened
-    await page.screenshot({ path: 'test-results/image-viewer-07-lightbox-open.png' });
 
     // Navigate in lightbox
     await page.locator('button.fg-panel-button-next path').click();
@@ -37,14 +35,10 @@ test.describe('Gallery - Image Viewer Layout', () => {
     await page.locator('button.fg-panel-button-prev > svg').click();
     await page.locator('button.fg-panel-button-prev > svg').click();
 
-    // Screenshot: After lightbox navigation
-    await page.screenshot({ path: 'test-results/image-viewer-08-lightbox-nav.png' });
 
     // Toggle fullscreen
     await page.locator('button.fg-panel-button-fullscreen').click();
 
-    // Screenshot: Fullscreen
-    await page.screenshot({ path: 'test-results/image-viewer-09-fullscreen.png' });
 
     // Shrink back
     await page.locator('svg.fg-icon-shrink').click();
@@ -55,8 +49,6 @@ test.describe('Gallery - Image Viewer Layout', () => {
     // Wait for lightbox to close with a shorter timeout
     await page.waitForSelector('.fg-panel-content', { state: 'hidden', timeout: 15000 });
 
-    // Screenshot: After lightbox closed
-    await page.screenshot({ path: 'test-results/image-viewer-10-lightbox-closed.png' });
 
     // Test the unique Image Viewer navigation (fiv-next/fiv-prev)
     const fivNext = page.locator('button.fiv-next > span');
@@ -68,8 +60,6 @@ test.describe('Gallery - Image Viewer Layout', () => {
     await fivNext.click();
     await fivNext.click();
 
-    // Screenshot: After viewer forward navigation
-    await page.screenshot({ path: 'test-results/image-viewer-11-viewer-forward.png' });
 
     // Navigate back using viewer controls
     await page.locator('button.fiv-prev > span').click();
@@ -77,7 +67,5 @@ test.describe('Gallery - Image Viewer Layout', () => {
     await page.locator('button.fiv-prev > span').click();
     await page.locator('button.fiv-prev > span').click();
 
-    // Screenshot: Final state
-    await page.screenshot({ path: 'test-results/image-viewer-12-final.png' });
   });
 });

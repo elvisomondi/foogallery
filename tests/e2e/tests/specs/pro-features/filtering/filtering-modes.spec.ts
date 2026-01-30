@@ -46,7 +46,6 @@ test.describe('Filtering - Selection Modes', () => {
         expect(isFirstSelected).toBe(false);
         expect(isSecondSelected).toBe(true);
 
-        await page.screenshot({ path: 'test-results/filtering-mode-single-result.png' });
       }
     });
   });
@@ -87,7 +86,6 @@ test.describe('Filtering - Selection Modes', () => {
         const countAfterSecond = await getVisibleItemCount(page);
         expect(countAfterSecond).toBeGreaterThanOrEqual(countAfterFirst);
 
-        await page.screenshot({ path: 'test-results/filtering-mode-or-result.png' });
       }
     });
 
@@ -118,7 +116,6 @@ test.describe('Filtering - Selection Modes', () => {
         isSelected = await isFilterSelected(page, tags[0]);
         expect(isSelected).toBe(false);
 
-        await page.screenshot({ path: 'test-results/filtering-mode-or-deselect-result.png' });
       }
     });
   });
@@ -159,7 +156,6 @@ test.describe('Filtering - Selection Modes', () => {
         const countAfterSecond = await getVisibleItemCount(page);
         expect(countAfterSecond).toBeLessThanOrEqual(countAfterFirst);
 
-        await page.screenshot({ path: 'test-results/filtering-mode-and-result.png' });
       }
     });
 
@@ -200,7 +196,6 @@ test.describe('Filtering - Selection Modes', () => {
           expect(counts[i]).toBeLessThanOrEqual(counts[i - 1]);
         }
 
-        await page.screenshot({ path: 'test-results/filtering-mode-and-restrict-result.png' });
       }
     });
   });

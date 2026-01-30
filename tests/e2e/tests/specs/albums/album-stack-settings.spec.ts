@@ -17,7 +17,6 @@ import {
 
 test.describe('Album - Stack Template Settings', () => {
   test.beforeEach(async ({ page }) => {
-    await page.setViewportSize({ width: 1932, height: 1271 });
     await ensureGalleriesExist(page, 3);
   });
 
@@ -32,7 +31,6 @@ test.describe('Album - Stack Template Settings', () => {
       randomAngle: true,
     });
 
-    await page.screenshot({ path: 'test-results/album-stack-random-angle-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -47,7 +45,6 @@ test.describe('Album - Stack Template Settings', () => {
     const count = await piles.count();
     expect(count).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-stack-random-angle-frontend.png' });
   });
 
   test('applies custom gutter spacing', async ({ page }) => {
@@ -61,7 +58,6 @@ test.describe('Album - Stack Template Settings', () => {
       gutter: 60,
     });
 
-    await page.screenshot({ path: 'test-results/album-stack-gutter-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -77,7 +73,6 @@ test.describe('Album - Stack Template Settings', () => {
       expect(dataGutter).toBe('60');
     }
 
-    await page.screenshot({ path: 'test-results/album-stack-gutter-frontend.png' });
   });
 
   test('applies pile angle level 1', async ({ page }) => {
@@ -92,7 +87,6 @@ test.describe('Album - Stack Template Settings', () => {
       pileAngle: 1,
     });
 
-    await page.screenshot({ path: 'test-results/album-stack-pile-angle-1-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -105,7 +99,6 @@ test.describe('Album - Stack Template Settings', () => {
     const count = await piles.count();
     expect(count).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-stack-pile-angle-1-frontend.png' });
   });
 
   test('applies pile angle level 3 (high intensity)', async ({ page }) => {
@@ -120,7 +113,6 @@ test.describe('Album - Stack Template Settings', () => {
       pileAngle: 3,
     });
 
-    await page.screenshot({ path: 'test-results/album-stack-pile-angle-3-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -129,7 +121,6 @@ test.describe('Album - Stack Template Settings', () => {
     const stackContainer = page.locator(ALBUM_SELECTORS.frontend.stackContainer);
     await expect(stackContainer).toBeVisible();
 
-    await page.screenshot({ path: 'test-results/album-stack-pile-angle-3-frontend.png' });
   });
 
   test('applies thumbnail dimensions', async ({ page }) => {
@@ -144,7 +135,6 @@ test.describe('Album - Stack Template Settings', () => {
       thumbHeight: 180,
     });
 
-    await page.screenshot({ path: 'test-results/album-stack-thumb-dimensions-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -161,7 +151,6 @@ test.describe('Album - Stack Template Settings', () => {
       await expect(firstPileImage).toBeVisible();
     }
 
-    await page.screenshot({ path: 'test-results/album-stack-thumb-dimensions-frontend.png' });
   });
 
   test('stack album displays without lightbox', async ({ page }) => {
@@ -172,7 +161,6 @@ test.describe('Album - Stack Template Settings', () => {
     await selectAlbumTemplate(page, 'stack');
     await selectGalleries(page, 3);
 
-    await page.screenshot({ path: 'test-results/album-stack-basic-config.png' });
 
     await publishAlbum(page);
     await createPageWithAlbum(page);
@@ -189,6 +177,5 @@ test.describe('Album - Stack Template Settings', () => {
     const pileCount = await piles.count();
     expect(pileCount).toBeGreaterThanOrEqual(2);
 
-    await page.screenshot({ path: 'test-results/album-stack-basic-frontend.png' });
   });
 });

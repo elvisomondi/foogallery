@@ -23,8 +23,6 @@ test.describe('EXIF Global Settings', () => {
   const screenshotPrefix = 'exif-global';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('navigates to global EXIF settings', async ({ page }) => {
@@ -32,7 +30,6 @@ test.describe('EXIF Global Settings', () => {
     await navigateToFooGallerySettings(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-settings-page.png` });
 
     // Verify we're on the settings page
     await expect(page).toHaveURL(/page=foogallery-settings/);
@@ -43,7 +40,6 @@ test.describe('EXIF Global Settings', () => {
     await navigateToGlobalExifSettings(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-exif-attributes.png` });
 
     // Look for EXIF attributes setting
     // This is typically a textarea or multi-select for allowed EXIF fields
@@ -71,7 +67,6 @@ test.describe('EXIF Global Settings', () => {
       await page.waitForTimeout(300);
 
       // Screenshot
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-03-modified-attributes-admin.png` });
 
       // Verify value was changed
       await expect(exifTextarea).toHaveValue('camera,aperture');
@@ -108,7 +103,6 @@ test.describe('EXIF Global Settings', () => {
     // Open lightbox and verify only camera and aperture are shown
     const exifOpened = await openLightboxAndShowExif(page, 0);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-modified-attributes-frontend.png` });
 
     if (exifOpened) {
       const exifValues = await getExifValuesFromLightbox(page);
@@ -146,7 +140,6 @@ test.describe('EXIF Global Settings', () => {
       await apertureLabelInput.fill('F-Stop');
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-04-custom-aperture-label-admin.png` });
       await expect(apertureLabelInput).toHaveValue('F-Stop');
 
       // Save settings
@@ -163,7 +156,6 @@ test.describe('EXIF Global Settings', () => {
       if (await labelInput.isVisible()) {
         originalValue = await labelInput.inputValue();
         await labelInput.fill('F-Stop');
-        await page.screenshot({ path: `test-results/${screenshotPrefix}-04-custom-aperture-label-admin.png` });
 
         const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
         if (await saveButton.isVisible()) {
@@ -196,7 +188,6 @@ test.describe('EXIF Global Settings', () => {
 
     await openLightboxAndShowExif(page, 0);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-custom-aperture-label-frontend.png` });
 
     // Check if custom label is used
     const exifProps = page.locator(EXIF_SELECTORS.exifProp);
@@ -243,7 +234,6 @@ test.describe('EXIF Global Settings', () => {
       await cameraLabelInput.fill('Camera Model');
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-05-custom-camera-label-admin.png` });
       await expect(cameraLabelInput).toHaveValue('Camera Model');
 
       const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
@@ -258,7 +248,6 @@ test.describe('EXIF Global Settings', () => {
       if (await labelInput.isVisible()) {
         originalValue = await labelInput.inputValue();
         await labelInput.fill('Camera Model');
-        await page.screenshot({ path: `test-results/${screenshotPrefix}-05-custom-camera-label-admin.png` });
 
         const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
         if (await saveButton.isVisible()) {
@@ -290,7 +279,6 @@ test.describe('EXIF Global Settings', () => {
 
     await openLightboxAndShowExif(page, 0);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-custom-camera-label-frontend.png` });
 
     const exifValues = await getExifValuesFromLightbox(page);
     // Verify camera value exists (with possibly custom label)
@@ -324,7 +312,6 @@ test.describe('EXIF Global Settings', () => {
       await dateLabelInput.fill('Date Taken');
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-06-custom-date-label-admin.png` });
       await expect(dateLabelInput).toHaveValue('Date Taken');
 
       const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
@@ -339,7 +326,6 @@ test.describe('EXIF Global Settings', () => {
       if (await labelInput.isVisible()) {
         originalValue = await labelInput.inputValue();
         await labelInput.fill('Date Taken');
-        await page.screenshot({ path: `test-results/${screenshotPrefix}-06-custom-date-label-admin.png` });
 
         const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
         if (await saveButton.isVisible()) {
@@ -371,7 +357,6 @@ test.describe('EXIF Global Settings', () => {
 
     const exifOpened = await openLightboxAndShowExif(page, 0);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-custom-date-label-frontend.png` });
 
     // Verify EXIF panel is open (it should be with full layout)
     expect(exifOpened).toBe(true);
@@ -404,7 +389,6 @@ test.describe('EXIF Global Settings', () => {
       await exposureLabelInput.fill('Shutter');
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-07-custom-exposure-label-admin.png` });
       await expect(exposureLabelInput).toHaveValue('Shutter');
 
       const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
@@ -419,7 +403,6 @@ test.describe('EXIF Global Settings', () => {
       if (await labelInput.isVisible()) {
         originalValue = await labelInput.inputValue();
         await labelInput.fill('Shutter');
-        await page.screenshot({ path: `test-results/${screenshotPrefix}-07-custom-exposure-label-admin.png` });
 
         const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
         if (await saveButton.isVisible()) {
@@ -451,7 +434,6 @@ test.describe('EXIF Global Settings', () => {
 
     const exifOpened = await openLightboxAndShowExif(page, 0);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-custom-exposure-label-frontend.png` });
 
     // Verify EXIF panel opened
     expect(exifOpened).toBe(true);
@@ -484,7 +466,6 @@ test.describe('EXIF Global Settings', () => {
       await focalLabelInput.fill('Lens Focal Length');
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-08-custom-focal-label-admin.png` });
       await expect(focalLabelInput).toHaveValue('Lens Focal Length');
 
       const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
@@ -499,7 +480,6 @@ test.describe('EXIF Global Settings', () => {
       if (await labelInput.isVisible()) {
         originalValue = await labelInput.inputValue();
         await labelInput.fill('Lens Focal Length');
-        await page.screenshot({ path: `test-results/${screenshotPrefix}-08-custom-focal-label-admin.png` });
 
         const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
         if (await saveButton.isVisible()) {
@@ -531,7 +511,6 @@ test.describe('EXIF Global Settings', () => {
 
     await openLightboxAndShowExif(page, 0);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-custom-focal-label-frontend.png` });
 
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
     await expect(exifContainer).toBeVisible();
@@ -564,7 +543,6 @@ test.describe('EXIF Global Settings', () => {
       await isoLabelInput.fill('ISO Speed');
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-09-custom-iso-label-admin.png` });
       await expect(isoLabelInput).toHaveValue('ISO Speed');
 
       const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
@@ -579,7 +557,6 @@ test.describe('EXIF Global Settings', () => {
       if (await labelInput.isVisible()) {
         originalValue = await labelInput.inputValue();
         await labelInput.fill('ISO Speed');
-        await page.screenshot({ path: `test-results/${screenshotPrefix}-09-custom-iso-label-admin.png` });
 
         const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
         if (await saveButton.isVisible()) {
@@ -611,7 +588,6 @@ test.describe('EXIF Global Settings', () => {
 
     await openLightboxAndShowExif(page, 0);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-custom-iso-label-frontend.png` });
 
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
     await expect(exifContainer).toBeVisible();
@@ -646,7 +622,6 @@ test.describe('EXIF Global Settings', () => {
       await exifTextarea.fill('');
       await page.waitForTimeout(300);
 
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-10-empty-attributes-admin.png` });
       await expect(exifTextarea).toHaveValue('');
 
       const saveButton = page.locator('input[type="submit"][value="Save Changes"], button:has-text("Save Changes")').first();
@@ -676,13 +651,11 @@ test.describe('EXIF Global Settings', () => {
     await publishGalleryAndNavigateToFrontend(page);
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-empty-attributes-frontend.png` });
 
     // Open lightbox - info button may be disabled if no EXIF attributes are configured
     await openLightbox(page, 0);
     const infoToggled = await toggleLightboxInfo(page);
 
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-empty-attributes-lightbox.png` });
 
     // With empty attributes, EXIF should not display any properties
     if (infoToggled) {

@@ -24,7 +24,6 @@ test.describe('Album - Frontend Default Template', () => {
 
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
-    await page.setViewportSize({ width: 1932, height: 1271 });
 
     // Create album once for all tests in this describe block
     await ensureGalleriesExist(page, 3);
@@ -43,7 +42,6 @@ test.describe('Album - Frontend Default Template', () => {
   });
 
   test.beforeEach(async ({ page }) => {
-    await page.setViewportSize({ width: 1932, height: 1271 });
     // Navigate to the album page before each test
     await page.goto(albumPageUrl);
     await page.waitForLoadState('networkidle');
@@ -60,7 +58,6 @@ test.describe('Album - Frontend Default Template', () => {
     const containerHTML = await albumContainer.innerHTML();
     expect(containerHTML.length).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-container.png' });
   });
 
   test('displays gallery piles with correct count', async ({ page }) => {
@@ -71,7 +68,6 @@ test.describe('Album - Frontend Default Template', () => {
     // Should have 3 piles (we created album with 3 galleries)
     expect(pileCount).toBeGreaterThanOrEqual(2);
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-piles.png' });
   });
 
   test('displays gallery thumbnails in piles', async ({ page }) => {
@@ -85,7 +81,6 @@ test.describe('Album - Frontend Default Template', () => {
     // First image should be visible
     await expect(pileImages.first()).toBeVisible();
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-thumbnails.png' });
   });
 
   test('displays gallery titles', async ({ page }) => {
@@ -101,7 +96,6 @@ test.describe('Album - Frontend Default Template', () => {
     expect(titles.length).toBeGreaterThan(0);
     expect(titles[0]).toBeTruthy();
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-titles.png' });
   });
 
   test('displays image counts in piles', async ({ page }) => {
@@ -118,7 +112,6 @@ test.describe('Album - Frontend Default Template', () => {
       expect(firstCount).toBeTruthy();
     }
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-counts.png' });
   });
 
   test('navigates to gallery on pile click', async ({ page }) => {
@@ -145,7 +138,6 @@ test.describe('Album - Frontend Default Template', () => {
     const itemCount = await galleryItems.count();
     expect(itemCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-gallery-view.png' });
   });
 
   test('displays back link on gallery page', async ({ page }) => {
@@ -159,7 +151,6 @@ test.describe('Album - Frontend Default Template', () => {
     const backLink = page.locator(ALBUM_SELECTORS.frontend.backLink);
     await expect(backLink.first()).toBeVisible();
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-back-link.png' });
   });
 
   test('returns to album via back link', async ({ page }) => {
@@ -185,7 +176,6 @@ test.describe('Album - Frontend Default Template', () => {
     const pileCount = await piles.count();
     expect(pileCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-back-to-album.png' });
   });
 
   test('opens lightbox on image click', async ({ page }) => {
@@ -208,7 +198,6 @@ test.describe('Album - Frontend Default Template', () => {
       await expect(lightboxImage.first()).toBeVisible();
     }
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-lightbox-open.png' });
   });
 
   test('closes lightbox correctly', async ({ page }) => {
@@ -235,6 +224,5 @@ test.describe('Album - Frontend Default Template', () => {
     const galleryContainer = page.locator(ALBUM_SELECTORS.frontend.galleryContainer);
     await expect(galleryContainer).toBeVisible();
 
-    await page.screenshot({ path: 'test-results/album-frontend-default-lightbox-closed.png' });
   });
 });

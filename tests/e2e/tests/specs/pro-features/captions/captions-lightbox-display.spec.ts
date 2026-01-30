@@ -19,8 +19,6 @@ test.describe('Lightbox Caption Display', () => {
   const screenshotPrefix = 'captions-lightbox-display';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('displays caption in lightbox', async ({ page }) => {
@@ -43,7 +41,6 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-caption-in-lightbox.png` });
 
     // Verify lightbox is visible
     const lightbox = page.locator(CAPTION_SELECTORS.lightboxPanel);
@@ -73,7 +70,6 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-title-in-lightbox.png` });
 
     // Check if title element exists in lightbox
     const titleElement = page.locator(CAPTION_SELECTORS.lightboxCaptionTitle);
@@ -108,7 +104,6 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-desc-in-lightbox.png` });
 
     // Check if description element exists in lightbox
     const descElement = page.locator(CAPTION_SELECTORS.lightboxCaptionDescription);
@@ -144,7 +139,6 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-caption-hidden-lightbox.png` });
 
     // Verify lightbox is visible but caption elements should be hidden or not present
     const lightbox = page.locator(CAPTION_SELECTORS.lightboxPanel);
@@ -175,7 +169,6 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot before toggle
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-before-toggle.png` });
 
     // Try to toggle info panel
     const infoButton = page.locator(CAPTION_SELECTORS.lightboxInfoButton);
@@ -184,7 +177,6 @@ test.describe('Lightbox Caption Display', () => {
       await page.waitForTimeout(500);
 
       // Screenshot after toggle
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-05-after-toggle.png` });
     }
 
     // Verify lightbox is visible
@@ -216,7 +208,6 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-position-top-lightbox.png` });
 
     // Verify lightbox is visible
     const lightbox = page.locator(CAPTION_SELECTORS.lightboxPanel);
@@ -247,7 +238,6 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-position-bottom-lightbox.png` });
 
     // Verify lightbox is visible
     const lightbox = page.locator(CAPTION_SELECTORS.lightboxPanel);
@@ -277,19 +267,16 @@ test.describe('Lightbox Caption Display', () => {
     await openLightbox(page, 0);
 
     // Screenshot first image
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-first-image.png` });
 
     // Navigate to next image
     await navigateToNextInLightbox(page);
 
     // Screenshot second image
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-second-image.png` });
 
     // Navigate to next image again
     await navigateToNextInLightbox(page);
 
     // Screenshot third image
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-third-image.png` });
 
     // Verify lightbox is still visible
     const lightbox = page.locator(CAPTION_SELECTORS.lightboxPanel);

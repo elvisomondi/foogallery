@@ -16,8 +16,6 @@ test.describe('Instagram Filters', () => {
 
   test.describe('Admin Settings', () => {
     test('navigates to Appearance tab', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       // Navigate to Add New Gallery
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
@@ -37,12 +35,9 @@ test.describe('Instagram Filters', () => {
       const appearanceTab = page.locator('div.foogallery-settings-container-default div.foogallery-vertical-tabs > div:nth-of-type(3)');
       await expect(appearanceTab).toHaveClass(/foogallery-tab-active/);
 
-      await page.screenshot({ path: 'test-results/instagram-filters-appearance-tab.png' });
     });
 
     test('shows all 12 Instagram filter options plus none', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -60,12 +55,9 @@ test.describe('Instagram Filters', () => {
         await expect(filterOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/instagram-filters-all-options.png' });
     });
 
     test('default filter is none', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -81,7 +73,6 @@ test.describe('Instagram Filters', () => {
       const noneOption = page.locator('#FooGallerySettings_default_instagram0');
       await expect(noneOption).toBeChecked();
 
-      await page.screenshot({ path: 'test-results/instagram-filters-default-none.png' });
     });
   });
 

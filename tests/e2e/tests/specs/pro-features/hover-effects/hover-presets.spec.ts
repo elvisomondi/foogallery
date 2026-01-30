@@ -18,8 +18,6 @@ test.describe('Hover Effect Presets', () => {
 
   test.describe('Admin Settings', () => {
     test('navigates to Hover Effects tab', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -35,12 +33,9 @@ test.describe('Hover Effect Presets', () => {
       const hoverTab = page.locator('div.foogallery-settings-container-default div.foogallery-vertical-tabs > div:nth-of-type(4)');
       await expect(hoverTab).toHaveClass(/foogallery-tab-active/);
 
-      await page.screenshot({ path: 'test-results/hover-presets-tab.png' });
     });
 
     test('shows hover effect type options', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -58,12 +53,9 @@ test.describe('Hover Effect Presets', () => {
         await expect(typeOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/hover-presets-type-options.png' });
     });
 
     test('shows all 12 preset options when preset type is selected', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -85,7 +77,6 @@ test.describe('Hover Effect Presets', () => {
         await expect(presetOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/hover-presets-all-options.png' });
     });
   });
 

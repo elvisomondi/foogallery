@@ -16,8 +16,6 @@ test.describe('Gallery Theme', () => {
 
   test.describe('Admin Settings', () => {
     test('shows all theme options', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -35,12 +33,9 @@ test.describe('Gallery Theme', () => {
         await expect(themeOption).toBeVisible();
       }
 
-      await page.screenshot({ path: 'test-results/themes-all-options.png' });
     });
 
     test('default theme is light', async ({ page }) => {
-      await page.setViewportSize({ width: 1932, height: 1271 });
-
       await page.goto('/wp-admin/post-new.php?post_type=foogallery');
       await page.waitForLoadState('domcontentloaded');
 
@@ -56,7 +51,6 @@ test.describe('Gallery Theme', () => {
       const lightOption = page.locator('#FooGallerySettings_default_theme0');
       await expect(lightOption).toBeChecked();
 
-      await page.screenshot({ path: 'test-results/themes-default-light.png' });
     });
   });
 

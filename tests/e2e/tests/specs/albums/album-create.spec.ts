@@ -20,7 +20,6 @@ import {
 
 test.describe('Album - Create', () => {
   test.beforeEach(async ({ page }) => {
-    await page.setViewportSize({ width: 1932, height: 1271 });
     // Ensure we have galleries to work with
     await ensureGalleriesExist(page, 3);
   });
@@ -39,7 +38,6 @@ test.describe('Album - Create', () => {
     await selectGalleries(page, 2);
 
     // Take screenshot before publish
-    await page.screenshot({ path: 'test-results/album-create-default-configured.png' });
 
     // Publish
     const albumId = await publishAlbum(page);
@@ -51,7 +49,6 @@ test.describe('Album - Create', () => {
     // Verify album title persisted
     await expect(page.locator(ALBUM_SELECTORS.admin.titleInput)).toHaveValue('Test Album Default');
 
-    await page.screenshot({ path: 'test-results/album-create-default-published.png' });
   });
 
   test('creates album with stack template', async ({ page }) => {
@@ -71,7 +68,6 @@ test.describe('Album - Create', () => {
     // Select galleries
     await selectGalleries(page, 2);
 
-    await page.screenshot({ path: 'test-results/album-create-stack-configured.png' });
 
     // Publish
     const albumId = await publishAlbum(page);
@@ -80,7 +76,6 @@ test.describe('Album - Create', () => {
     // Verify we're on the edit page (indicates successful publish)
     await expect(page).toHaveURL(/post\.php\?post=\d+&action=edit/);
 
-    await page.screenshot({ path: 'test-results/album-create-stack-published.png' });
   });
 
   test('displays shortcode after publish', async ({ page }) => {
@@ -97,7 +92,6 @@ test.describe('Album - Create', () => {
     expect(shortcode).toMatch(/\[foogallery-album id="\d+"\]/);
     expect(shortcode).toContain(albumId);
 
-    await page.screenshot({ path: 'test-results/album-create-shortcode.png' });
   });
 
   test('creates page with album shortcode', async ({ page }) => {
@@ -118,7 +112,6 @@ test.describe('Album - Create', () => {
     const albumContainer = page.locator(ALBUM_SELECTORS.frontend.albumContainer);
     await expect(albumContainer).toBeVisible();
 
-    await page.screenshot({ path: 'test-results/album-create-page.png' });
   });
 
   test('shows album in admin list', async ({ page }) => {
@@ -136,7 +129,6 @@ test.describe('Album - Create', () => {
     const albumExists = await albumExistsInList(page, albumName);
     expect(albumExists).toBe(true);
 
-    await page.screenshot({ path: 'test-results/album-create-list.png' });
   });
 
   test('edits existing album', async ({ page }) => {
@@ -163,7 +155,6 @@ test.describe('Album - Create', () => {
     // Verify new title persisted
     await expect(titleInput).toHaveValue('Test Album Edit Updated');
 
-    await page.screenshot({ path: 'test-results/album-edit-updated.png' });
   });
 
   test('removes gallery from album', async ({ page }) => {
@@ -193,7 +184,6 @@ test.describe('Album - Create', () => {
     const newCount = await selectedGalleries.count();
     expect(newCount).toBeLessThan(initialCount);
 
-    await page.screenshot({ path: 'test-results/album-remove-gallery.png' });
   });
 
   test('adds gallery to existing album', async ({ page }) => {
@@ -228,6 +218,5 @@ test.describe('Album - Create', () => {
     const newCount = await selectedGalleries.count();
     expect(newCount).toBeGreaterThan(initialCount);
 
-    await page.screenshot({ path: 'test-results/album-add-gallery.png' });
   });
 });

@@ -17,8 +17,6 @@ test.describe('Custom Caption Templates', () => {
   const screenshotPrefix = 'captions-custom';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('enables custom caption type', async ({ page }) => {
@@ -42,7 +40,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForTimeout(300);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-custom-type-enabled.png` });
 
     // Verify custom type is selected
     const customRadio = page.locator(`#FooGallerySettings_${templateSelector}_captions_type1`);
@@ -68,7 +65,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForTimeout(300);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-textarea-visible.png` });
 
     // Verify custom template textarea is visible
     const templateTextarea = page.locator(`#FooGallerySettings_${templateSelector}_caption_custom_template`);
@@ -92,7 +88,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-title-placeholder.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -116,7 +111,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-desc-placeholder.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -140,7 +134,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-alt-placeholder.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -164,7 +157,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-id-placeholder.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -188,7 +180,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-multiple-placeholders.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -212,7 +203,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-html-in-caption.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);
@@ -236,7 +226,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-empty-template.png` });
 
     // Get caption from gallery
     const caption = await getCaptionFromGallery(page, 0);
@@ -263,7 +252,6 @@ test.describe('Custom Caption Templates', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-postmeta-placeholder.png` });
 
     // Verify gallery is rendered
     const gallery = page.locator(CAPTION_SELECTORS.galleryContainer);

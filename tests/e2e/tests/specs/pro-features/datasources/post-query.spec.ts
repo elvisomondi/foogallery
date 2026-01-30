@@ -37,7 +37,6 @@ test.describe('Datasource - Post Query', () => {
     const optionText = await postQueryOption.textContent();
     expect(optionText?.toLowerCase()).toMatch(/post|query/);
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-modal.png' });
   });
 
   test('can select post type', async ({ page }) => {
@@ -65,7 +64,6 @@ test.describe('Datasource - Post Query', () => {
     await configurePostQuery(page, { postType: 'attachment' });
     await expect(postTypeInput).toHaveValue('attachment');
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-post-type.png' });
   });
 
   test('can set number of posts', async ({ page }) => {
@@ -89,7 +87,6 @@ test.describe('Datasource - Post Query', () => {
     await configurePostQuery(page, { numberOfPosts: '10' });
     await expect(numberOfPostsInput).toHaveValue('10');
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-number.png' });
   });
 
   test('can set exclude IDs', async ({ page }) => {
@@ -109,7 +106,6 @@ test.describe('Datasource - Post Query', () => {
     await configurePostQuery(page, { exclude: '1,2,3' });
     await expect(excludeInput).toHaveValue('1,2,3');
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-exclude.png' });
   });
 
   test('can set taxonomy filter', async ({ page }) => {
@@ -129,7 +125,6 @@ test.describe('Datasource - Post Query', () => {
     await configurePostQuery(page, { taxonomy: 'category:uncategorized' });
     await expect(taxonomyInput).toHaveValue('category:uncategorized');
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-taxonomy.png' });
   });
 
   test('shows override options', async ({ page }) => {
@@ -153,7 +148,6 @@ test.describe('Datasource - Post Query', () => {
 
     expect(linkVisible || descVisible || titleVisible).toBe(true);
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-overrides.png' });
   });
 
   test('creates gallery from posts', async ({ page }) => {
@@ -171,7 +165,6 @@ test.describe('Datasource - Post Query', () => {
       numberOfPosts: '5',
     });
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-configured.png' });
 
     // Apply datasource
     await applyDatasource(page);
@@ -183,7 +176,6 @@ test.describe('Datasource - Post Query', () => {
     // Publish gallery
     await publishGallery(page);
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-published.png' });
   });
 
   test('gallery displays post images', async ({ page }) => {
@@ -210,7 +202,6 @@ test.describe('Datasource - Post Query', () => {
     const imageCount = await getGalleryImageCount(page);
     expect(imageCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-frontend.png' });
   });
 
   test('lightbox works on post query gallery', async ({ page }) => {
@@ -234,7 +225,6 @@ test.describe('Datasource - Post Query', () => {
     // Test lightbox functionality
     await verifyLightboxWorks(page);
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-lightbox.png' });
   });
 
   test('can edit post query datasource', async ({ page }) => {
@@ -267,7 +257,6 @@ test.describe('Datasource - Post Query', () => {
     const postTypeInput = page.locator(POST_QUERY.postType);
     await expect(postTypeInput).toHaveValue('post');
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-edit.png' });
   });
 
   test('can remove post query datasource', async ({ page }) => {
@@ -297,7 +286,6 @@ test.describe('Datasource - Post Query', () => {
     // Verify datasource info is removed
     await expect(datasourceInfo).not.toBeVisible({ timeout: 5000 });
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-removed.png' });
   });
 
   test('can query attachments directly', async ({ page }) => {
@@ -324,6 +312,5 @@ test.describe('Datasource - Post Query', () => {
     const imageCount = await getGalleryImageCount(page);
     expect(imageCount).toBeGreaterThan(0);
 
-    await page.screenshot({ path: 'test-results/datasource-post-query-attachments.png' });
   });
 });

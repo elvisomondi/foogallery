@@ -33,7 +33,6 @@ test.describe('Filtering - Search', () => {
       // Verify placeholder text
       await expect(searchInput).toHaveAttribute('placeholder', /Search/);
 
-      await page.screenshot({ path: 'test-results/filtering-search-display-result.png' });
     });
 
     test('does not display search input when search is disabled', async ({ page }) => {
@@ -51,7 +50,6 @@ test.describe('Filtering - Search', () => {
       const searchInput = page.locator(FILTERING_SELECTORS.searchInput);
       await expect(searchInput).not.toBeVisible();
 
-      await page.screenshot({ path: 'test-results/filtering-search-disabled-result.png' });
     });
   });
 
@@ -73,7 +71,6 @@ test.describe('Filtering - Search', () => {
       // Type a search term (using a common term that might be in image titles/captions)
       await enterSearchText(page, 'test');
 
-      await page.screenshot({ path: 'test-results/filtering-search-typing-result.png' });
     });
 
     test('clears search and shows all items', async ({ page }) => {
@@ -92,7 +89,6 @@ test.describe('Filtering - Search', () => {
 
       // Type a search term
       await enterSearchText(page, 'sample');
-      await page.screenshot({ path: 'test-results/filtering-search-clear-before.png' });
 
       // Clear search
       await clearSearch(page);
@@ -101,7 +97,6 @@ test.describe('Filtering - Search', () => {
       const finalCount = await getVisibleItemCount(page);
       expect(finalCount).toBe(initialCount);
 
-      await page.screenshot({ path: 'test-results/filtering-search-clear-after.png' });
     });
 
     test('search works with filter tags together', async ({ page }) => {
@@ -122,11 +117,9 @@ test.describe('Filtering - Search', () => {
 
       if (firstTag) {
         await clickFilterTag(page, firstTag);
-        await page.screenshot({ path: 'test-results/filtering-search-tags-filtered.png' });
 
         // Then add a search term
         await enterSearchText(page, 'image');
-        await page.screenshot({ path: 'test-results/filtering-search-tags-searched.png' });
       }
     });
   });
@@ -148,7 +141,6 @@ test.describe('Filtering - Search', () => {
       const filterContainer = page.locator(FILTERING_SELECTORS.container);
       await expect(filterContainer).toHaveClass(/fg-search-above-center/);
 
-      await page.screenshot({ path: 'test-results/filtering-search-above-center-result.png' });
     });
 
     test('displays search above right', async ({ page }) => {
@@ -167,7 +159,6 @@ test.describe('Filtering - Search', () => {
       const filterContainer = page.locator(FILTERING_SELECTORS.container);
       await expect(filterContainer).toHaveClass(/fg-search-above-right/);
 
-      await page.screenshot({ path: 'test-results/filtering-search-above-right-result.png' });
     });
 
     test('displays search below center', async ({ page }) => {
@@ -190,7 +181,6 @@ test.describe('Filtering - Search', () => {
       const filterContainer = page.locator(FILTERING_SELECTORS.container).first();
       await expect(filterContainer).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/filtering-search-below-center-result.png' });
     });
 
     test('displays search before filter (merged)', async ({ page }) => {
@@ -213,7 +203,6 @@ test.describe('Filtering - Search', () => {
       const filterContainer = page.locator(FILTERING_SELECTORS.container).first();
       await expect(filterContainer).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/filtering-search-before-merged-result.png' });
     });
 
     test('displays search after filter (merged)', async ({ page }) => {
@@ -236,7 +225,6 @@ test.describe('Filtering - Search', () => {
       const filterContainer = page.locator(FILTERING_SELECTORS.container).first();
       await expect(filterContainer).toBeVisible();
 
-      await page.screenshot({ path: 'test-results/filtering-search-after-merged-result.png' });
     });
   });
 
@@ -261,7 +249,6 @@ test.describe('Filtering - Search', () => {
       // Test search functionality
       await enterSearchText(page, 'sample');
 
-      await page.screenshot({ path: 'test-results/filtering-search-only-result.png' });
     });
   });
 });

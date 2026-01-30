@@ -19,7 +19,6 @@ test.describe('Album - Frontend Stack Template', () => {
 
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
-    await page.setViewportSize({ width: 1932, height: 1271 });
 
     // Create stack album once for all tests in this describe block
     await ensureGalleriesExist(page, 3);
@@ -38,7 +37,6 @@ test.describe('Album - Frontend Stack Template', () => {
   });
 
   test.beforeEach(async ({ page }) => {
-    await page.setViewportSize({ width: 1932, height: 1271 });
     // Navigate to the album page before each test
     await page.goto(albumPageUrl);
     await page.waitForLoadState('networkidle');
@@ -51,7 +49,6 @@ test.describe('Album - Frontend Stack Template', () => {
     const stackContainer = page.locator(ALBUM_SELECTORS.frontend.stackContainer);
     await expect(stackContainer).toBeVisible();
 
-    await page.screenshot({ path: 'test-results/album-frontend-stack-container.png' });
   });
 
   test('displays all piles', async ({ page }) => {
@@ -66,7 +63,6 @@ test.describe('Album - Frontend Stack Template', () => {
     const piles = page.locator(ALBUM_SELECTORS.frontend.stackPile);
     await expect(piles.first()).toBeVisible();
 
-    await page.screenshot({ path: 'test-results/album-frontend-stack-piles.png' });
   });
 
   test('displays pile items', async ({ page }) => {
@@ -86,7 +82,6 @@ test.describe('Album - Frontend Stack Template', () => {
       await expect(pileImages.first()).toBeVisible();
     }
 
-    await page.screenshot({ path: 'test-results/album-frontend-stack-pile-items.png' });
   });
 
   test('expands pile on click', async ({ page }) => {
@@ -111,7 +106,6 @@ test.describe('Album - Frontend Stack Template', () => {
     const expandedClass = await expandedPile.getAttribute('class');
     // Note: actual class names will depend on FooGallery implementation
 
-    await page.screenshot({ path: 'test-results/album-frontend-stack-expanded.png' });
   });
 
   test('shows gallery title in header', async ({ page }) => {
@@ -130,7 +124,6 @@ test.describe('Album - Frontend Stack Template', () => {
       expect(titleText).toBeTruthy();
     }
 
-    await page.screenshot({ path: 'test-results/album-frontend-stack-header.png' });
   });
 
   test('shows back button when expanded', async ({ page }) => {
@@ -155,6 +148,5 @@ test.describe('Album - Frontend Stack Template', () => {
       expect(pileCount).toBeGreaterThan(0);
     }
 
-    await page.screenshot({ path: 'test-results/album-frontend-stack-back-button.png' });
   });
 });

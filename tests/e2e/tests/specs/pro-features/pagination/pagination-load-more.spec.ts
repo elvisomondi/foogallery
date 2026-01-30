@@ -34,7 +34,6 @@ test.describe('Pagination - Load More', () => {
       const visibleCount = await getVisibleItemCount(page);
       expect(visibleCount).toBe(5);
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-button-visible.png' });
     });
 
     test('hides Load More button when all items are visible', async ({ page }) => {
@@ -51,7 +50,6 @@ test.describe('Pagination - Load More', () => {
       const loadMoreButton = page.locator(PAGINATION_SELECTORS.loadMoreButton);
       await expect(loadMoreButton).not.toBeVisible();
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-not-needed.png' });
     });
   });
 
@@ -79,7 +77,6 @@ test.describe('Pagination - Load More', () => {
       const countAfterClick = await getVisibleItemCount(page);
       expect(countAfterClick).toBe(10);
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-clicked.png' });
     });
 
     test('progressively loads all items with multiple clicks', async ({ page }) => {
@@ -108,7 +105,6 @@ test.describe('Pagination - Load More', () => {
       const isVisible = await isLoadMoreVisible(page);
       expect(isVisible).toBe(false);
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-all-loaded.png' });
     });
 
     test('hides button when all items are loaded', async ({ page }) => {
@@ -138,7 +134,6 @@ test.describe('Pagination - Load More', () => {
       const count = await getVisibleItemCount(page);
       expect(count).toBe(10);
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-complete-result.png' });
     });
   });
 
@@ -163,7 +158,6 @@ test.describe('Pagination - Load More', () => {
       const countAfterClick = await getVisibleItemCount(page);
       expect(countAfterClick).toBe(10);
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-masonry-result.png' });
     });
 
     test('works with Grid Pro template', async ({ page }) => {
@@ -186,7 +180,6 @@ test.describe('Pagination - Load More', () => {
       const countAfterClick = await getVisibleItemCount(page);
       expect(countAfterClick).toBe(12);
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-gridpro-result.png' });
     });
   });
 
@@ -212,7 +205,6 @@ test.describe('Pagination - Load More', () => {
       const countAfterClick = await getVisibleItemCount(page);
       expect(countAfterClick).toBe(16);
 
-      await page.screenshot({ path: 'test-results/pagination-loadmore-custom-size-result.png' });
     });
   });
 });

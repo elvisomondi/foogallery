@@ -26,8 +26,6 @@ test.describe('FooGallery Smoke Tests', () => {
 
     expect(isWordPress).toBeTruthy();
 
-    // Screenshot: Homepage loaded
-    await page.screenshot({ path: 'test-results/smoke-homepage-01-loaded.png' });
   });
 
   test('Admin login works and dashboard loads', async ({ page }) => {
@@ -48,8 +46,6 @@ test.describe('FooGallery Smoke Tests', () => {
     const adminMenu = page.locator('#adminmenu');
     await expect(adminMenu).toBeVisible();
 
-    // Screenshot: Admin dashboard loaded
-    await page.screenshot({ path: 'test-results/smoke-admin-01-dashboard.png' });
   });
 
   test('FooGallery admin menu is accessible', async ({ page }) => {
@@ -66,8 +62,6 @@ test.describe('FooGallery Smoke Tests', () => {
     // Check if FooGallery menu exists
     await expect(fooGalleryMenu).toBeVisible({ timeout: 15000 });
 
-    // Screenshot: FooGallery menu visible in sidebar
-    await page.screenshot({ path: 'test-results/smoke-foogallery-01-menu-visible.png' });
 
     // Click on FooGallery menu
     await fooGalleryMenu.click();
@@ -82,8 +76,6 @@ test.describe('FooGallery Smoke Tests', () => {
     const pageTitle = page.locator('.wrap h1').first();
     await expect(pageTitle).toContainText(/galleries|foogallery/i);
 
-    // Screenshot: FooGallery list page
-    await page.screenshot({ path: 'test-results/smoke-foogallery-02-list-page.png' });
   });
 
   test('FooGallery Add New page loads', async ({ page }) => {
@@ -115,8 +107,6 @@ test.describe('FooGallery Smoke Tests', () => {
     // Gallery UI should be present
     await expect(galleryMetabox).toBeVisible({ timeout: 15000 });
 
-    // Screenshot: Add New Gallery page
-    await page.screenshot({ path: 'test-results/smoke-foogallery-03-add-new-page.png' });
   });
 
   test('FooGallery Pro features are unlocked', async ({ page }) => {
@@ -149,7 +139,5 @@ test.describe('FooGallery Smoke Tests', () => {
 
     expect(hasProIndicators || noFreemiusNag).toBeTruthy();
 
-    // Screenshot: Pro features verification
-    await page.screenshot({ path: 'test-results/smoke-foogallery-04-pro-features.png' });
   });
 });

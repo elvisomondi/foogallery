@@ -18,8 +18,6 @@ test.describe('EXIF Lightbox Display', () => {
   const screenshotPrefix = 'exif-lightbox';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('displays info button in lightbox', async ({ page }) => {
@@ -44,7 +42,6 @@ test.describe('EXIF Lightbox Display', () => {
     await page.waitForSelector(EXIF_SELECTORS.lightboxPanel, { state: 'visible', timeout: 10000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-info-button.png` });
 
     // Verify info button is visible
     const infoButton = page.locator(EXIF_SELECTORS.lightboxInfoButton);
@@ -69,7 +66,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-panel-open.png` });
 
     // Verify EXIF container is visible
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -97,7 +93,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-properties.png` });
 
     // Check for EXIF properties
     const exifProps = page.locator(EXIF_SELECTORS.exifProp);
@@ -126,7 +121,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-aperture.png` });
 
     // Get EXIF values
     const exifValues = await getExifValuesFromLightbox(page);
@@ -156,7 +150,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-camera.png` });
 
     // Get EXIF values
     const exifValues = await getExifValuesFromLightbox(page);
@@ -186,7 +179,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-date.png` });
 
     // Get EXIF values
     const exifValues = await getExifValuesFromLightbox(page);
@@ -216,7 +208,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-shutter.png` });
 
     // Get EXIF values
     const exifValues = await getExifValuesFromLightbox(page);
@@ -246,7 +237,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-focal.png` });
 
     // Get EXIF values
     const exifValues = await getExifValuesFromLightbox(page);
@@ -276,7 +266,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-iso.png` });
 
     // Get EXIF values
     const exifValues = await getExifValuesFromLightbox(page);
@@ -306,7 +295,6 @@ test.describe('EXIF Lightbox Display', () => {
     await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-orientation.png` });
 
     // Get EXIF values
     const exifValues = await getExifValuesFromLightbox(page);
@@ -339,14 +327,12 @@ test.describe('EXIF Lightbox Display', () => {
     const initialValues = await getExifValuesFromLightbox(page);
 
     // Screenshot first image
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-11-navigation-first.png` });
 
     // Navigate to next image
     await navigateToNextInLightbox(page);
     await page.waitForTimeout(500);
 
     // Screenshot second image
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-11-navigation-second.png` });
 
     // Get new EXIF values
     const newValues = await getExifValuesFromLightbox(page);
@@ -392,7 +378,6 @@ test.describe('EXIF Lightbox Display', () => {
     }
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-12-hidden.png` });
 
     // Check EXIF container - may be hidden or not present for images without EXIF
     const exifContainer = page.locator(EXIF_SELECTORS.exifContainer);
@@ -421,7 +406,6 @@ test.describe('EXIF Lightbox Display', () => {
     const exifOpened = await openLightboxAndShowExif(page);
 
     // Screenshot with EXIF open
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-13-close-before.png` });
 
     // Only try to close if EXIF was successfully opened
     if (exifOpened) {
@@ -438,7 +422,6 @@ test.describe('EXIF Lightbox Display', () => {
     }
 
     // Screenshot with EXIF closed
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-13-close-after.png` });
 
     // Verify lightbox is still open
     const lightboxPanel = page.locator(EXIF_SELECTORS.lightboxPanel);
@@ -464,7 +447,6 @@ test.describe('EXIF Lightbox Display', () => {
     const exifOpened = await openLightboxAndShowExif(page);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-14-tooltip-before.png` });
 
     // Only test tooltip if EXIF panel was successfully opened
     if (exifOpened) {
@@ -482,7 +464,6 @@ test.describe('EXIF Lightbox Display', () => {
           await page.waitForTimeout(500);
 
           // Screenshot with tooltip
-          await page.screenshot({ path: `test-results/${screenshotPrefix}-14-tooltip-after.png` });
 
           // Check for tooltip elements (there may be multiple)
           const tooltips = page.locator(EXIF_SELECTORS.exifTooltip);

@@ -27,8 +27,6 @@ test.describe('EXIF Settings Configuration', () => {
   const screenshotPrefix = 'exif-settings';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('displays EXIF tab in gallery settings', async ({ page }) => {
@@ -50,7 +48,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForTimeout(500);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-exif-tab-visible.png` });
 
     // Verify EXIF tab is visible
     const exifTabVisible = await isExifTabVisible(page, templateSelector);
@@ -81,7 +78,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin settings
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-exif-enabled-admin.png` });
 
     // Verify EXIF is enabled (Enabled radio should be checked)
     const enabledRadio = page.locator(`#FooGallerySettings_${templateSelector}_exif_view_status1`);
@@ -94,7 +90,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-exif-enabled-frontend.png` });
 
     // Verify gallery has EXIF position class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -115,7 +110,6 @@ test.describe('EXIF Settings Configuration', () => {
     expect(isVisible).toBe(true);
 
     // Screenshot lightbox with EXIF
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-exif-enabled-lightbox.png` });
 
     await closeLightbox(page);
   });
@@ -142,7 +136,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin settings
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-exif-disabled-admin.png` });
 
     // Verify EXIF is disabled (Disabled radio should be checked)
     const disabledRadio = page.locator(`#FooGallerySettings_${templateSelector}_exif_view_status0`);
@@ -155,7 +148,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-exif-disabled-frontend.png` });
 
     // Verify gallery does NOT have EXIF position classes
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -190,7 +182,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-dependent-settings-visible.png` });
 
     // Verify dependent settings are visible
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -227,7 +218,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-dependent-settings-hidden.png` });
 
     // Verify dependent settings are hidden
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -268,7 +258,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-icon-position-bottom-right-admin.png` });
 
     // Verify icon position is set in admin
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -282,7 +271,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-icon-position-bottom-right-frontend.png` });
 
     // Verify gallery has fg-exif-bottom-right class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -312,7 +300,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-icon-position-bottom-left-admin.png` });
 
     // Verify icon position is set in admin
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -326,7 +313,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-icon-position-bottom-left-frontend.png` });
 
     // Verify gallery has fg-exif-bottom-left class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -356,7 +342,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-icon-position-top-right-admin.png` });
 
     // Verify icon position is set in admin
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -370,7 +355,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-icon-position-top-right-frontend.png` });
 
     // Verify gallery has fg-exif-top-right class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -400,7 +384,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-icon-position-top-left-admin.png` });
 
     // Verify icon position is set in admin
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -414,7 +397,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-icon-position-top-left-frontend.png` });
 
     // Verify gallery has fg-exif-top-left class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -445,7 +427,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-icon-position-none-admin.png` });
 
     // Verify icon position is set to empty/none in admin
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -459,7 +440,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-icon-position-none-frontend.png` });
 
     // Verify gallery does NOT have any position classes
     const hasNoPositionClasses = await verifyExifIconPositionOnFrontend(page, 'none');
@@ -500,7 +480,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-11-icon-theme-dark-admin.png` });
 
     // Verify dark theme is selected in admin
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -515,7 +494,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-11-icon-theme-dark-frontend.png` });
 
     // Verify gallery has fg-exif-dark class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -546,7 +524,6 @@ test.describe('EXIF Settings Configuration', () => {
     });
 
     // Screenshot admin
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-12-icon-theme-light-admin.png` });
 
     // Verify light theme is selected in admin
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -561,7 +538,6 @@ test.describe('EXIF Settings Configuration', () => {
     await page.waitForSelector(EXIF_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot frontend
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-12-icon-theme-light-frontend.png` });
 
     // Verify gallery has fg-exif-light class
     const gallery = page.locator(EXIF_SELECTORS.galleryContainer);
@@ -605,7 +581,6 @@ test.describe('EXIF Settings Configuration', () => {
     }
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-13-no-foogallery-lightbox.png` });
 
     // Navigate to EXIF tab to check if it shows a warning
     await navigateToExifSettings(page, templateSelector);
@@ -642,7 +617,6 @@ test.describe('EXIF Settings Configuration', () => {
       await page.waitForTimeout(500);
 
       // Screenshot
-      await page.screenshot({ path: `test-results/${screenshotPrefix}-14-slider-pro-exif.png` });
 
       // Verify EXIF tab is visible for panel_support template
       const exifTabVisible = await isExifTabVisible(page, sliderProTemplate);

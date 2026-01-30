@@ -18,8 +18,7 @@ test.describe('Video Settings Configuration', () => {
   const screenshotPrefix = 'video-settings';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
+    // Viewport is set globally in playwright.config.ts
   });
 
   test('enables video feature by default', async ({ page }) => {
@@ -39,7 +38,6 @@ test.describe('Video Settings Configuration', () => {
     await navigateToVideoSettings(page, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-default-enabled.png` });
 
     // Verify video is enabled by default (empty value radio should be checked)
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -66,7 +64,6 @@ test.describe('Video Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-disabled.png` });
 
     // Verify disabled radio is checked
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -91,7 +88,6 @@ test.describe('Video Settings Configuration', () => {
     await navigateToVideoSettings(page, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-icon-options.png` });
 
     // Verify all 6 icon options are present
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -123,7 +119,6 @@ test.describe('Video Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-icon-selected.png` });
 
     // Verify icon2 is selected by checking the hidden radio button state
     const isChecked = await page.evaluate(() => {
@@ -153,7 +148,6 @@ test.describe('Video Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-sticky-enabled.png` });
 
     // Verify sticky icon is enabled - check the Yes radio is checked
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -182,7 +176,6 @@ test.describe('Video Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-sticky-disabled.png` });
 
     // Verify sticky icon is disabled (No is checked)
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -208,7 +201,6 @@ test.describe('Video Settings Configuration', () => {
     await navigateToVideoSettings(page, templateSelector);
 
     // Screenshot before - show icon size options
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-icon-size-options.png` });
 
     // Note: Icon size setting is only visible when hover effect is "None"
     // This test verifies the setting exists
@@ -240,7 +232,6 @@ test.describe('Video Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-lightbox-size.png` });
 
     // Verify size is selected
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -268,7 +259,6 @@ test.describe('Video Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-autoplay-enabled.png` });
 
     // Verify autoplay is enabled (Yes is checked)
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);
@@ -297,7 +287,6 @@ test.describe('Video Settings Configuration', () => {
     });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-autoplay-disabled.png` });
 
     // Verify autoplay is disabled (No is checked)
     const templateContainer = page.locator(`.foogallery-settings-container-${templateSelector}`);

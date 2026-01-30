@@ -69,8 +69,6 @@ test.describe('Video Frontend Display', () => {
     await page.goto(galleryPageUrl);
     await page.waitForLoadState('networkidle');
 
-    // Screenshot: Gallery with video thumbnail
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-video-thumbnail.png` });
 
     // Check that gallery is visible
     const gallery = page.locator('.foogallery');
@@ -86,8 +84,6 @@ test.describe('Video Frontend Display', () => {
     await page.goto(galleryPageUrl);
     await page.waitForLoadState('networkidle');
 
-    // Screenshot: Video icon style
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-icon-style.png` });
 
     // The gallery should have video-related classes
     const gallery = page.locator('.foogallery');
@@ -103,8 +99,6 @@ test.describe('Video Frontend Display', () => {
     await page.goto(galleryPageUrl);
     await page.waitForLoadState('networkidle');
 
-    // Screenshot: Sticky icon visible
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-sticky-icon.png` });
 
     // We enabled sticky icon, so gallery should have fg-video-sticky class
     const gallery = page.locator('.foogallery');
@@ -158,7 +152,6 @@ test.describe('Video Frontend Display', () => {
     }
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-video-disabled.png` });
 
     // Gallery should NOT have sticky video icon class when video is disabled
     const gallery = page.locator('.foogallery');
@@ -175,8 +168,6 @@ test.describe('Video Frontend Display', () => {
     await page.goto('/wp-admin/edit.php?post_type=foogallery');
     await page.waitForLoadState('domcontentloaded');
 
-    // Screenshot: Gallery list
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-gallery-list.png` });
 
     // Find the "Test Video Frontend" gallery in the list
     const galleryRow = page.locator('tr').filter({ hasText: 'Test Video Frontend' });

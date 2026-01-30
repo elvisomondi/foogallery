@@ -24,8 +24,6 @@ test.describe('Lightbox Caption Override', () => {
   const screenshotPrefix = 'captions-lightbox-override';
 
   test.beforeEach(async ({ page }) => {
-    // Set viewport size
-    await page.setViewportSize({ width: 1932, height: 1271 });
   });
 
   test('uses thumbnail caption by default', async ({ page }) => {
@@ -45,7 +43,6 @@ test.describe('Lightbox Caption Override', () => {
     await navigateToLightboxInfoTab(page, templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-01-default-caption.png` });
 
     // Verify override is set to none (default)
     const noneRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_caption_override0`);
@@ -70,7 +67,6 @@ test.describe('Lightbox Caption Override', () => {
     await setLightboxCaptionOverride(page, 'override', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-02-override-enabled.png` });
 
     // Verify override is enabled
     const overrideRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_caption_override1`);
@@ -96,7 +92,6 @@ test.describe('Lightbox Caption Override', () => {
     await setLightboxOverrideTitleSource(page, 'alt', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-03-override-title-source.png` });
 
     // Verify title source is set to alt
     const titleRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_caption_override_title${CAPTION_SOURCES.alt}`);
@@ -122,7 +117,6 @@ test.describe('Lightbox Caption Override', () => {
     await setLightboxOverrideDescSource(page, 'desc', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-04-override-desc-source.png` });
 
     // Verify desc source is set to description
     const descRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_caption_override_desc${CAPTION_SOURCES.desc}`);
@@ -147,7 +141,6 @@ test.describe('Lightbox Caption Override', () => {
     await setLightboxCaptionOverride(page, 'custom', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-05-custom-template-enabled.png` });
 
     // Verify custom is selected
     const customRadio = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_caption_override2`);
@@ -177,7 +170,6 @@ test.describe('Lightbox Caption Override', () => {
     await setLightboxCustomTemplate(page, '<h3>{{title}}</h3><p>{{description}}</p>', templateSelector);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-06-custom-template-content.png` });
 
     // Verify template textarea has content
     const templateTextarea = page.locator(`#FooGallerySettings_${templateSelector}_lightbox_caption_custom_template`);
@@ -202,7 +194,6 @@ test.describe('Lightbox Caption Override', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-07-data-lightbox-title.png` });
 
     // Verify anchor element exists
     const anchor = page.locator(CAPTION_SELECTORS.itemAnchor).first();
@@ -227,7 +218,6 @@ test.describe('Lightbox Caption Override', () => {
     await page.waitForSelector(CAPTION_SELECTORS.galleryContainer, { state: 'visible', timeout: 15000 });
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-08-data-lightbox-desc.png` });
 
     // Verify anchor element exists
     const anchor = page.locator(CAPTION_SELECTORS.itemAnchor).first();
@@ -255,7 +245,6 @@ test.describe('Lightbox Caption Override', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-09-overridden-caption-lightbox.png` });
 
     // Verify lightbox is visible
     const lightbox = page.locator(CAPTION_SELECTORS.lightboxPanel);
@@ -286,7 +275,6 @@ test.describe('Lightbox Caption Override', () => {
     await openLightbox(page, 0);
 
     // Screenshot
-    await page.screenshot({ path: `test-results/${screenshotPrefix}-10-custom-template-lightbox.png` });
 
     // Verify lightbox is visible
     const lightbox = page.locator(CAPTION_SELECTORS.lightboxPanel);
