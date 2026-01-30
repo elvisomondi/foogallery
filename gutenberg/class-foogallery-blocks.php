@@ -13,7 +13,8 @@ if ( ! class_exists( 'FooGallery_Blocks' ) ) {
 
 		function __construct() {
 			//Backend editor block assets.
-			add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+			//add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+			add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_editor_assets' ) );
 
 			add_action( 'init', array( $this, 'php_block_init' ) );
 
@@ -35,8 +36,13 @@ if ( ! class_exists( 'FooGallery_Blocks' ) ) {
 				return;
 			}
 
+			if ( !is_admin() ) {
+				return;
+			}
+
 			//enqueue foogallery dependencies
 			wp_enqueue_script( 'masonry' );
+			wp_enqueue_script( 'lodash' );
 			foogallery_enqueue_core_gallery_template_script();
 			foogallery_enqueue_core_gallery_template_style();
 
@@ -77,7 +83,9 @@ if ( ! class_exists( 'FooGallery_Blocks' ) ) {
 				"editGalleryUrl" => $this->get_edit_gallery_url()
 			));
 
-			$inline_script = 'window.FOOGALLERY_BLOCK = ' . json_encode( $block_js_data ) . ';';
+			$inline_script = 'if ( typeof window.lodash === "undefined" && typeof window._ !== "undefined" ) { window.lodash = window._; }';
+			$inline_script .= PHP_EOL . 'if ( typeof window._ === "undefined" && typeof window.lodash !== "undefined" ) { window._ = window.lodash; }';
+			$inline_script .= PHP_EOL . 'window.FOOGALLERY_BLOCK = ' . json_encode( $block_js_data ) . ';';
 			if ( false !== $local_data ) {
 				/*
 				 * Pass already loaded translations to our JavaScript.
