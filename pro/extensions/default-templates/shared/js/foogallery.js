@@ -16069,10 +16069,14 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 		},
 		destroy: function(preserveState){
 			var self = this, _super = self._super.bind(self);
-			return self.panel.destroy().then(function(){
-				self.$section.remove();
+			if ( self.panel ) {
+				return self.panel.destroy().then(function(){
+					self.$section.remove();
+					return _super(preserveState);
+				});
+			} else {
 				return _super(preserveState);
-			});
+			}
 		},
 
 		onPreInit: function(){
