@@ -60,11 +60,26 @@ if ( ! class_exists( 'FooGallery_Default_Gallery_Template' ) ) {
 
 			$id         = $gallery->container_id();
 			$dimensions = foogallery_gallery_template_setting('thumbnail_dimensions');
+			$layout     = foogallery_gallery_template_setting( 'layout' );
+			$width		= 0;
+			$height		= 0;
 			if ( is_array( $dimensions ) && array_key_exists( 'width', $dimensions ) && intval( $dimensions['width'] ) > 0 ) {
 				$width = intval( $dimensions['width'] );
-				$css[] = '#' . $id . ' .fg-image { width: ' . $width . 'px; }';
 			}
-
+			if ( is_array( $dimensions ) && array_key_exists( 'height', $dimensions ) && intval( $dimensions['height'] ) > 0 ) {
+				$height = intval( $dimensions['height'] );
+			}
+			if ( !empty( $layout ) ) {
+				if ( $width > 0 && $height > 0 ) {
+					$css[] = '#' . $id . ' .fg-item { max-width: ' . $width . 'px; }';
+					$css[] = '#' . $id . ' .fg-image { aspect-ratio: ' . $width . ' / ' . $height . '; }';
+				}
+			} else {
+				//default layout. Do as before.
+				if ( $width > 0 ) {
+					$css[] = '#' . $id . ' .fg-image { width: ' . $width . 'px; }';
+				}
+			}
 			$spacing = foogallery_intval( foogallery_gallery_template_setting( 'spacing', '10' ) );
 			if ( $spacing >= 0 ) {
 				$css[] = '#' . $id . ' { --fg-gutter: ' . $spacing . 'px; }';
@@ -124,6 +139,28 @@ if ( ! class_exists( 'FooGallery_Default_Gallery_Template' ) ) {
 						),
 						'row_data' => array(
 							'data-foogallery-change-selector' => 'input',
+							'data-foogallery-preview'         => 'shortcode'
+						)
+					),
+					array(
+						'id'       => 'layout',
+						'title'    => __( 'Layout', 'foogallery' ),
+						'desc'     => __( 'Number of columns to show on mobile (screen widths less than 600px)', 'foogallery' ),
+						'section'  => __( 'General', 'foogallery' ),
+						'default'  => '',
+						'type'     => 'radio',
+						'class'    => 'foogallery-radios-stacked',
+						'choices'  => array(
+							''   => __( 'Default (use all available space)', 'foogallery' ),
+							'fg-d-col1' => __( '1 Column', 'foogallery' ),
+							'fg-d-col2' => __( '2 Columns', 'foogallery' ),
+							'fg-d-col3' => __( '3 Columns', 'foogallery' ),
+							'fg-d-col4' => __( '4 Columns', 'foogallery' ),
+							'fg-d-col5' => __( '5 Columns', 'foogallery' ),
+							'fg-d-col6' => __( '6 Columns', 'foogallery' ),
+						),
+						'row_data' => array(
+							'data-foogallery-change-selector' => 'input:radio',
 							'data-foogallery-preview'         => 'shortcode'
 						)
 					),
