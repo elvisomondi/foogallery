@@ -18,6 +18,13 @@ const DependencyExtractionWebpackPlugin = require( '@wordpress/dependency-extrac
  * @return {object} Returns the generated webpack config.
  */
 module.exports = function configHelper(entry, output, mode, productionSourceMaps = false, removePolyfill = false){
+    const resolvedMode = mode ?? "production";
+    if ( resolvedMode === "development" ) {
+        defaults.optimization = {
+            ...defaults.optimization,
+            minimize: false,
+        };
+    }
 
     if ( productionSourceMaps ){
         defaults.devtool = "source-map";
@@ -46,6 +53,6 @@ module.exports = function configHelper(entry, output, mode, productionSourceMaps
         ...defaults,
         entry,
         output,
-        mode: mode ?? "production"
+        mode: resolvedMode
     }
 };
