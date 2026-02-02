@@ -205,6 +205,24 @@ if ( !class_exists( 'FooGallery_FooGrid_Gallery_Template' ) ) {
 						)
 					),
 					array(
+						'id'      => 'panel_enabled',
+						'section' => __( 'Panel', 'foogallery' ),
+						'subsection' => array( 'lightbox-general' => __( 'General', 'foogallery' ) ),
+						'title'   => __('Panel Enabled', 'foogallery'),
+						'desc' => __('Enable or disable the panel.', 'foogallery'),
+						'default' => '',
+						'type'    => 'radio',
+						'choices' => array(
+							'' => __( 'Enabled', 'foogallery' ),
+							'disabled' => __( 'Disabled', 'foogallery' ),
+						),
+						'row_data'=> array(
+							'data-foogallery-change-selector' => 'input',
+							'data-foogallery-value-selector' => 'input:checked',
+							'data-foogallery-preview' => 'shortcode'
+						)
+					),
+					array(
 						'id'      => 'aspect-ratio',
 						'section' => __( 'Panel', 'foogallery' ),
 						'subsection' => array( 'lightbox-general' => __( 'General', 'foogallery' ) ),
@@ -378,6 +396,7 @@ if ( !class_exists( 'FooGallery_FooGrid_Gallery_Template' ) ) {
 			$scroll_smooth = foogallery_gallery_template_setting( 'scroll_smooth', 'yes' ) === 'yes';
 			$scroll_offset = foogallery_gallery_template_setting( 'scroll_offset', 0 );
 			$transition = foogallery_gallery_template_setting( 'transition', 'fade' );
+			$panel_disabled = foogallery_gallery_template_setting( 'panel_enabled', '' ) === 'disabled';
 
 			//map to correct values
 			$transition = $this->get_correct_field_value( 'transition', $transition );
@@ -387,6 +406,9 @@ if ( !class_exists( 'FooGallery_FooGrid_Gallery_Template' ) ) {
 			$options['template']['scrollSmooth'] = $scroll_smooth;
 			$options['template']['scrollOffset'] = intval( $scroll_offset );
 			$options['template']['transition'] = $transition;
+			if ( $panel_disabled ) {
+				$options['template']['noPanel'] = true;
+			}
 
 			return $options;
 		}
