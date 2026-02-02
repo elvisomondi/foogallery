@@ -16044,26 +16044,28 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 		construct: function(options, element){
 			var self = this;
 			self._super(options, element);
-			self.$section = null;
-			self.isFirst = false;
-			self.disableTransitions = false;
-			self.panel = new _.Panel( self, self.template );
-			self.on({
-				"pre-init": self.onPreInit,
-				"parsed-item": self.onParsedItem,
-				"created-item": self.onCreatedItem,
-				"destroy-item": self.onDestroyItem,
-				"after-state": self.onAfterState,
-				"before-page-change": self.onBeforePageChange,
-				"before-filter-change": self.onBeforeFilterChange
-			}, self);
-			self.panel.on({
-				"next": self.onPanelNext,
-				"prev": self.onPanelPrev,
-				"close": self.onPanelClose,
-				"area-load": self.onPanelAreaLoad,
-				"area-unload": self.onPanelAreaUnload
-			}, self);
+			if ( !self.template.noPanel ) {
+				self.$section = null;
+				self.isFirst = false;
+				self.disableTransitions = false;
+				self.panel = new _.Panel( self, self.template );
+				self.on({
+					"pre-init": self.onPreInit,
+					"parsed-item": self.onParsedItem,
+					"created-item": self.onCreatedItem,
+					"destroy-item": self.onDestroyItem,
+					"after-state": self.onAfterState,
+					"before-page-change": self.onBeforePageChange,
+					"before-filter-change": self.onBeforeFilterChange
+				}, self);
+				self.panel.on({
+					"next": self.onPanelNext,
+					"prev": self.onPanelPrev,
+					"close": self.onPanelClose,
+					"area-load": self.onPanelAreaLoad,
+					"area-unload": self.onPanelAreaUnload
+				}, self);
+			}
 		},
 		destroy: function(preserveState){
 			var self = this, _super = self._super.bind(self);
@@ -16328,6 +16330,7 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 
 	_.template.register("foogrid", _.FooGridTemplate, {
 		template: {
+			noPanel: false,
 			classNames: "foogrid-panel",
 			scroll: true,
 			scrollOffset: 0,
