@@ -24,6 +24,15 @@ if ( ! class_exists( 'FooGallery_Thumb_Generator_Background_Fill' ) ) {
 				return $editor;
 			}
 
+			if ( empty( $args['width'] ) || empty( $args['height'] ) ) {
+				return $editor;
+			}
+
+			$current_size = $editor->get_size();
+			if ( $current_size['width'] == $args['width'] && $current_size['height'] == $args['height'] ) {
+				return $editor;
+			}
+
 			$this->editor = $editor;
 			$this->args = $args;
 
@@ -144,34 +153,71 @@ if ( ! class_exists( 'FooGallery_Thumb_Generator_Background_Fill' ) ) {
 			}
 
 			$current_size = $this->editor->get_size();
-			$size = array( 'width' => $this->args['width'], 'height' => $this->args['height'] );
+			$size = array( 'width' => (int) $this->args['width'], 'height' => (int) $this->args['height'] );
 
-			$offset_left = intval( ( $size['width'] - $current_size['width'] ) / 2 );
-			$offset_top = intval( ( $size['height'] - $current_size['height'] ) / 2 );
+			if ( $size['width'] <= $current_size['width'] && $size['height'] <= $current_size['height'] ) {
+				return;
+			}
+
+			$pad_left = max( 0, (int) floor( ( $size['width'] - $current_size['width'] ) / 2 ) );
+			$pad_top = max( 0, (int) floor( ( $size['height'] - $current_size['height'] ) / 2 ) );
+			$pad_right = max( 0, $size['width'] - $current_size['width'] - $pad_left );
+			$pad_bottom = max( 0, $size['height'] - $current_size['height'] - $pad_top );
+
+			if ( $pad_left === 0 && $pad_right === 0 && $pad_top === 0 && $pad_bottom === 0 ) {
+				return;
+			}
 
 			$new_image = new Imagick();
 			$new_image->newImage( $size['width'], $size['height'], new ImagickPixel( 'transparent' ) );
 
 			$draw = new ImagickDraw();
+			if ( method_exists( $draw, 'setStrokeOpacity' ) ) {
+				$draw->setStrokeOpacity( 0 );
+			}
+			$draw->setStrokeWidth( 0 );
 
-			if ( $current_size['width'] != $size['width'] ) {
+			if ( $pad_left > 0 ) {
 				$draw->setFillColor( $this->imagick_pixel_from_color( $colors['left'] ) );
-				$draw->rectangle( 0, 0, $offset_left, $size['height'] );
+				$draw->rectangle( 0, 0, $pad_left - 1, $size['height'] - 1 );
+			}
 
+			if ( $pad_right > 0 ) {
 				$draw->setFillColor( $this->imagick_pixel_from_color( $colors['right'] ) );
-				$draw->rectangle( $offset_left + $current_size['width'], 0, $size['width'], $size['height'] );
+				$draw->rectangle( $size['width'] - $pad_right, 0, $size['width'] - 1, $size['height'] - 1 );
 			}
 
-			if ( $current_size['height'] != $size['height'] ) {
+			if ( $pad_top > 0 ) {
 				$draw->setFillColor( $this->imagick_pixel_from_color( $colors['top'] ) );
-				$draw->rectangle( 0, 0, $size['width'], $offset_top - 1 );
-
-				$draw->setFillColor( $this->imagick_pixel_from_color( $colors['bottom'] ) );
-				$draw->rectangle( 0, $offset_top + $current_size['height'], $size['width'], $size['height'] );
+				$draw->rectangle( 0, 0, $size['width'] - 1, $pad_top - 1 );
 			}
 
-			$new_image->drawImage( $draw );
-			$new_image->compositeImage( $this->editor->get_image(), Imagick::COMPOSITE_OVER, $offset_left, $offset_top );
+			if ( $pad_bottom > 0 ) {
+				$draw->setFillColor( $this->imagick_pixel_from_color( $colors['bottom'] ) );
+				$draw->rectangle( 0, $size['height'] - $pad_bottom, $size['width'] - 1, $size['height'] - 1 );
+			}
+
+			try {
+				$new_image->drawImage( $draw );
+				$new_image->compositeImage( $this->editor->get_image(), Imagick::COMPOSITE_OVER, $pad_left, $pad_top );
+			} catch (ImagickException $e) {
+				error_log('ImagickException message: ' . $e->getMessage());
+				error_log('ImagickException code: ' . $e->getCode());
+				error_log('ImagickException trace: ' . $e->getTraceAsString());
+				return;
+			}
+
+			if ( method_exists( $new_image, 'setImagePage' ) ) {
+				$new_image->setImagePage( $size['width'], $size['height'], 0, 0 );
+			}
+
+			$source_image = $this->editor->get_image();
+			if ( $source_image instanceof Imagick ) {
+				try {
+					$new_image->setImageFormat( $source_image->getImageFormat() );
+				} catch ( Exception $e ) {
+				}
+			}
 
 			$this->editor->update_image( $new_image );
 			$this->editor->update_size();
