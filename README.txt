@@ -4,7 +4,7 @@ Donate link: https://fooplugins.com
 Tags: gallery, image-gallery, photo-gallery, responsive-gallery, lightbox
 Requires at least: 5.3
 Tested up to: 6.9
-Stable tag: 3.1.11
+Stable tag: 3.1.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -289,6 +289,13 @@ Yes. FooGallery does not collect visitor data, and admin tracking is optional.
 Please update in order for FooGallery to work in WP 5.5+!
 
 == Changelog ==
+
+= 3.1.12 =
+
+This release removes from PHP warnings that show in the block editor when the block editor is in "iFrame" mode.
+
+* Date Updated : 4 Feb 2026
+* Fixed : Removed PHP warnings when loading foogallery assets in the iFrame block editor.
 
 = 3.1.11 =
 
