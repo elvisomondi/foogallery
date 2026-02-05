@@ -48,7 +48,7 @@ services:
       VIMEO_ACCESS_TOKEN: ${VIMEO_ACCESS_TOKEN:-}
     volumes:
       # Mount plugin source (read-only)
-      - ../../app/public/wp-content/plugins/foogallery-premium:/var/www/html/wp-content/plugins/foogallery-premium:ro
+      - ${FOOGALLERY_PLUGIN_SOURCE}:/var/www/html/wp-content/plugins/foogallery:ro
       # Mount setup scripts
       - ./scripts:/var/scripts:ro
       # Persist WordPress uploads

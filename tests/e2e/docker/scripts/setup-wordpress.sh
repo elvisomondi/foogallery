@@ -78,15 +78,22 @@ else
     log_warn "See e2e/README.md for setup instructions."
 fi
 
-# Step 4: Activate FooGallery Premium
-log_info "Activating FooGallery Premium..."
-if wp plugin is-active foogallery-premium --allow-root 2>/dev/null; then
-    log_info "FooGallery Premium is already active"
-else
-    wp plugin activate foogallery-premium --allow-root || log_warn "Could not activate FooGallery Premium (may not be installed)"
+# Step 4: Verify FooGallery is installed
+log_info "Verifying FooGallery plugin is installed..."
+if ! wp plugin is-installed foogallery --allow-root 2>/dev/null; then
+    log_error "FooGallery plugin not found. Ensure it is mounted/installed before running E2E tests. Check value for FOOGALLERY_PLUGIN_SOURCE in .env!"
+    exit 1
 fi
 
-# Step 4b: Activate FooGallery Albums Extension
+# Step 4b: Activate FooGallery
+log_info "Activating FooGallery..."
+if wp plugin is-active foogallery --allow-root 2>/dev/null; then
+    log_info "FooGallery is already active"
+else
+    wp plugin activate foogallery --allow-root || log_warn "Could not activate FooGallery"
+fi
+
+# Step 4c: Activate FooGallery Albums Extension
 log_info "Activating FooGallery Albums extension..."
 wp eval 'update_option("foogallery_extensions_activated", array_merge(get_option("foogallery_extensions_activated", array()), array("foogallery-albums" => "FooGallery_Albums_Extension"))); echo "Albums extension activated!";' --allow-root 2>/dev/null || log_warn "Could not activate Albums extension"
 

@@ -12,7 +12,10 @@ cd "$PROJECT_DIR"
 # Load environment variables from .env file if it exists
 if [ -f ".env" ]; then
     echo "[Pre-Test] Loading environment variables from .env..."
-    export $(grep -v '^#' .env | xargs)
+    # Source to preserve spaces and quoted values.
+    set -a
+    . ".env"
+    set +a
 fi
 
 echo ""
