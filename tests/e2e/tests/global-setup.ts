@@ -5,6 +5,7 @@ import { chromium, FullConfig } from '@playwright/test';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as fs from 'fs';
+import { clearDebugLog } from './helpers/php-error-log-helper';
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
@@ -60,6 +61,10 @@ async function globalSetup(config: FullConfig): Promise<void> {
 
   // Wait for WordPress to be ready
   await waitForWordPress(baseURL);
+
+  // Clear debug.log for fresh error tracking
+  console.log('[Global Setup] Clearing debug.log for fresh error tracking...');
+  await clearDebugLog();
 
   // Launch browser for setup
   const browser = await chromium.launch();

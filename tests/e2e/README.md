@@ -307,6 +307,59 @@ Screenshots are captured automatically:
 - On test completion (always)
 - Located in `test-results/` directory
 
+### PHP Error Capture
+
+The test infrastructure automatically captures PHP errors, warnings, and notices from WordPress's `debug.log` during test runs. This helps identify FooGallery-related issues that might not cause test failures but could affect users with `WP_DEBUG` enabled.
+
+**Features:**
+- **Per-test tracking** - Errors are associated with the specific test that triggered them
+- **FooGallery filtering** - Only FooGallery-related entries are highlighted (patterns: `foogallery`, `fg_`, `class-foogallery`, etc.)
+- **Report only** - Errors appear in reports but don't fail tests (unless fatal)
+- **Multiple output formats** - HTML report, JSON summary, and raw debug.log
+
+**View PHP Error Reports:**
+```bash
+# Open HTML report in browser
+npm run errors:view
+
+# View JSON summary
+npm run errors:report
+
+# View raw debug.log
+npm run errors:log
+```
+
+**Reports Generated:**
+- `test-results/php-errors-report.html` - Visual HTML report grouped by test
+- `test-results/php-errors-summary.json` - Machine-readable data for CI/CD
+- `test-results/debug.log` - Complete WordPress debug log
+- `test-results/foogallery-errors.json` - FooGallery-specific errors only
+
+**Error Levels Tracked:**
+| Level | Description |
+|-------|-------------|
+| Fatal | PHP fatal error - application crash |
+| Error | PHP error - may cause issues |
+| Warning | PHP warning - potential problem |
+| Notice | PHP notice - minor issue |
+| Deprecated | Deprecated function usage |
+
+**Advanced: Per-Test Error Assertions**
+
+For tests that need to explicitly check for PHP errors:
+
+```typescript
+import { test, expect } from '../fixtures/error-capture-fixture';
+
+test('gallery should not generate warnings', async ({ page, phpErrors }) => {
+  // Your test code...
+
+  // Assert no FooGallery warnings
+  const errors = await phpErrors.getNewFooGalleryErrors();
+  expect(errors.filter(e => e.level === 'warning')).toHaveLength(0);
+});
+```
+
 ## Troubleshooting
 
 ### Docker Issues

@@ -29,11 +29,11 @@ cd /var/www/html
 
 log_info "Starting WordPress setup..."
 
-# Step 1: Wait for MySQL to be ready
+# Step 1: Wait for MySQL to be ready (using PHP mysqli instead of mariadb-check to avoid SSL issues)
 log_info "Waiting for MySQL..."
 COUNTER=0
 MAX_TRIES=60
-until wp db check --allow-root 2>/dev/null; do
+until php -r "new mysqli('$DB_HOST', '$DB_USER', '$DB_PASSWORD', '$DB_NAME');" 2>/dev/null; do
     COUNTER=$((COUNTER + 1))
     if [ $COUNTER -ge $MAX_TRIES ]; then
         log_error "MySQL not available after ${MAX_TRIES} attempts"

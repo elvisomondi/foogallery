@@ -42,6 +42,8 @@ export default defineConfig({
       open: 'never',
       outputFolder: '../playwright-report',
     }],
+    // PHP error capture reporter
+    ['./reporters/php-error-reporter.ts'],
   ],
 
   // Shared settings for all projects
@@ -68,8 +70,9 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
   },
 
-  // Global setup
+  // Global setup and teardown
   globalSetup: require.resolve('./global-setup'),
+  globalTeardown: require.resolve('./global-teardown'),
 
   // Configure projects (Chromium only for Phase 1)
   projects: [

@@ -45,7 +45,11 @@
 
     "setup": "npm run docker:up && sleep 10 && npm run docker:setup",
     "clean": "npm run docker:clean && rm -rf playwright-report test-results .auth",
-    "clean:artifacts": "rm -rf playwright-report test-results .auth"
+    "clean:artifacts": "rm -rf playwright-report test-results .auth",
+
+    "errors:report": "cat test-results/php-errors-summary.json",
+    "errors:view": "open test-results/php-errors-report.html",
+    "errors:log": "cat test-results/debug.log"
   },
   "devDependencies": {
     "@playwright/test": "^1.40.0",
