@@ -24,8 +24,8 @@ export default defineConfig({
   },
 
   // Run tests sequentially in Phase 1
-  fullyParallel: false,
-  workers: 1,
+  fullyParallel: true,
+  workers: 2,
 
   // Fail the build on CI if you accidentally left test.only in the source code
   forbidOnly: isCI,
