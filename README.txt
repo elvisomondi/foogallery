@@ -4,7 +4,7 @@ Donate link: https://fooplugins.com
 Tags: gallery, image-gallery, photo-gallery, responsive-gallery, lightbox
 Requires at least: 5.3
 Tested up to: 6.9
-Stable tag: 3.1.10
+Stable tag: 3.1.12
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -290,6 +290,22 @@ Please update in order for FooGallery to work in WP 5.5+!
 
 == Changelog ==
 
+= 3.1.12 =
+
+This release removes from PHP warnings that show in the block editor when the block editor is in "iFrame" mode.
+
+* Date Updated : 4 Feb 2026
+* Fixed : Removed PHP warnings when loading foogallery assets in the iFrame block editor.
+
+= 3.1.11 =
+
+This release fixes a bug where FooGallery assets were not loading in the block editor when in "iframe" mode.
+
+* Date Updated : 30 Jan 2026
+* Fixed : Fixed bug where FooGallery assets were not being loaded in iframe mode.
+* Fixed : Fixed bug where FooGallery blocks were not selectable in the block editor.
+* Fixed : Fixed bug where masonry galleries were not calculating correct layout in iframe mode.
+
 = 3.1.10 =
 
 This release fixes a bunch of issues, hardens AJAX calls, and ensures foogallery block is WP 7.0 compatible.
@@ -322,6 +338,7 @@ This release fixes the bug for the missing "Import Video" tab in the media selec
 [//]: # fs_premium_only_begin
 * Fixed: [Expert Plan] fixed bug introduced in 3.1.6 where the "Import Video" tab was not showing in the media selector modal.
 [//]: # fs_premium_only_end
+
 = 3.1.6 =
 
 This release fixes a few bugs and compatability issues with WP Rocket
