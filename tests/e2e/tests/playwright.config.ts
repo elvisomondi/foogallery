@@ -23,7 +23,7 @@ export default defineConfig({
     timeout: 10 * 1000,
   },
 
-  // Run tests sequentially in Phase 1
+  // Run tests in parallel!
   fullyParallel: true,
   workers: 2,
 

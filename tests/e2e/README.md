@@ -132,7 +132,7 @@ ARCHIVE_REPORTS=false
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                    Host Machine                              │
+│                    Host Machine                             │
 │  ┌─────────────────┐    ┌─────────────────────────────────┐ │
 │  │   Playwright    │    │      Docker Network             │ │
 │  │   Test Runner   │    │  ┌─────────┐  ┌──────────┐      │ │
@@ -140,10 +140,10 @@ ARCHIVE_REPORTS=false
 │  │  (TypeScript)   │    │  │  :8080  │  │   :3306  │      │ │
 │  └─────────────────┘    │  └─────────┘  └──────────┘      │ │
 │                         └─────────────────────────────────┘ │
-│                                    ▲                         │
-│                                    │                         │
+│                                    ▲                        │
+│                                    │                        │
 │  ┌─────────────────────────────────┴─────────────────────┐  │
-│  │  foogallery-premium/ (mounted read-only)              │  │
+│  │  foogallery/ (mounted read-only).                     │  │
 │  └───────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -195,17 +195,17 @@ e2e/
 
 ### How FooGallery Plugin is Loaded
 
-The FooGallery Premium plugin is mounted from your local installation into Docker:
+The FooGallery plugin is mounted from your local installation into Docker:
 
 ```yaml
 # docker-compose.yml
 volumes:
-  - ../../app/public/wp-content/plugins/foogallery-premium:/var/www/html/wp-content/plugins/foogallery-premium:ro
+  - ../../app/public/wp-content/plugins/foogallery:/var/www/html/wp-content/plugins/foogallery:ro
 ```
 
 **Path mapping:**
-- Host: `<project-root>/app/public/wp-content/plugins/foogallery-premium`
-- Container: `/var/www/html/wp-content/plugins/foogallery-premium`
+- Host: `<project-root>/app/public/wp-content/plugins/foogallery`
+- Container: `/var/www/html/wp-content/plugins/foogallery`
 
 The `:ro` flag makes it read-only to prevent tests from modifying the plugin source.
 
@@ -393,7 +393,7 @@ sleep 30 && npm run docker:setup
 npm run docker:wp -- plugin list
 
 # Manually activate
-npm run docker:wp -- plugin activate foogallery-premium
+npm run docker:wp -- plugin activate foogallery
 ```
 
 **Permalinks not working:**
@@ -508,7 +508,7 @@ export class GalleryPage {
 2. **Database:** MySQL 8.0 (most common production setup)
 3. **Browser:** Chromium only for Phase 1 (fastest, most stable)
 4. **Sequential Tests:** Tests run sequentially for Phase 1 reliability
-5. **Plugin Location:** Plugin mounted from `../app/public/wp-content/plugins/foogallery-premium`
+5. **Plugin Location:** Plugin mounted from `../app/public/wp-content/plugins/foogallery`
 6. **Freemius Bypass:** Requires manual setup of `secrets/freemius-e2e-helper.php` (see Developer Setup)
 7. **Fresh Environment:** Each `npm test` run starts with a clean WordPress installation
 

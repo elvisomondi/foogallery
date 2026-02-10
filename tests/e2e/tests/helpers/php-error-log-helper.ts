@@ -59,7 +59,6 @@ const EMPTY_LOG_RESULT: LogCaptureResult = {
  */
 const FOOGALLERY_PATTERNS = [
   /foogallery/i,
-  /\/foogallery-premium\//i,
   /class-foogallery/i,
   /\bfg_/i,
   /\bfoogallery_/i,
@@ -401,7 +400,7 @@ export function getEnvironmentInfo(): EnvironmentInfo {
     ).trim();
 
     const fooGalleryVersion = execSync(
-      `docker exec ${CONTAINER_NAME} wp plugin get foogallery-premium --field=version --allow-root`,
+      `docker exec ${CONTAINER_NAME} wp plugin get foogallery --field=version --allow-root`,
       { encoding: 'utf-8' }
     ).trim();
 
