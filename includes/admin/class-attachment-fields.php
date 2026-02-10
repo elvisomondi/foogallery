@@ -224,12 +224,12 @@ if (!class_exists('FooGallery_Attachment_Fields')) {
 								    $post['errors'][ $field ]['errors'][] = __( $values['error_text'] );
 								    // Otherwise we update the custom field
 							    } else {
-								    update_post_meta( $post['ID'], '_' . $field, $value );
+								    update_post_meta( $post_id, '_' . $field, $value );
 							    }
 						    }
 						    // Otherwise, we delete it if it already existed
 						    else {
-							    delete_post_meta( , $field );
+							    delete_post_meta( $post_id, '_' . $field );
 						    }
 					        break;
 
