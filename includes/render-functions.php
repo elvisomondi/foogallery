@@ -135,6 +135,8 @@ function foogallery_build_attachment_html_anchor_attributes( $foogallery_attachm
 		$url = $foogallery_attachment->url;
 	}
 
+	$has_custom_url = 'custom' === $link && ! empty( $url );
+
 	// fallback for images that might not have a custom url.
 	if ( empty( $url ) ) {
 		$url = $foogallery_attachment->url;
@@ -147,6 +149,9 @@ function foogallery_build_attachment_html_anchor_attributes( $foogallery_attachm
 		$attr['href'] = foogallery_process_image_url( $url );
 		if ( ! empty( $foogallery_attachment->custom_target ) && 'default' !== $foogallery_attachment->custom_target ) {
 			$attr['target'] = $foogallery_attachment->custom_target;
+		}
+		if ( $has_custom_url && ! empty( $foogallery_attachment->custom_rel ) ) {
+			$attr['rel'] = $foogallery_attachment->custom_rel;
 		}
 	}
 

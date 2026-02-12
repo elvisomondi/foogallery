@@ -314,34 +314,61 @@ if ( ! class_exists( 'FooGallery_Admin_Gallery_Attachment_Modal' ) ) {
 				);
 
 				if ( array_key_exists( 'title', $data ) ) {
-					$foogallery_post['post_title'] = $data['title'];
+					$foogallery_post['post_title'] = sanitize_text_field( wp_unslash( $data['title'] ) );
 				}
 
 				if ( array_key_exists( 'caption', $data ) ) {
-					$foogallery_post['post_excerpt'] = $data['caption'];
+					$foogallery_post['post_excerpt'] = sanitize_text_field( wp_unslash( $data['caption'] ) );
 				}
 
 				if ( array_key_exists( 'description', $data ) ) {
-					$foogallery_post['post_content'] = $data['description'];
+					$foogallery_post['post_content'] = wp_kses_post( wp_unslash( $data['description'] ) );
 				}
 
 				// Update post meta values
 				if ( array_key_exists( 'alt-text', $data ) ) {
-					update_post_meta( $img_id, '_wp_attachment_image_alt', $data['alt-text'] );
+					$alt_text = sanitize_text_field( wp_unslash( $data['alt-text'] ) );
+					if ( '' === $alt_text ) {
+						delete_post_meta( $img_id, '_wp_attachment_image_alt' );
+					} else {
+						update_post_meta( $img_id, '_wp_attachment_image_alt', $alt_text );
+					}
 				}
 
 				if ( array_key_exists( 'custom-url', $data ) ) {
 					$custom_url = foogallery_sanitize_attachment_custom_url( wp_unslash( $data['custom-url'] ) );
-					update_post_meta( $img_id, '_foogallery_custom_url', $custom_url );
+					if ( '' === $custom_url ) {
+						delete_post_meta( $img_id, '_foogallery_custom_url' );
+					} else {
+						update_post_meta( $img_id, '_foogallery_custom_url', $custom_url );
+					}
 				}
 
 				if ( array_key_exists( 'custom-target', $data ) ) {
 					$custom_target = foogallery_sanitize_attachment_custom_target( wp_unslash( $data['custom-target'] ) );
-					update_post_meta( $img_id, '_foogallery_custom_target', $custom_target );
+					if ( '' === $custom_target ) {
+						delete_post_meta( $img_id, '_foogallery_custom_target' );
+					} else {
+						update_post_meta( $img_id, '_foogallery_custom_target', $custom_target );
+					}
+				}
+
+				if ( array_key_exists( 'custom-rel', $data ) ) {
+					$custom_rel = foogallery_sanitize_attachment_custom_rel( wp_unslash( $data['custom-rel'] ) );
+					if ( '' === $custom_rel ) {
+						delete_post_meta( $img_id, '_foogallery_custom_rel' );
+					} else {
+						update_post_meta( $img_id, '_foogallery_custom_rel', $custom_rel );
+					}
 				}
 
 				if ( array_key_exists( 'custom-class', $data ) ) {
-					update_post_meta( $img_id, '_foogallery_custom_class', $data['custom-class'] );
+					$custom_class = sanitize_text_field( wp_unslash( $data['custom-class'] ) );
+					if ( '' === $custom_class ) {
+						delete_post_meta( $img_id, '_foogallery_custom_class' );
+					} else {
+						update_post_meta( $img_id, '_foogallery_custom_class', $custom_class );
+					}
 				}
 
 				if ( is_array( $foogallery_post ) && count( $foogallery_post ) > 1 ) {
@@ -497,6 +524,7 @@ if ( ! class_exists( 'FooGallery_Admin_Gallery_Attachment_Modal' ) ) {
 
                     $modal_data['custom_url'] = get_post_meta( $attachment_id, '_foogallery_custom_url', true );
                     $modal_data['custom_target'] = get_post_meta( $attachment_id, '_foogallery_custom_target', true );
+                    $modal_data['custom_rel'] = foogallery_sanitize_attachment_custom_rel( get_post_meta( $attachment_id, '_foogallery_custom_rel', true ) );
                     $modal_data['custom_class'] = get_post_meta( $attachment_id, '_foogallery_custom_class', true );
                 }
             }
@@ -711,6 +739,10 @@ if ( ! class_exists( 'FooGallery_Admin_Gallery_Attachment_Modal' ) ) {
 									}
 									?>
 								</select>
+							</span>
+							<span class="setting" data-setting="custom_rel">
+								<label for="attachments-foogallery-custom-rel" class="name"><?php esc_html_e('Custom Rel', 'foogallery'); ?></label>
+								<input type="text" id="attachments-foogallery-custom-rel" name="foogallery[custom-rel]" value="<?php echo esc_attr( $modal_data['custom_rel'] );?>">
 							</span>
 							<span class="setting has-description" data-setting="custom_class">
 								<label for="attachments-foogallery-custom-class" class="name"><?php esc_html_e('Custom Class', 'foogallery'); ?></label>

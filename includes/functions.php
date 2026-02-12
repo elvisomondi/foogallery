@@ -1633,6 +1633,80 @@ function foogallery_sanitize_attachment_custom_target( $target ) {
 }
 
 /**
+ * Sanitize attachment custom rel values against allowed tokens.
+ *
+ * @since 1.0.0
+ *
+ * @param string $rel
+ * @return string
+ */
+function foogallery_sanitize_attachment_custom_rel( $rel ) {
+	if ( ! is_string( $rel ) ) {
+		return '';
+	}
+
+	$rel = strtolower( trim( $rel ) );
+	if ( '' === $rel ) {
+		return '';
+	}
+
+	$allowed = wp_kses_allowed_html();
+
+	$allowed_tokens = array(
+		'alternate',
+		'author',
+		'bookmark',
+		'external',
+		'help',
+		'license',
+		'me',
+		'next',
+		'nofollow',
+		'noopener',
+		'noreferrer',
+		'prev',
+		'search',
+		'sponsored',
+		'tag',
+		'ugc',
+	);
+
+	/**
+	 * Filter the list of allowed rel tokens for attachment custom rel values.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array  $allowed_tokens Allowed rel tokens.
+	 * @param string $rel            Raw rel value before tokenization.
+	 */
+	$allowed_tokens = apply_filters( 'foogallery_custom_rel_allowed_tokens', $allowed_tokens, $rel );
+	if ( ! is_array( $allowed_tokens ) ) {
+		$allowed_tokens = array();
+	}
+
+	$rel_tokens = preg_split( '/\s+/', $rel );
+	if ( ! is_array( $rel_tokens ) ) {
+		return '';
+	}
+
+	$sanitized_tokens = array();
+	foreach ( $rel_tokens as $token ) {
+		$token = sanitize_key( $token );
+
+		if ( in_array( $token, $allowed_tokens, true ) ) {
+			$sanitized_tokens[] = $token;
+		}
+	}
+
+	if ( empty( $sanitized_tokens ) ) {
+		return '';
+	}
+
+	$sanitized_tokens = array_values( array_unique( $sanitized_tokens ) );
+	return implode( ' ', $sanitized_tokens );
+}
+
+/**
  * Sanitize HTML to make it safe to output. Used to sanitize potentially harmful HTML used for captions
  *
  * @since 1.9.23
