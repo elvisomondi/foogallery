@@ -142,28 +142,28 @@ if ( ! class_exists( 'FooGallery_Default_Gallery_Template' ) ) {
 							'data-foogallery-preview'         => 'shortcode'
 						)
 					),
-					array(
-						'id'       => 'layout',
-						'title'    => __( 'Layout', 'foogallery' ),
-						'desc'     => __( 'Number of columns to show on mobile (screen widths less than 600px)', 'foogallery' ),
-						'section'  => __( 'General', 'foogallery' ),
-						'default'  => '',
-						'type'     => 'radio',
-						'class'    => 'foogallery-radios-stacked',
-						'choices'  => array(
-							''   => __( 'Default (use all available space)', 'foogallery' ),
-							'fg-d-col1' => __( '1 Column', 'foogallery' ),
-							'fg-d-col2' => __( '2 Columns', 'foogallery' ),
-							'fg-d-col3' => __( '3 Columns', 'foogallery' ),
-							'fg-d-col4' => __( '4 Columns', 'foogallery' ),
-							'fg-d-col5' => __( '5 Columns', 'foogallery' ),
-							'fg-d-col6' => __( '6 Columns', 'foogallery' ),
-						),
-						'row_data' => array(
-							'data-foogallery-change-selector' => 'input:radio',
-							'data-foogallery-preview'         => 'shortcode'
-						)
-					),
+					// array(
+					// 	'id'       => 'layout',
+					// 	'title'    => __( 'Layout', 'foogallery' ),
+					// 	'desc'     => __( 'Number of columns to show on mobile (screen widths less than 600px)', 'foogallery' ),
+					// 	'section'  => __( 'General', 'foogallery' ),
+					// 	'default'  => '',
+					// 	'type'     => 'radio',
+					// 	'class'    => 'foogallery-radios-stacked',
+					// 	'choices'  => array(
+					// 		''   => __( 'Default (use all available space)', 'foogallery' ),
+					// 		'fg-d-col1' => __( '1 Column', 'foogallery' ),
+					// 		'fg-d-col2' => __( '2 Columns', 'foogallery' ),
+					// 		'fg-d-col3' => __( '3 Columns', 'foogallery' ),
+					// 		'fg-d-col4' => __( '4 Columns', 'foogallery' ),
+					// 		'fg-d-col5' => __( '5 Columns', 'foogallery' ),
+					// 		'fg-d-col6' => __( '6 Columns', 'foogallery' ),
+					// 	),
+					// 	'row_data' => array(
+					// 		'data-foogallery-change-selector' => 'input:radio',
+					// 		'data-foogallery-preview'         => 'shortcode'
+					// 	)
+					// ),
 					array(
 						'id'       => 'mobile_columns',
 						'title'    => __( 'Mobile Layout', 'foogallery' ),
