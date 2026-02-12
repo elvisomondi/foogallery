@@ -104,9 +104,9 @@ if ( ! class_exists( "FooGallery_Pro_Video_Import" ) ) {
 					// Save alt text in the post meta
 					update_post_meta( $result["attachment_id"], "_wp_attachment_image_alt", $video["title"] );
 					// Save the URL that we will be opening
-					update_post_meta( $result["attachment_id"], "_foogallery_custom_url", $video["url"] );
+					update_post_meta( $result["attachment_id"], "_foogallery_custom_url", foogallery_sanitize_attachment_custom_url( $video["url"] ) );
 					// Make sure we open in new tab by default
-					update_post_meta( $result["attachment_id"], "_foogallery_custom_target", foogallery_get_setting( "video_default_target", "_blank" ) );
+					update_post_meta( $result["attachment_id"], "_foogallery_custom_target", foogallery_sanitize_attachment_custom_target( foogallery_get_setting( "video_default_target", "_blank" ) ) );
 					//save video object
 					update_post_meta( $result["attachment_id"], FOOGALLERY_VIDEO_POST_META, $video );
 				}
