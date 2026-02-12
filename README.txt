@@ -4,7 +4,7 @@ Donate link: https://fooplugins.com
 Tags: gallery, image-gallery, photo-gallery, responsive-gallery, lightbox
 Requires at least: 5.3
 Tested up to: 6.9
-Stable tag: 3.1.12
+Stable tag: 3.1.14
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -290,12 +290,25 @@ Please update in order for FooGallery to work in WP 5.5+!
 
 == Changelog ==
 
-= 3.1.12 =
+= 3.1.14 =
 
-This release removes from PHP warnings that show in the block editor when the block editor is in "iFrame" mode.
+This release introduces a new "Custom Rel" field for attachments, and adds support for background fill when using ImageMagick to upscale small images.
 
-* Date Updated : 4 Feb 2026
+* Date Updated : 12 Feb 2026
+* Added : Added support for background fill when using ImageMagick to upscale small images to thumbnail size setting.
+* Update : Renamed "Upscale Small Images" setting to "Background Fill", and enable it by default.
+[//]: # fs_premium_only_begin
+* Added: [Starter Plan] Added new setting for Grid PRO layout, to disable the Panel.
+[//]: # fs_premium_only_end
+
+= 3.1.13 =
+
+This is a bug fix release for PHP warnings, permission checks, and better input validation.
+
+* Date Updated : 10 Feb 2026
 * Fixed : Removed PHP warnings when loading foogallery assets in the iFrame block editor.
+* Fixed : Added permission checks for all admin AJAX calls.
+* Fixed : Improved input validation and render output for Custom URL and Custom Target fields for attachments.
 
 = 3.1.11 =
 

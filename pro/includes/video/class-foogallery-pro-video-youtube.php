@@ -157,14 +157,17 @@ if ( !class_exists("FooGallery_Pro_Video_YouTube") ){
 					parse_str($url_parts["query"], $query_string);
 				}
 
+				$query_v = isset( $query_string['v'] ) ? $query_string['v'] : '';
+				$query_list = isset( $query_string['list'] ) ? $query_string['list'] : '';
+
 				// check if we are dealing with a playlist url
 				if (preg_match('/(www\.)?youtube\.com\/playlist/i', $url)) {
-					return $this->fetch_stream("playlistItems", $query_string["list"], $page, $offset);
+					return $this->fetch_stream("playlistItems", $query_list, $page, $offset);
 				}
 
 				// otherwise we are dealing with one of the single video supported formats
-				$id = $query_string["v"];
-				$list = $query_string["list"];
+				$id = $query_v;
+				$list = $query_list;
 				// if the id does not exist in the query string then we are dealing with a YouTube
 				// short or embed url so grab the id from the last part of the url
 				if (empty($id) && preg_match('/(www\.)?youtube\.com\/(embed|shorts)|youtu\.be/i', $url)) {
@@ -179,7 +182,7 @@ if ( !class_exists("FooGallery_Pro_Video_YouTube") ){
 				}
 
 				if (!empty($list)){
-					return $this->fetch_stream("playlistItems", $query_string["list"], $page, $offset);
+					return $this->fetch_stream("playlistItems", $list, $page, $offset);
 				}
 
 			}
