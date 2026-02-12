@@ -4,7 +4,7 @@ Donate link: https://fooplugins.com
 Tags: gallery, image-gallery, photo-gallery, responsive-gallery, lightbox
 Requires at least: 5.3
 Tested up to: 6.9
-Stable tag: 3.1.13
+Stable tag: 3.1.14
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -289,6 +289,15 @@ Yes. FooGallery does not collect visitor data, and admin tracking is optional.
 Please update in order for FooGallery to work in WP 5.5+!
 
 == Changelog ==
+
+= 3.1.14 =
+
+This release introduces a new "Custom Rel" field for attachments, which allows you to set a custom rel attribute for the thumbnail link.
+
+* Date Updated : 12 Feb 2026
+[//]: # fs_premium_only_begin
+* Added: [Starter Plan] Added new setting for Grid PRO layout, to disable the Panel.
+[//]: # fs_premium_only_end
 
 = 3.1.13 =
 
