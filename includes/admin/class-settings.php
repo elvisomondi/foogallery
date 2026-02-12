@@ -343,8 +343,8 @@ if ( ! class_exists( 'FooGallery_Admin_Settings' ) ) {
 			if ( foogallery_thumb_active_engine()->has_local_cache() ) {
 				$settings[] = array(
 					'id'    => 'thumb_resize_upscale_small',
-					'title' => __( 'Upscale Small Images', 'foogallery' ),
-					'desc'  => __( 'If the original image is smaller than the thumbnail size, then use a background color to fill the space.', 'foogallery' ),
+					'title' => __( 'Background Fill', 'foogallery' ),
+					'desc'  => __( 'If the image is smaller than the thumbnail size, then use a background color to fill the space. (Previously called Upscale Small Images)', 'foogallery' ),
 					'default' => 'on',
 					'type'  => 'checkbox',
 					'tab'   => 'thumb'
@@ -352,7 +352,7 @@ if ( ! class_exists( 'FooGallery_Admin_Settings' ) ) {
 
 				$settings[] = array(
 					'id'      => 'thumb_resize_upscale_small_color',
-					'title'   => __( 'Upscale Background Color', 'foogallery' ),
+					'title'   => __( 'Background Fill Color', 'foogallery' ),
 					'desc'    => __( 'The background color to use for upscaled images. You can also use "transparent" or "auto".', 'foogallery' ),
 					'type'    => 'text',
 					'default' => 'auto',

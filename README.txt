@@ -292,9 +292,11 @@ Please update in order for FooGallery to work in WP 5.5+!
 
 = 3.1.14 =
 
-This release introduces a new "Custom Rel" field for attachments, which allows you to set a custom rel attribute for the thumbnail link.
+This release introduces a new "Custom Rel" field for attachments, and adds support for background fill when using ImageMagick to upscale small images.
 
 * Date Updated : 12 Feb 2026
+* Added : Added support for background fill when using ImageMagick to upscale small images to thumbnail size setting.
+* Update : Renamed "Upscale Small Images" setting to "Background Fill", and enable it by default.
 [//]: # fs_premium_only_begin
 * Added: [Starter Plan] Added new setting for Grid PRO layout, to disable the Panel.
 [//]: # fs_premium_only_end
