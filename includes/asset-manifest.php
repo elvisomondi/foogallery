@@ -9,8 +9,8 @@ return [
     'extensions/default-templates/shared/js/foogallery.ready.min.js' => 'assets/js/foogallery.ready.e6fae73a.min.js',
     'extensions/default-templates/shared/js/foogallery.polyfills.js' => 'assets/js/foogallery.polyfills.37f35c9b.js',
     'extensions/default-templates/shared/js/foogallery.polyfills.min.js' => 'assets/js/foogallery.polyfills.c943decf.min.js',
-    'pro/extensions/default-templates/shared/css/foogallery.css' => 'pro/assets/css/foogallery.978ec1e9.css',
-    'pro/extensions/default-templates/shared/css/foogallery.min.css' => 'pro/assets/css/foogallery.1ccc8405.min.css',
-    'pro/extensions/default-templates/shared/js/foogallery.js' => 'pro/assets/js/foogallery.020d200a.js',
-    'pro/extensions/default-templates/shared/js/foogallery.min.js' => 'pro/assets/js/foogallery.6e13cc73.min.js',
+    'pro/extensions/default-templates/shared/css/foogallery.css' => 'pro/assets/css/foogallery.cc3e7fab.css',
+    'pro/extensions/default-templates/shared/css/foogallery.min.css' => 'pro/assets/css/foogallery.9ddb29f5.min.css',
+    'pro/extensions/default-templates/shared/js/foogallery.js' => 'pro/assets/js/foogallery.b0d59d58.js',
+    'pro/extensions/default-templates/shared/js/foogallery.min.js' => 'pro/assets/js/foogallery.a8524cae.min.js',
 ];

@@ -9497,18 +9497,13 @@ button.fg-carousel-next:is(:hover,:focus) {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    justify-content: center;
     gap: var(--fg-gutter);
     padding: 0;
     width: 100%;
     font-size: 0;
     line-height: 0;
 }
-.foogrid:after {
-    content: '';
-    display: block;
-    clear: both;
-}
-
 .foogrid.foogrid-cols-2 {
     --fg-column-width: var(--fg-col2-width);
 }
@@ -9545,6 +9540,19 @@ button.fg-carousel-next:is(:hover,:focus) {
 
 .foogrid .fg-image {
     width: 100%;
+}
+
+/* Horizontal alignment */
+.foogrid.fg-left {
+    justify-content: flex-start;
+}
+
+.foogrid.fg-center {
+    justify-content: center;
+}
+
+.foogrid.fg-right {
+    justify-content: flex-end;
 }
 
 /* Force 7 column layout */
@@ -9588,7 +9596,7 @@ button.fg-carousel-next:is(:hover,:focus) {
     }
 }
 /* Force 2 column layout */
-@media only screen and (min-width: 321px) and (max-width: 480px) {
+@media only screen and (max-width: 480px) {
     .foogrid.foogrid-cols-3,
     .foogrid.foogrid-cols-4,
     .foogrid.foogrid-cols-5,
