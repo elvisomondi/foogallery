@@ -155,7 +155,9 @@ function foogallery_get_default_options() {
 		'gallery_sorting'            => '',
 		'datasource'                 => 'media_library',
         'advanced_attachment_modal'  => 'on',
-		'hide_editor_button'         => 'on'
+		'hide_editor_button'         => 'on',
+		'thumb_resize_upscale_small' => 'on',
+		'thumb_resize_upscale_small_color' => 'auto',
 	);
 
 	// A handy filter to override the defaults.
