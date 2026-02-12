@@ -16044,33 +16044,39 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 		construct: function(options, element){
 			var self = this;
 			self._super(options, element);
-			self.$section = null;
-			self.isFirst = false;
-			self.disableTransitions = false;
-			self.panel = new _.Panel( self, self.template );
-			self.on({
-				"pre-init": self.onPreInit,
-				"parsed-item": self.onParsedItem,
-				"created-item": self.onCreatedItem,
-				"destroy-item": self.onDestroyItem,
-				"after-state": self.onAfterState,
-				"before-page-change": self.onBeforePageChange,
-				"before-filter-change": self.onBeforeFilterChange
-			}, self);
-			self.panel.on({
-				"next": self.onPanelNext,
-				"prev": self.onPanelPrev,
-				"close": self.onPanelClose,
-				"area-load": self.onPanelAreaLoad,
-				"area-unload": self.onPanelAreaUnload
-			}, self);
+			if ( !self.template.noPanel ) {
+				self.$section = null;
+				self.isFirst = false;
+				self.disableTransitions = false;
+				self.panel = new _.Panel( self, self.template );
+				self.on({
+					"pre-init": self.onPreInit,
+					"parsed-item": self.onParsedItem,
+					"created-item": self.onCreatedItem,
+					"destroy-item": self.onDestroyItem,
+					"after-state": self.onAfterState,
+					"before-page-change": self.onBeforePageChange,
+					"before-filter-change": self.onBeforeFilterChange
+				}, self);
+				self.panel.on({
+					"next": self.onPanelNext,
+					"prev": self.onPanelPrev,
+					"close": self.onPanelClose,
+					"area-load": self.onPanelAreaLoad,
+					"area-unload": self.onPanelAreaUnload
+				}, self);
+			}
 		},
 		destroy: function(preserveState){
 			var self = this, _super = self._super.bind(self);
-			return self.panel.destroy().then(function(){
-				self.$section.remove();
+			if ( self.panel ) {
+				return self.panel.destroy().then(function(){
+					self.$section.remove();
+					return _super(preserveState);
+				});
+			} else {
 				return _super(preserveState);
-			});
+			}
 		},
 
 		onPreInit: function(){
@@ -16187,6 +16193,18 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 		getOffsetTop: function(item){
 			return item instanceof _.Item && item.isCreated ? item.$el.offset().top : 0;
 		},
+		getRowLastItem: function(item){
+			if (!(item instanceof _.Item) || !item.isCreated){
+				return item instanceof _.Item ? item.$el : null;
+			}
+			var $item = item.$el,
+				rowTop = Math.round($item.position().top),
+				$next = $item.nextAll('.fg-item'),
+				$sameRow = $next.filter(function(){
+					return Math.round($(this).position().top) === rowTop;
+				});
+			return $sameRow.length ? $sameRow.last() : $item;
+		},
 		scrollTo: function(scrollTop, when, duration){
 			var self = this;
 
@@ -16239,7 +16257,14 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 				self.scrollTo(self.getOffsetTop(item), newRow || self.isFirst).then(function(){
 
 					self.panel.appendTo(self.$section);
-					if (newRow) item.$el.after(self.$section);
+					if (newRow){
+						var $rowLast = self.getRowLastItem(item);
+						if ($rowLast && $rowLast.length){
+							$rowLast.after(self.$section);
+						} else {
+							item.$el.after(self.$section);
+						}
+					}
 					if (self.transitionOpen(newRow)){
 						self.isFirst = false;
 						_t.start(self.$section, function($el){
@@ -16328,6 +16353,7 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 
 	_.template.register("foogrid", _.FooGridTemplate, {
 		template: {
+			noPanel: false,
 			classNames: "foogrid-panel",
 			scroll: true,
 			scrollOffset: 0,
@@ -16360,6 +16386,7 @@ FooGallery.utils.$, FooGallery.utils, FooGallery.utils.is, FooGallery.utils.fn);
 	FooGallery.utils.obj,
 	FooGallery.utils.transition
 );
+
 (function($, _, _utils, _obj){
 
     _.SliderTemplate = _.Template.extend({

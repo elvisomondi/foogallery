@@ -140,6 +140,30 @@ class FooGalleryAttachmentModalAjaxTest extends WP_Ajax_UnitTestCase {
 	}
 
 	/**
+	 * Tests custom rel is sanitized when saved via attachment modal.
+	 *
+	 * @group ajax
+	 */
+	public function test_save_modal_sanitizes_custom_rel() {
+		wp_set_current_user( $this->admin_id );
+
+		$_POST['nonce'] = wp_create_nonce( 'foogallery-modal-nonce' );
+		$_POST['img_id'] = $this->attachment_id;
+		$_POST['foogallery'] = array(
+			'custom-rel' => ' NOFOLLOW sponsored onclick ',
+		);
+
+		try {
+			$this->_handleAjax( 'foogallery_attachment_modal_save' );
+			$this->fail( 'Expected ajax die.' );
+		} catch ( WPAjaxDieContinueException $e ) {
+			$response = json_decode( $this->_last_response, true );
+			$this->assertSame( true, $response['success'] );
+			$this->assertSame( 'nofollow sponsored', get_post_meta( $this->attachment_id, '_foogallery_custom_rel', true ) );
+		}
+	}
+
+	/**
 	 * Tests invalid attachment ID returns error on save.
 	 *
 	 * @group ajax

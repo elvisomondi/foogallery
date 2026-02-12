@@ -1587,6 +1587,126 @@ function foogallery_sanitize_full( $text ) {
 }
 
 /**
+ * Sanitize attachment custom URLs before persisting or rendering.
+ *
+ * @since 1.0.0
+ *
+ * @param string $url
+ * @return string
+ */
+function foogallery_sanitize_attachment_custom_url( $url ) {
+	if ( ! is_string( $url ) ) {
+		return '';
+	}
+
+	$url = trim( $url );
+	if ( '' === $url ) {
+		return '';
+	}
+	return esc_url_raw( $url );
+}
+
+/**
+ * Sanitize attachment custom target values against known options.
+ *
+ * @since 1.0.0
+ *
+ * @param string $target
+ * @return string
+ */
+function foogallery_sanitize_attachment_custom_target( $target ) {
+	if ( ! is_string( $target ) ) {
+		return '';
+	}
+
+	$target = sanitize_key( $target );
+	if ( '' === $target ) {
+		return '';
+	}
+
+	$target_options = foogallery_get_target_options();
+	if ( array_key_exists( $target, $target_options ) ) {
+		return $target;
+	}
+
+	return 'default';
+}
+
+/**
+ * Sanitize attachment custom rel values against allowed tokens.
+ *
+ * @since 1.0.0
+ *
+ * @param string $rel
+ * @return string
+ */
+function foogallery_sanitize_attachment_custom_rel( $rel ) {
+	if ( ! is_string( $rel ) ) {
+		return '';
+	}
+
+	$rel = strtolower( trim( $rel ) );
+	if ( '' === $rel ) {
+		return '';
+	}
+
+	$allowed = wp_kses_allowed_html();
+
+	$allowed_tokens = array(
+		'alternate',
+		'author',
+		'bookmark',
+		'external',
+		'help',
+		'license',
+		'me',
+		'next',
+		'nofollow',
+		'noopener',
+		'noreferrer',
+		'prev',
+		'search',
+		'sponsored',
+		'tag',
+		'ugc',
+	);
+
+	/**
+	 * Filter the list of allowed rel tokens for attachment custom rel values.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array  $allowed_tokens Allowed rel tokens.
+	 * @param string $rel            Raw rel value before tokenization.
+	 */
+	$allowed_tokens = apply_filters( 'foogallery_custom_rel_allowed_tokens', $allowed_tokens, $rel );
+	if ( ! is_array( $allowed_tokens ) ) {
+		$allowed_tokens = array();
+	}
+
+	$rel_tokens = preg_split( '/\s+/', $rel );
+	if ( ! is_array( $rel_tokens ) ) {
+		return '';
+	}
+
+	$sanitized_tokens = array();
+	foreach ( $rel_tokens as $token ) {
+		$token = sanitize_key( $token );
+
+		if ( in_array( $token, $allowed_tokens, true ) ) {
+			$sanitized_tokens[] = $token;
+		}
+	}
+
+	if ( empty( $sanitized_tokens ) ) {
+		return '';
+	}
+
+	$sanitized_tokens = array_values( array_unique( $sanitized_tokens ) );
+	return implode( ' ', $sanitized_tokens );
+}
+
+/**
  * Sanitize HTML to make it safe to output. Used to sanitize potentially harmful HTML used for captions
  *
  * @since 1.9.23
@@ -2072,11 +2192,11 @@ function foogallery_import_attachment( $attachment_data ) {
 	}
 
 	if ( isset( $attachment_data['custom_url'] ) && ! empty( $attachment_data['custom_url'] ) ) {
-		$attachment_args['meta_input']['_foogallery_custom_url'] = $attachment_data['custom_url'];
+		$attachment_args['meta_input']['_foogallery_custom_url'] = foogallery_sanitize_attachment_custom_url( $attachment_data['custom_url'] );
 	}
 
 	if ( isset( $attachment_data['custom_target'] ) && ! empty( $attachment_data['custom_target'] ) ) {
-		$attachment_args['meta_input']['_foogallery_custom_target'] = $attachment_data['custom_target'];
+		$attachment_args['meta_input']['_foogallery_custom_target'] = foogallery_sanitize_attachment_custom_target( $attachment_data['custom_target'] );
 	}
 
 	if ( isset( $attachment_data['video'] ) && ! empty( $attachment_data['video'] ) ) {
